@@ -8,6 +8,7 @@ public class Ship {
     // TODO: Understand what these todo comments mean
 
     //Team mtoftheholycross, pair 1 was here
+    // Team mtoftheholycross, pair 2 was here
 
     public  void show()     {     // dunno why this is here maybe it is just an example method
         System.out.println("IF you can't see this then something is severely wrong!!");
