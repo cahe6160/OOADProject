@@ -3,6 +3,7 @@ Assignment template
 ### Minimal Requirments
 <ol>
   <li> Names of all team members. No grade if your name is not in the readme</li>
+    <li> Caroline Hernandez, Alex Kim, Gabe Madera, Drew McFaul</li>
   <li> An appropriate .gitignore</li>
   <li> The pdf with the CRC cards  </li>
    <li>The pdf and code changes tagged with the tag "milestone1" </li>

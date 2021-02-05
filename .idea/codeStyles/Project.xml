@@ -1,5 +1,8 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <MarkdownNavigatorCodeStyleSettings>
+      <option name="RIGHT_MARGIN" value="72" />
+    </MarkdownNavigatorCodeStyleSettings>
     <codeStyleSettings language="Dart">
       <option name="KEEP_BLANK_LINES_IN_CODE" value="4" />
       <option name="SPECIAL_ELSE_IF_TREATMENT" value="false" />
