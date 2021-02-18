@@ -10,11 +10,23 @@ public class BattleshipTests {
     @Before
     public void init() {
         Grid shipGrid1 = new Grid("ships");
-        shipGrid1.printBoard();
+        //shipGrid1.printBoard();
         shipGrid1.addShip("A1", "A4");
         shipGrid1.printBoard();
+        shipGrid1.checkHit("A2");//
+        //shipGrid1.checkHit("A6");//
         //shipGrid1.addShip("D2", "G2");
         //Grid shotsGrid1 = new Grid("shots");
+    }
+
+    @Test
+    public void TestHit() {
+
+    }
+
+    @Test
+    public void TestMiss() {
+
     }
 }
 

@@ -4,6 +4,7 @@ package edu.colorado.mtoftheholycross;
 public class Ship {
     private String name;
     private int shipLength;
+    String[] positionsHeld;
     private String Head;
     private String Tail;
 

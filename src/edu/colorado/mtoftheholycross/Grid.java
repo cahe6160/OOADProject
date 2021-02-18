@@ -44,6 +44,25 @@ public class Grid {
             }
         }
     }
+
+    public String checkHit(String Location) {
+       int[] position = convertPosition(Location);
+
+//       System.out.println("Positon:" + position[0] + " " + position[1]);
+//       System.out.println("Board: " + board[position[1]][position[0]]);
+
+       if(board[position[1]][position[0]] == "Ship" )
+       {
+           System.out.println("HIT");
+           return "HIT";
+       }
+       else
+       {
+           System.out.println("MISS");
+           return "MISS";
+       }
+    }
+
     public void printBoard() {
         for (int i = 0; i < 10; i++)
         {
@@ -55,4 +74,11 @@ public class Grid {
         }
 
     }
+
+    //Helper Functions
+    public int[] convertPosition(String Location) {
+        int[] position = {Location.charAt(0) -65, Integer.parseInt(Location.substring(1,2)) -1};
+        return position;
+    }
 }
+
