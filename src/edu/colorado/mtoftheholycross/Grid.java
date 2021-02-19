@@ -9,10 +9,24 @@ public class Grid {
     public Grid() {
         myShips = new String[10][10];
         myShots = new String[10][10];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                myShips[i][j] = "Sea";
+                myShots[i][j] = "Fog";
+            }
+        }
         isPlayerOne = true;
     }
 
     public Grid(Boolean isPlayerOne) {
+        myShips = new String[10][10];
+        myShots = new String[10][10];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                myShips[i][j] = "Sea";
+                myShots[i][j] = "Fog";
+            }
+        }
         this.isPlayerOne = isPlayerOne;
     }
 
@@ -48,7 +62,7 @@ public class Grid {
     public Boolean checkHit(String Location) {
        int[] position = convertPosition(Location);
 
-       if(myShips[position[1]][position[0]] == "Ship" )
+       if(myShips[position[1]][position[0]].equals("Ship"))
        {
            System.out.println("Shot HIT");
            return true;
@@ -75,7 +89,7 @@ public class Grid {
         {
             for(int j=0; j < 10 ; j++)
             {
-                System.out.print(myShots[i][j] + "  ");
+                System.out.print(this.myShots[i][j] + "  ");
             }
             System.out.println("");
         }
@@ -84,11 +98,11 @@ public class Grid {
     public void updateBoards(String Location, Boolean isHit){
         int[] position = convertPosition(Location);
         if(isHit && isPlayerOne){
-            myShips[position[0]][position[1]] = "Damage";
+            myShips[position[1]][position[0]] = "Damage";
         }else if(isHit){
-            myShots[position[0]][position[1]] = "HIT";
+            myShots[position[1]][position[0]] = "HIT";
         }else if(!isPlayerOne){
-            myShots[position[0]][position[1]] = "MISS";
+            myShots[position[1]][position[0]] = "MISS";
         }
     }
 
