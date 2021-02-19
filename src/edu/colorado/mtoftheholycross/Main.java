@@ -7,14 +7,18 @@ public class Main {
          Ship ship = new Ship();//
          ship.show();//
 
-        Grid shipGrid1 = new Grid("ships");
-        Grid shotGrid1 = new Grid("shots");
+        Grid p0Grid = new Grid(false);
+        Grid p1Grid = new Grid(true);
 
-        shipGrid1.addShip("A1", "A4");
-        shipGrid1.printBoard();
-        //shipGrid1.checkHit("A2");//HIT
-        String result = shipGrid1.checkHit("A6");//MISS
+        p1Grid.addShip("A1", "A4");
+        p1Grid.printMyShips();
 
+        Boolean isHit = p0Grid.checkHit("A2");
+        System.out.println(isHit);
+        p0Grid.updateBoards("A2", isHit);
+        p1Grid.updateBoards("A2", isHit);
 
+        p0Grid.printMyShots();
+        p1Grid.printMyShips();
     }
 }

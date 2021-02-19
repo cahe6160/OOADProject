@@ -1,25 +1,25 @@
 package edu.colorado.mtoftheholycross;
 
 public class Grid {
-    String[][] board;
-    String type;
+    String[][] myShips;
+    String[][] myShots;
+    Boolean isPlayerOne;
+
 
     public Grid() {
-        board = new String[10][10];
+        myShips = new String[10][10];
+        myShots = new String[10][10];
+        isPlayerOne = true;
     }
 
-    public Grid(String type) {
-        board = new String[10][10];
-        this.board = board;
-        this.type = type;
+    public Grid(Boolean isPlayerOne) {
+        this.isPlayerOne = isPlayerOne;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public Grid(String[][] myShips, String[][] myShots, Boolean isPlayerOne) {
+        this.myShips = myShips;
+        this.myShots = myShots;
+        this.isPlayerOne = isPlayerOne;
     }
 
     public void addShip(String Head, String Tail) {
@@ -33,49 +33,68 @@ public class Grid {
         {
             for(int i = headPosition[1]; i <= tailPosition[1]; i++)
             {
-                board[i][headPosition[0]] = "Ship";
+                myShips[i][headPosition[0]] = "Ship";
             }
         }
         else
         {
             for(int i = headPosition[0]; i <= tailPosition[0]; i++)
             {
-                board[headPosition[1]][i] = "Ship";
+                myShips[headPosition[1]][i] = "Ship";
             }
         }
     }
 
-    public String checkHit(String Location) {
+    public Boolean checkHit(String Location) {
        int[] position = convertPosition(Location);
 
-       if(board[position[1]][position[0]] == "Ship" )
+       if(myShips[position[1]][position[0]] == "Ship" )
        {
            System.out.println("Shot HIT");
-           return "HIT";
-       }
-       else
+           return true;
+       } else
        {
            System.out.println("Shot MISS");
-           return "MISS";
+           return false;
        }
     }
 
-    public void printBoard() {
+    public void printMyShips() {
         for (int i = 0; i < 10; i++)
         {
             for(int j=0; j < 10 ; j++)
             {
-                System.out.print(board[i][j] + "  ");
+                System.out.print(myShips[i][j] + "  ");
             }
             System.out.println("");
         }
+    }
 
+    public void printMyShots() {
+        for (int i = 0; i < 10; i++)
+        {
+            for(int j=0; j < 10 ; j++)
+            {
+                System.out.print(myShots[i][j] + "  ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public void updateBoards(String Location, Boolean isHit){
+        int[] position = convertPosition(Location);
+        if(isHit && isPlayerOne){
+            myShips[position[0]][position[1]] = "Damage";
+        }else if(isHit){
+            myShots[position[0]][position[1]] = "HIT";
+        }else if(!isPlayerOne){
+            myShots[position[0]][position[1]] = "MISS";
+        }
     }
 
     //Helper Functions
     public int[] convertPosition(String Location) {
-        int[] position = {Location.charAt(0) -65, Integer.parseInt(Location.substring(1,2)) -1};
-        return position;
+        return new int[]{Location.charAt(0) -65, Integer.parseInt(Location.substring(1,2)) -1};
     }
 }
 
