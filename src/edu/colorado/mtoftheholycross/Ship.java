@@ -6,8 +6,10 @@ public class Ship {
         String name;
         String head;
         String tail;
+        Boolean casualtyReported;
 
     public Ship(String name, String head, String tail) {
+        casualtyReported = false;
         this.name = name;
         this.head = head;
         this.tail = tail;
@@ -23,6 +25,14 @@ public class Ship {
 
     public String getTail() {
         return tail;
+    }
+
+    public Boolean getCasualtyReported(){
+        return casualtyReported;
+    }
+
+    public void setCasualtyReported(Boolean casualtyReported) {
+        this.casualtyReported = casualtyReported;
     }
 
     public void setName(String name) {

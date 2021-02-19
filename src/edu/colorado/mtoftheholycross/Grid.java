@@ -137,6 +137,10 @@ public class Grid {
                 }
             }
         }
+        if(!shipToCheck.getCasualtyReported()) {
+            System.out.println("You sunk my " + shipToCheck.getName());
+        }
+        shipToCheck.setCasualtyReported(true);
         return true;
     }
 }
