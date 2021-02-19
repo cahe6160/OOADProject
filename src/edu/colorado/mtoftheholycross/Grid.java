@@ -1,9 +1,10 @@
 package edu.colorado.mtoftheholycross;
 
 public class Grid {
-    String[][] myShips;
-    String[][] myShots;
-    Boolean isPlayerOne;
+    private
+        String[][] myShips;
+        String[][] myShots;
+        Boolean isWaiting;
 
 
     public Grid() {
@@ -15,10 +16,10 @@ public class Grid {
                 myShots[i][j] = "Fog";
             }
         }
-        isPlayerOne = true;
+        isWaiting = true;
     }
 
-    public Grid(Boolean isPlayerOne) {
+    public Grid(Boolean isWaiting) {
         myShips = new String[10][10];
         myShots = new String[10][10];
         for(int i = 0; i < 10; i++){
@@ -27,21 +28,27 @@ public class Grid {
                 myShots[i][j] = "Fog";
             }
         }
-        this.isPlayerOne = isPlayerOne;
+        this.isWaiting = isWaiting;
     }
 
-    public Grid(String[][] myShips, String[][] myShots, Boolean isPlayerOne) {
+    public Grid(String[][] myShips, String[][] myShots, Boolean isWaiting) {
         this.myShips = myShips;
         this.myShots = myShots;
-        this.isPlayerOne = isPlayerOne;
+        this.isWaiting = isWaiting;
     }
 
-    public void addShip(String Head, String Tail) {
+    public String[][] getMyShips() {
+        return myShips;
+    }
 
-        int[] headPosition = { Head.charAt(0) -65, Integer.parseInt(Head.substring(1,2)) -1};
-        //System.out.println("Head "+ headPosition[0] + " " + headPosition[1]);
-        int[] tailPosition = { Tail.charAt(0) -65, Integer.parseInt(Tail.substring(1,2)) -1};
-        //System.out.println("Tail "+ tailPosition[0] + " " + tailPosition[1]);
+    public String[][] getMyShots() {
+        return myShots;
+    }
+
+    public void addShip(Ship shipToAdd) {
+
+        int[] headPosition = convertPosition(shipToAdd.getHead());
+        int[] tailPosition = convertPosition(shipToAdd.getTail());
 
         if(headPosition[0] == tailPosition[0])
         {
@@ -59,10 +66,10 @@ public class Grid {
         }
     }
 
-    public Boolean checkHit(String Location) {
+    public Boolean checkHit(String Location, String[][] opponentBoard) {
        int[] position = convertPosition(Location);
 
-       if(myShips[position[1]][position[0]].equals("Ship"))
+       if(opponentBoard[position[1]][position[0]].equals("Ship"))
        {
            System.out.println("Shot HIT");
            return true;
@@ -97,18 +104,40 @@ public class Grid {
 
     public void updateBoards(String Location, Boolean isHit){
         int[] position = convertPosition(Location);
-        if(isHit && isPlayerOne){
+        if(isHit && isWaiting){
             myShips[position[1]][position[0]] = "Damage";
         }else if(isHit){
             myShots[position[1]][position[0]] = "HIT";
-        }else if(!isPlayerOne){
+        }else if(!isWaiting){
             myShots[position[1]][position[0]] = "MISS";
         }
     }
 
     //Helper Functions
+
+    //Converts string coordinate to indices
     public int[] convertPosition(String Location) {
-        return new int[]{Location.charAt(0) -65, Integer.parseInt(Location.substring(1,2)) -1};
+        return new int[]{Location.charAt(0) -65, Integer.parseInt(Location.substring(1)) -1};
+    }
+
+    public Boolean isSunk(Ship shipToCheck){
+        int[] headCord = convertPosition(shipToCheck.getHead());
+        int[] tailCord = convertPosition(shipToCheck.getTail());
+
+        if(headCord[0] == tailCord[0]) {
+            for(int i = headCord[1]; i <= tailCord[1]; i++) {
+                if(myShips[i][headCord[0]].equals("Ship")){
+                    return false;
+                }
+            }
+        } else {
+            for(int i = headCord[0]; i <= tailCord[0]; i++) {
+                if(myShips[headCord[1]][i].equals("Ship")){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 

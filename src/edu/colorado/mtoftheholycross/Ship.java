@@ -2,57 +2,38 @@ package edu.colorado.mtoftheholycross;
 // This is the  baseclass for your ship.  Modify accordingly
 // TODO: practice good OO design
 public class Ship {
-    private String name;
-    private int shipLength;
-    String[] positionsHeld;
-    private String Head;
-    private String Tail;
+    private
+        String name;
+        String head;
+        String tail;
 
-    public Ship() { }
-
-    public Ship(String name, int shipLength, String Head, String Tail) {
+    public Ship(String name, String head, String tail) {
         this.name = name;
-        this.shipLength = shipLength;
-        this.Head = Head;
-        this.Tail = Tail;
+        this.head = head;
+        this.tail = tail;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getShipLength() {
-        return shipLength;
-    }
-
     public String getHead() {
-        return Head;
+        return head;
     }
 
     public String getTail() {
-        return Tail;
+        return tail;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setShipLength(int shipLength) {
-        this.shipLength = shipLength;
-    }
-
-    public void setHead(String Head) {
-        this.Head = Head;
+    public void setHead(String head) {
+        this.head = head;
     }
 
     public void setTail(String tail) {
-        this.Tail = tail;
-    }
-
-    //Team mtoftheholycross, pair 1 was here
-    // Team mtoftheholycross, pair 2 was here
-
-    public  void show()     {     // dunno why this is here maybe it is just an example method
-        System.out.println("IF you can't see this then something is severely wrong!!");
+        this.tail = tail;
     }
 }

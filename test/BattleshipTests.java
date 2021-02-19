@@ -9,27 +9,27 @@
 //
 //public class BattleshipTests {
 //
-//    private Grid shipGrid1;
+//    private Grid p0Grid;
+//    private Grid p1Grid;
 //
 //    @Before
 //    public void init() {
-//        shipGrid1 = new Grid("MyShips");
-//        shipGrid1.addShip("A2", "A5");
-//        shipGrid1.addShip("E6", "G6");
-//        //shipGrid1.printBoard();
+//        p0Grid = new Grid(false);
+//        p1Grid = new Grid(true);
+//        p0Grid.addShip("A2", "A5");
+//        p1Grid.addShip("E6", "G6");
 //    }
 //
 //    @Test
 //    public void TestHit() {
-//        String result = shipGrid1.checkHit("F6");
-//        assertEquals("HIT", result);
-//
+//        Boolean result = p1Grid.checkHit("F6");
+//        assertEquals(true, result);
 //    }
 //
 //    @Test
 //    public void TestMiss() {
-//        String result = shipGrid1.checkHit("A1");
-//        assertEquals("MISS", result);
+//        Boolean result = p0Grid.checkHit("A1");
+//        assertEquals(false, result);
 //    }
 //}
 //
