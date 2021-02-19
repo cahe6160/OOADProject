@@ -25,9 +25,9 @@ public class Grid {
     public void addShip(String Head, String Tail) {
 
         int[] headPosition = { Head.charAt(0) -65, Integer.parseInt(Head.substring(1,2)) -1};
-        System.out.println("Head "+ headPosition[0] + " " + headPosition[1]);
+        //System.out.println("Head "+ headPosition[0] + " " + headPosition[1]);
         int[] tailPosition = { Tail.charAt(0) -65, Integer.parseInt(Tail.substring(1,2)) -1};
-        System.out.println("Tail "+ tailPosition[0] + " " + tailPosition[1]);
+        //System.out.println("Tail "+ tailPosition[0] + " " + tailPosition[1]);
 
         if(headPosition[0] == tailPosition[0])
         {
@@ -48,17 +48,14 @@ public class Grid {
     public String checkHit(String Location) {
        int[] position = convertPosition(Location);
 
-//       System.out.println("Positon:" + position[0] + " " + position[1]);
-//       System.out.println("Board: " + board[position[1]][position[0]]);
-
        if(board[position[1]][position[0]] == "Ship" )
        {
-           System.out.println("HIT");
+           System.out.println("Shot HIT");
            return "HIT";
        }
        else
        {
-           System.out.println("MISS");
+           System.out.println("Shot MISS");
            return "MISS";
        }
     }

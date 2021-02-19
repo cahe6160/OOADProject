@@ -2,31 +2,34 @@ import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import java.lang.*;
+import static org.junit.Assert.assertEquals;
 
 public class BattleshipTests {
 
+    private Grid shipGrid1;
+
     @Before
     public void init() {
-        Grid shipGrid1 = new Grid("ships");
+        shipGrid1 = new Grid("MyShips");
+        shipGrid1.addShip("A2", "A5");
+        shipGrid1.addShip("E6", "G6");
         //shipGrid1.printBoard();
-        shipGrid1.addShip("A1", "A4");
-        shipGrid1.printBoard();
-        shipGrid1.checkHit("A2");//
-        //shipGrid1.checkHit("A6");//
-        //shipGrid1.addShip("D2", "G2");
-        //Grid shotsGrid1 = new Grid("shots");
     }
 
     @Test
     public void TestHit() {
+        String result = shipGrid1.checkHit("F6");
+        assertEquals("HIT", result);
 
     }
 
     @Test
     public void TestMiss() {
-
+        String result = shipGrid1.checkHit("A1");
+        assertEquals("MISS", result);
     }
 }
 
