@@ -71,11 +71,11 @@ public class Grid {
 
        if(opponentBoard[position[1]][position[0]].equals("Ship"))
        {
-           System.out.println("Shot HIT");
+           //System.out.println("Shot HIT");
            return true;
        } else
        {
-           System.out.println("Shot MISS");
+           //System.out.println("Shot MISS");
            return false;
        }
     }

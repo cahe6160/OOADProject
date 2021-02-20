@@ -1,6 +1,6 @@
 package edu.colorado.mtoftheholycross;
 
-class Game {
+public class Game {
     private
         Ship[] p1Fleet;
         Ship[] p2Fleet;
@@ -20,6 +20,22 @@ class Game {
 
         p1Grid = new Grid(false);
         p2Grid = new Grid(true);
+    }
+
+    public Grid getP1Grid() {
+        return p1Grid;
+    }
+
+    public Grid getP2Grid() {
+        return p2Grid;
+    }
+
+    public void setP1Grid(Grid p1Grid) {
+        this.p1Grid = p1Grid;
+    }
+
+    public void setP2Grid(Grid p2Grid) {
+        this.p2Grid = p2Grid;
     }
 
     public int switchTurn(){

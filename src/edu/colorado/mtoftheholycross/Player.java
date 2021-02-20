@@ -1,6 +1,6 @@
 package edu.colorado.mtoftheholycross;
 
-class Player {
+public class Player {
     private
         int shipCount;
 }
