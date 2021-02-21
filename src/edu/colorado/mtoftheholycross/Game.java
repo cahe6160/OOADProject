@@ -8,15 +8,11 @@ public class Game {
         Grid p2Grid;
 
     public Game() {
-        p2Fleet = new Ship[3];
+        p2Fleet = new Ship[1];
         p2Fleet[0] = new Ship("Minesweeper", "A1", "A2");
-        p2Fleet[1] = new Ship("Destroyer", "B1", "B3");
-        p2Fleet[2] = new Ship("Battleship", "C1", "C4");
 
-        p1Fleet = new Ship[3];
+        p1Fleet = new Ship[1];
         p1Fleet[0] = new Ship("Minesweeper", "A7", "A8");
-        p1Fleet[1] = new Ship("Destroyer", "B7", "B9");
-        p1Fleet[2] = new Ship("Battleship", "C7", "C10");
 
         p1Grid = new Grid(false);
         p2Grid = new Grid(true);
@@ -39,10 +35,10 @@ public class Game {
     }
 
     public int switchTurn(){
-        if(p2Grid.isWaiting && playerSurrender()){
+        if(p2Grid.isWaiting && playerSurrender()) {
             System.out.println("Player 2 surrendered!");
             return 0;
-        }else if(p1Grid.isWaiting && playerSurrender()){
+        }else if(p1Grid.isWaiting && playerSurrender()) {
             System.out.println("Player 1 surrendered!");
             return 0;
         }
@@ -51,7 +47,7 @@ public class Game {
         return -1;
     }
 
-    public Boolean playerSurrender(){
+    public Boolean playerSurrender() {
         if(p1Grid.isWaiting) {
             for (int i = 0; i < p1Fleet.length; i++) {
                 if (!p1Grid.isSunk(p1Fleet[i])) {

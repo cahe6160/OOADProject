@@ -24,12 +24,8 @@ public class TestHitOrMiss {
         gameTest = new Game();
 
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[1]);
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[2]);
 
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[1]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[2]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
