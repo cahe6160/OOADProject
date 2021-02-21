@@ -42,7 +42,7 @@ public class TestSurrender {
     }
 
     @Test
-    public void Surrender() {
+    public void surrender() {
         //Shot 1
         gameTest.getP2Grid().updateBoards("A1", gameTest.getP1Grid().checkHit("A1", p2ShipBoard));
         gameTest.getP1Grid().updateBoards("A1", gameTest.getP1Grid().checkHit("A1", p2ShipBoard));
