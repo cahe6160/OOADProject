@@ -60,7 +60,7 @@ public class Game {
             }
         }
         if(p2Grid.isWaiting) {
-            for (int i = 0; i < p1Fleet.length; i++) {
+            for (int i = 0; i < p2Fleet.length; i++) {
                 if (!p2Grid.isSunk(p2Fleet[i])) {
                     return false;
                 }

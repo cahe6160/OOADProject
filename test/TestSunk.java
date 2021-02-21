@@ -6,23 +6,14 @@ import org.junit.*;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestSunk {
-
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream err = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-    private final PrintStream originalErr = System.err;
-
-    @Before
-    public void setStreams() {
-        System.setOut(new PrintStream(out));
-        System.setErr(new PrintStream(err));
-    }
 
     Game gameTest;
     String[][] p2ShipBoard;
@@ -53,20 +44,25 @@ public class TestSunk {
         assertEquals(true, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
     }
 
-//    @Test
-//    public void testSunkMessage() {
-//        //Shot 1
-//        Boolean hitMiss = gameTest.getP1Grid().checkHit("A1", p2ShipBoard);
-//        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-//        gameTest.getP2Grid().updateBoards("A1", hitMiss);
-//        //Shot 2
-//        hitMiss = gameTest.getP1Grid().checkHit("A2", p2ShipBoard);
-//        gameTest.getP1Grid().updateBoards("A2", hitMiss);
-//        gameTest.getP2Grid().updateBoards("A2", hitMiss);
-//
-////        System.out.println("Anything");
-//        assertEquals("You sunk my Minesweeper", out.toString());
-//    }
+    @Test
+    public void testSunkMessage() {
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+        //Shot 1
+        Boolean hitMiss = gameTest.getP1Grid().checkHit("A1", p2ShipBoard);
+        gameTest.getP1Grid().updateBoards("A1", hitMiss);
+        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        //Shot 2
+        hitMiss = gameTest.getP1Grid().checkHit("A2", p2ShipBoard);
+        gameTest.getP1Grid().updateBoards("A2", hitMiss);
+        gameTest.getP2Grid().updateBoards("A2", hitMiss);
+
+        gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]);
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+        assertEquals("You sunk my Minesweeper", standardOutput);
+    }
 
     @Test
     public void testNotSunk() {
