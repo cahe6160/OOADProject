@@ -6,13 +6,17 @@ public class Ship {
         String name;
         String head;
         String tail;
+        String captainLocation;
         Boolean casualtyReported;
+        Boolean captainHit;
 
-    public Ship(String name, String head, String tail) {
+    public Ship(String name, String head, String tail, String captainLocation) {
         casualtyReported = false;
+        captainHit = false;
         this.name = name;
         this.head = head;
         this.tail = tail;
+        this.captainLocation = captainLocation;
     }
 
     public String getName() {

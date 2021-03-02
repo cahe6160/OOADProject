@@ -61,18 +61,6 @@ public class Grid {
         }
     }
 
-    public Boolean checkHit(String Location, String[][] opponentBoard) {
-       int[] position = convertPosition(Location);
-
-       if(opponentBoard[position[1]][position[0]].equals("Ship")) {
-           //System.out.println("Shot HIT");
-           return true;
-       } else {
-           //System.out.println("Shot MISS");
-           return false;
-       }
-    }
-
     public void printMyShips() {
         for (int i = 0; i < 10; i++) {
             for(int j=0; j < 10 ; j++) {
@@ -91,8 +79,19 @@ public class Grid {
         }
     }
 
-    public void updateBoards(String Location, Boolean isHit){
+    public void updateBoards(String Location, String[][] opponentBoard){
+
+        boolean isHit = false;
         int[] position = convertPosition(Location);
+
+       if(opponentBoard[position[1]][position[0]].equals("Ship")) {
+           //System.out.println("Shot HIT");
+           isHit = true;
+       } else {
+           //System.out.println("Shot MISS");
+           isHit = false;
+       }
+
         if(isHit && isWaiting){
             myShips[position[1]][position[0]] = "Damage";
         }else if(isHit){

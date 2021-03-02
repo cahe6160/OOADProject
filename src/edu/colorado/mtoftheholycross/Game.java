@@ -6,13 +6,20 @@ public class Game {
         Ship[] p2Fleet;
         Grid p1Grid;
         Grid p2Grid;
+        Player P1;
+        Player P2;
 
     public Game() {
-        p2Fleet = new Ship[1];
-        p2Fleet[0] = new Ship("Minesweeper", "A1", "A2");
+        p2Fleet = new Ship[2];
+        p2Fleet[0] = new Ship("Minesweeper", "A1", "A2", "A1");
+        p2Fleet[1] = new Ship("Destroyer", "B1", "B3", "B2");
+        p2Fleet[2] = new Ship("Battleship", "C1", "C4", "C3");
+
 
         p1Fleet = new Ship[1];
-        p1Fleet[0] = new Ship("Minesweeper", "A7", "A8");
+        p1Fleet[0] = new Ship("Minesweeper", "A7", "A8", "A7");
+        p1Fleet[1] = new Ship("Destroyer", "B7", "B9", "B8");
+        p1Fleet[2] = new Ship("Battleship", "C7", "C10", "C9");
 
         p1Grid = new Grid(false);
         p2Grid = new Grid(true);
@@ -26,12 +33,28 @@ public class Game {
         return p2Grid;
     }
 
+    public Player getP1() {
+        return P1;
+    }
+
+    public Player getP2() {
+        return P2;
+    }
+
     public void setP1Grid(Grid p1Grid) {
         this.p1Grid = p1Grid;
     }
 
     public void setP2Grid(Grid p2Grid) {
         this.p2Grid = p2Grid;
+    }
+
+    public void setP1(Player p1) {
+        P1 = p1;
+    }
+
+    public void setP2(Player p2) {
+        P2 = p2;
     }
 
     public int switchTurn(){
