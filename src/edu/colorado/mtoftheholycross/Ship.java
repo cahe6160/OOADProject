@@ -8,15 +8,27 @@ public class Ship {
         String tail;
         String captainLocation;
         Boolean casualtyReported;
-        Boolean captainHit;
 
     public Ship(String name, String head, String tail, String captainLocation) {
         casualtyReported = false;
-        captainHit = false;
         this.name = name;
         this.head = head;
         this.tail = tail;
-        this.captainLocation = captainLocation;
+        if(this.name.equals("Minesweeper")){
+            this.captainLocation = head;
+        } else if(this.name.equals("Destroyer")){
+            if(this.head.substring(0, 1).equals(this.tail.substring(0, 1))) {
+                this.captainLocation = this.head.substring(0, 1) + (Integer.parseInt(this.head.substring(1)) + 1);
+            } else{
+                this.captainLocation = (this.head.charAt(0) + 1) + this.head.substring(1);
+            }
+        } else {
+            if(this.head.substring(0, 1).equals(this.tail.substring(0, 1))) {
+                this.captainLocation = this.head.substring(0, 1) + (Integer.parseInt(this.head.substring(1)) + 2);
+            } else{
+                this.captainLocation = (this.head.charAt(0) + 2) + this.head.substring(1);
+            }
+        }
     }
 
     public String getName() {
@@ -30,6 +42,11 @@ public class Ship {
     public String getTail() {
         return tail;
     }
+
+    public String getCaptainLocation() {
+        return captainLocation;
+    }
+
 
     public Boolean getCasualtyReported(){
         return casualtyReported;
@@ -49,5 +66,9 @@ public class Ship {
 
     public void setTail(String tail) {
         this.tail = tail;
+    }
+
+    public void setCaptainLocation(String captainLocation) {
+        this.captainLocation = captainLocation;
     }
 }

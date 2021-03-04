@@ -49,6 +49,7 @@ public class Grid {
 
         int[] headPosition = convertPosition(shipToAdd.getHead());
         int[] tailPosition = convertPosition(shipToAdd.getTail());
+        int[] captainPosition = convertPosition(shipToAdd.getCaptainLocation());
 
         if(headPosition[0] == tailPosition[0]) {
             for(int i = headPosition[1]; i <= tailPosition[1]; i++) {
@@ -58,6 +59,11 @@ public class Grid {
             for(int i = headPosition[0]; i <= tailPosition[0]; i++) {
                 myShips[headPosition[1]][i] = "Ship";
             }
+        }
+        if(shipToAdd.getName().equals("Minesweeper")) {
+            myShips[captainPosition[1]][captainPosition[0]] = "Captain";
+        } else {
+            myShips[captainPosition[1]][captainPosition[0]] = "Armor";
         }
     }
 
@@ -79,26 +85,38 @@ public class Grid {
         }
     }
 
-    public void updateBoards(String Location, String[][] opponentBoard){
+    public boolean updateBoards(String Location, String[][] opponentBoard){
 
         boolean isHit = false;
+        int captainHit = 0;
         int[] position = convertPosition(Location);
 
        if(opponentBoard[position[1]][position[0]].equals("Ship")) {
            //System.out.println("Shot HIT");
            isHit = true;
-       } else {
-           //System.out.println("Shot MISS");
-           isHit = false;
+       } else if(opponentBoard[position[1]][position[0]].equals("Captain")){
+           captainHit = 1;
+           isHit = true;
+       } else if(opponentBoard[position[1]][position[0]].equals("Armor")){
+           captainHit = 2;
+           isHit = true;
        }
 
-        if(isHit && isWaiting){
-            myShips[position[1]][position[0]] = "Damage";
-        }else if(isHit){
-            myShots[position[1]][position[0]] = "HIT";
-        }else if(!isWaiting){
-            myShots[position[1]][position[0]] = "MISS";
-        }
+       if(isHit && isWaiting && captainHit == 0) {
+           myShips[position[1]][position[0]] = "Damage";
+       } else if(isHit && isWaiting && captainHit == 1) {
+           myShips[position[1]][position[0]] = "Critical";
+       } else if(isHit && isWaiting) {
+           myShips[position[1]][position[0]] = "Captain";
+       } else if(isHit && captainHit != 2) {
+           myShots[position[1]][position[0]] = "HIT";
+       } else if(isHit) {
+           myShots[position[1]][position[0]] = "MISS";
+       } else if(!isWaiting){
+           myShots[position[1]][position[0]] = "MISS";
+       }
+
+        return isHit;
     }
 
     //Helper Functions
@@ -111,20 +129,38 @@ public class Grid {
     public Boolean isSunk(Ship shipToCheck){
         int[] headCord = convertPosition(shipToCheck.getHead());
         int[] tailCord = convertPosition(shipToCheck.getTail());
+        int[] captainCord = convertPosition(shipToCheck.getCaptainLocation());
 
         if(headCord[0] == tailCord[0]) {
             for(int i = headCord[1]; i <= tailCord[1]; i++) {
-                if(myShips[i][headCord[0]].equals("Ship")){
+                if(myShips[i][headCord[0]].equals("Ship") || myShips[i][headCord[0]].equals("Armor") || myShips[i][headCord[0]].equals("Captain")){
                     return false;
                 }
             }
         } else {
             for(int i = headCord[0]; i <= tailCord[0]; i++) {
-                if(myShips[headCord[1]][i].equals("Ship")){
+                if(myShips[headCord[1]][i].equals("Ship") || myShips[i][headCord[0]].equals("Armor") || myShips[i][headCord[0]].equals("Captain")){
                     return false;
                 }
             }
         }
+
+        if(headCord[0] == tailCord[0]) {
+            for(int i = headCord[1]; i <= tailCord[1]; i++) {
+                if(myShips[i][headCord[0]].equals("Critical") && !shipToCheck.getCasualtyReported()) {
+                    System.out.println("You sunk my " + shipToCheck.getName());
+                    shipToCheck.setCasualtyReported(true);
+                }
+            }
+        } else {
+            for(int i = headCord[0]; i <= tailCord[0]; i++) {
+                if(myShips[headCord[1]][i].equals("Critical") && !shipToCheck.getCasualtyReported()){
+                    System.out.println("You sunk my " + shipToCheck.getName());
+                    shipToCheck.setCasualtyReported(true);
+                }
+            }
+        }
+
         if(!shipToCheck.getCasualtyReported()) {
             System.out.println("You sunk my " + shipToCheck.getName());
         }

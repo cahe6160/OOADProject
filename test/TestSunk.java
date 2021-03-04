@@ -33,13 +33,11 @@ public class TestSunk {
     @Test
     public void testSunk() {
         //Shot 1
-        Boolean hitMiss = gameTest.getP1Grid().checkHit("A1", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
         //Shot 2
-        hitMiss = gameTest.getP1Grid().checkHit("A2", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1Grid().updateBoards("A2", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("A2", p2ShipBoard);
 
         assertEquals(true, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
     }
@@ -49,13 +47,11 @@ public class TestSunk {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
         //Shot 1
-        Boolean hitMiss = gameTest.getP1Grid().checkHit("A1", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
         //Shot 2
-        hitMiss = gameTest.getP1Grid().checkHit("A2", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1Grid().updateBoards("A2", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("A2", p2ShipBoard);
 
         gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]);
 
@@ -67,9 +63,8 @@ public class TestSunk {
     @Test
     public void testNotSunk() {
         //Shot 1
-        Boolean hitMiss = gameTest.getP1Grid().checkHit("A1", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
         assertEquals(false, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
     }
 }

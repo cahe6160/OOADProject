@@ -38,53 +38,50 @@ public class TestCaptainsQuarters {
     @Test
     public void hitCaptainMineseeper(){
 
-        boolean hitMiss = gameTest.getP1Grid().checkHit("A1", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
-        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[0]));
+        gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
+
+        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[0]));
 
     }
 
     @Test
     public void hitCaptainDestroyerOnce(){
 
-        boolean hitMiss = gameTest.getP1Grid().checkHit("B2", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
-        gameTest.getP2Grid().updateBoards(("B2", hitMiss));
+        gameTest.getP1Grid().updateBoards("B2", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("B2", p2ShipBoard);
         assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
     }
 
     @Test
     public void hitCaptainBattleshipOnce(){
-        boolean hitMiss = gameTest.getP1Grid().checkHit("C3", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("C3", hitMiss);
-        gameTest.getP2Grid().updateBoards(("C3", hitMiss));
+
+        gameTest.getP1Grid().updateBoards("C3", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("C3", p2ShipBoard);
         assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
     }
 
     @Test
     public void hitCaptainDestroyerTwice(){
-        boolean hitMiss = gameTest.getP1Grid().checkHit("B2", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
-        gameTest.getP2Grid().updateBoards(("B2", hitMiss));
 
-        boolean hitMiss = gameTest.getP1Grid().checkHit("B2", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
-        gameTest.getP2Grid().updateBoards(("B2", hitMiss));
+        gameTest.getP1Grid().updateBoards("B2", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("B2", p2ShipBoard);
 
-        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
+        gameTest.getP1Grid().updateBoards("B2", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("B2", p2ShipBoard);
+
+        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[1]));
     }
 
     @Test
     public void hitCaptainBattleshipTwice(){
-        boolean hitMiss = gameTest.getP1Grid().checkHit("C3", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("C3", hitMiss);
-        gameTest.getP2Grid().updateBoards(("C3", hitMiss));
 
-        boolean hitMiss = gameTest.getP1Grid().checkHit("C3", p2ShipBoard);
-        gameTest.getP1Grid().updateBoards("C2", hitMiss);
-        gameTest.getP2Grid().updateBoards(("C2", hitMiss));
+        gameTest.getP1Grid().updateBoards("C3", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("C3", p2ShipBoard);
 
-        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
+        gameTest.getP1Grid().updateBoards("C2", p2ShipBoard);
+        gameTest.getP2Grid().updateBoards("C2", p2ShipBoard);
+
+        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[1]));
     }
 }

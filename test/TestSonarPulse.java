@@ -16,6 +16,14 @@ import static org.junit.Assert.assertTrue;
 
 public class TestSonarPulse {
 
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @Before
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
     Game gameTest;
     String[][] p2ShipBoard;
     String [][] p1ShipBoard;
@@ -24,8 +32,8 @@ public class TestSonarPulse {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[2]);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[2]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
@@ -33,17 +41,153 @@ public class TestSonarPulse {
 
     @Test
     public void noCharges(){
-        assertEquals(null, gameTest.getP1().activateSonar("A3"));
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        gameTest.getP1().setSonarPulse(0);
+
+        gameTest.activateSonar("A3");
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+        assertEquals("Error, no sonar charges remain.", standardOutput);
     }
 
     @Test
     public void noShipSunk(){
-        assertEquals(null, gameTest.getP1().activateSonar("A3"));
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        gameTest.activateSonar("A3");
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+        assertEquals("Error, at least one ship must be sunk in order to activate sonar.", standardOutput);
     }
 
     @Test
-    public void sonarActivation(){
-        String[][] referenceMap = {{"SHIP", "SHIP", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}, {"FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG", "FOG"}}
-        assertEquals(referenceMap, gameTest.getP1().activateSonar("A3"));
+    public void noShipDetected(){
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                System.out.print(referenceMap[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myTestOut));
+
+        gameTest.getP2().setShipCount(2);
+        gameTest.activateSonar("E6");
+
+        final String testStandardOutput = myTestOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        assertEquals(standardOutput, testStandardOutput);
+    }
+
+    @Test
+    public void shipInFog(){
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                System.out.print(referenceMap[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myTestOut));
+
+        gameTest.getP2().setShipCount(2);
+        gameTest.activateSonar("E6");
+
+        final String testStandardOutput = myTestOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        assertEquals(standardOutput, testStandardOutput);
+    }
+
+    @Test
+    public void shipPartiallyInFog(){
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Ship", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                System.out.print(referenceMap[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myTestOut));
+
+        gameTest.getP2().setShipCount(2);
+        gameTest.activateSonar("D5");
+
+        final String testStandardOutput = myTestOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        assertEquals(standardOutput, testStandardOutput);
+    }
+
+    @Test
+    public void fullyDetected(){
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        String[][] referenceMap = {{"Fog", "Fog", "Ship", "Fog", "Fog"}, {"Fog", "Sea", "Ship", "Sea", "Fog"}, {"Sea", "Sea", "Ship", "Sea", "Sea"}, {"Fog", "Sea", "Ship", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                System.out.print(referenceMap[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myTestOut));
+
+        gameTest.getP2().setShipCount(2);
+        gameTest.activateSonar("C3");
+
+        final String testStandardOutput = myTestOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        assertEquals(standardOutput, testStandardOutput);
+    }
+
+    @Test
+    public void outOfBounds(){
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        gameTest.getP2().setShipCount(2);
+        gameTest.activateSonar("J10");
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        assertEquals("Error, sonar center out of bounds. Please choose another coordinate.", standardOutput);
     }
 }
