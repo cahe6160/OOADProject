@@ -1,5 +1,7 @@
 package edu.colorado.mtoftheholycross;
 
+import javax.security.auth.Destroyable;
+
 public class Game {
     private
         Ship[] p1Fleet;
@@ -11,15 +13,15 @@ public class Game {
 
     public Game() {
         p2Fleet = new Ship[3];
-        p2Fleet[0] = new Ship("Minesweeper", "A1", "A2", "A1");
-        p2Fleet[1] = new Ship("Destroyer", "B1", "B3", "B2");
-        p2Fleet[2] = new Ship("Battleship", "C1", "C4", "C3");
+        p2Fleet[0] = new Minesweeper("A1", "A2");
+        p2Fleet[1] = new Destroyer("B1", "B3");
+        p2Fleet[2] = new Battleship("C1", "C4");
 
 
         p1Fleet = new Ship[3];
-        p1Fleet[0] = new Ship("Minesweeper", "A7", "A8", "A7");
-        p1Fleet[1] = new Ship("Destroyer", "B7", "B9", "B8");
-        p1Fleet[2] = new Ship("Battleship", "C7", "C10", "C9");
+        p1Fleet[0] = new Minesweeper("A7", "A8");
+        p1Fleet[1] = new Destroyer("B7", "B9");
+        p1Fleet[2] = new Battleship("C7", "C10");
 
         p1Grid = new Grid(false);
         p2Grid = new Grid(true);
@@ -97,134 +99,5 @@ public class Game {
 
     public Ship[] getP2Fleet() {
         return p2Fleet;
-    }
-
-    public boolean activateSonar(String location){
-
-        int[] sonarCenter = p1Grid.convertPosition(location);
-
-        if(!p1Grid.isWaiting && P1.getSonarPulse() == 0){
-            System.out.println("Error, no sonar charges remain.");
-            return false;
-        } else if(!p1Grid.isWaiting && P2.getShipCount() == 3) {
-            System.out.println("Error, at least one ship must be sunk in order to activate sonar.");
-            return false;
-        } else if(p1Grid.isWaiting && P2.getSonarPulse() == 0) {
-            System.out.println("Error, no sonar charges remain.");
-            return false;
-        } else if(p1Grid.isWaiting && P1.getShipCount() == 3) {
-            System.out.println("Error, at least one ship must be sunk in order to activate sonar.");
-            return false;
-        }
-
-        int[][] bounds = getBounds(sonarCenter);
-        for(int i = 0; i < 4; i++){
-            for( int j = 0; j < 2; j ++){
-                if(bounds[i][j] < 0 || bounds[i][j] > 9){
-                    System.out.println("Error, sonar center out of bounds. Please choose another coordinate.");
-                    return false;
-                }
-            }
-        }
-
-        if(p1Grid.isWaiting){
-            String[][] p1Board = p1Grid.getMyShips();
-            String[][] sonarArray = {{"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}};
-            int counter = 0;
-            for(int i = bounds[1][1]; i < bounds[3][1] + 1; i++){
-                int jCounter = 0;
-                for(int j = bounds[1][0]; j < bounds[0][0] + 1; j++){
-                    if(!p1Board[i][j].equals("Sea")){
-                        System.out.println(sonarArray[counter][jCounter]);
-                        sonarArray[counter][jCounter] = "Ship";
-                    } else {
-                        sonarArray[counter][jCounter] = "Sea";
-                    }
-                    jCounter++;
-                }
-                counter++;
-            }
-
-            sonarArray[0][0] = "Fog";
-            sonarArray[0][1] = "Fog";
-            sonarArray[1][0] = "Fog";
-
-            sonarArray[3][0] = "Fog";
-            sonarArray[4][0] = "Fog";
-            sonarArray[4][1] = "Fog";
-
-            sonarArray[0][4] = "Fog";
-            sonarArray[0][3] = "Fog";
-            sonarArray[1][4] = "Fog";
-
-            sonarArray[4][4] = "Fog";
-            sonarArray[4][3] = "Fog";
-            sonarArray[3][4] = "Fog";
-
-            for(int i = 0; i < 5; i++){
-                for(int j = 0; j < 5; j++){
-                    System.out.print(sonarArray[i][j] + " ");
-                }
-                System.out.println();
-            }
-        } else {
-            String[][] p2Board = p2Grid.getMyShips();
-            String[][] sonarArray = {{"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}, {"Fog", "Fog", "Fog", "Fog", "Fog"}};
-            int counter = 0;
-            for(int i = bounds[1][1]; i < bounds[3][1] + 1; i++){
-                int jCounter = 0;
-                for(int j = bounds[1][0]; j < bounds[0][0] + 1; j++){
-                    if(!p2Board[i][j].equals("Sea")){
-                        sonarArray[counter][jCounter] = "Ship";
-                    } else {
-                        sonarArray[counter][jCounter] = "Sea";
-                    }
-                    jCounter++;
-                }
-                counter++;
-            }
-
-            sonarArray[0][0] = "Fog";
-            sonarArray[0][1] = "Fog";
-            sonarArray[1][0] = "Fog";
-
-            sonarArray[3][0] = "Fog";
-            sonarArray[4][0] = "Fog";
-            sonarArray[4][1] = "Fog";
-
-            sonarArray[0][4] = "Fog";
-            sonarArray[0][3] = "Fog";
-            sonarArray[1][4] = "Fog";
-
-            sonarArray[4][4] = "Fog";
-            sonarArray[4][3] = "Fog";
-            sonarArray[3][4] = "Fog";
-
-            for(int i = 0; i < 5; i++){
-                for(int j = 0; j < 5; j++){
-                    System.out.print(sonarArray[i][j] + " ");
-                }
-                System.out.println();
-            }
-        }
-        return true;
-    }
-
-    public int[][] getBounds(int[] centerLocation){
-        int[][] bounds = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};
-
-        bounds[0][0] = centerLocation[0] + 2;
-        bounds[0][1] = centerLocation[1] + 2;
-
-        bounds[1][0] = centerLocation[0] - 2;
-        bounds[1][1] = centerLocation[1] - 2;
-
-        bounds[2][0] = centerLocation[0] + 2;
-        bounds[2][1] = centerLocation[1] - 2;
-
-        bounds[3][0] = centerLocation[0] - 2;
-        bounds[3][1] = centerLocation[1] + 2;
-
-        return bounds;
     }
 }

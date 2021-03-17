@@ -85,38 +85,23 @@ public class Grid {
         }
     }
 
-    public boolean updateBoards(String Location, String[][] opponentBoard){
+    public void updateBoards(String location, int[] hitResults) {
 
-        boolean isHit = false;
-        int captainHit = 0;
-        int[] position = convertPosition(Location);
+        int[] position = convertPosition(location);
 
-       if(opponentBoard[position[1]][position[0]].equals("Ship")) {
-           //System.out.println("Shot HIT");
-           isHit = true;
-       } else if(opponentBoard[position[1]][position[0]].equals("Captain")){
-           captainHit = 1;
-           isHit = true;
-       } else if(opponentBoard[position[1]][position[0]].equals("Armor")){
-           captainHit = 2;
-           isHit = true;
-       }
-
-       if(isHit && isWaiting && captainHit == 0) {
+       if(hitResults[0] == 1 && isWaiting && hitResults[1] == 0) {
            myShips[position[1]][position[0]] = "Damage";
-       } else if(isHit && isWaiting && captainHit == 1) {
+       } else if(hitResults[0] == 1 && isWaiting && hitResults[1] == 1) {
            myShips[position[1]][position[0]] = "Critical";
-       } else if(isHit && isWaiting) {
+       } else if(hitResults[0] == 1 && isWaiting) {
            myShips[position[1]][position[0]] = "Captain";
-       } else if(isHit && captainHit != 2) {
+       } else if(hitResults[0] == 1 && hitResults[1] != 2) {
            myShots[position[1]][position[0]] = "HIT";
-       } else if(isHit) {
+       } else if(hitResults[0] == 1) {
            myShots[position[1]][position[0]] = "MISS";
        } else if(!isWaiting){
            myShots[position[1]][position[0]] = "MISS";
        }
-
-        return isHit;
     }
 
     //Helper Functions

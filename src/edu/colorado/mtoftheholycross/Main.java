@@ -3,6 +3,7 @@ package edu.colorado.mtoftheholycross;
 public class Main {
 
     public static void main(String[] args) {
+
         /*Game gameTest = new Game();
 
         gameTest.p1Grid.addShip(gameTest.getP1Fleet()[0]);
@@ -56,6 +57,9 @@ public class Main {
             return;
         }*/
 
+
+        //Sonar test
+
         Game gameTest;
         String[][] p2ShipBoard;
         String [][] p1ShipBoard;
@@ -71,6 +75,15 @@ public class Main {
         gameTest.getP2().setShipCount(2);
 
         String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Ship", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
-        gameTest.activateSonar("D5");
+
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                System.out.print(referenceMap[i][j]);
+            }
+            System.out.println();
+        }
+
+        gameTest.getP1().getSonar().activateSonar("D5", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
+
     }
 }

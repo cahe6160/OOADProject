@@ -2,34 +2,33 @@ package edu.colorado.mtoftheholycross;
 // This is the  baseclass for your ship.  Modify accordingly
 // TODO: practice good OO design
 public class Ship {
-    private
-        String name;
-        String head;
-        String tail;
-        String captainLocation;
-        Boolean casualtyReported;
+    protected String name;
+    protected String head;
+    protected String tail;
+    protected String captainLocation;
+    protected Boolean casualtyReported;
 
-    public Ship(String name, String head, String tail, String captainLocation) {
-        casualtyReported = false;
-        this.name = name;
-        this.head = head;
-        this.tail = tail;
-        if(this.name.equals("Minesweeper")){
-            this.captainLocation = head;
-        } else if(this.name.equals("Destroyer")){
-            if(this.head.substring(0, 1).equals(this.tail.substring(0, 1))) {
-                this.captainLocation = this.head.substring(0, 1) + (Integer.parseInt(this.head.substring(1)) + 1);
-            } else{
-                this.captainLocation = (this.head.charAt(0) + 1) + this.head.substring(1);
-            }
-        } else {
-            if(this.head.substring(0, 1).equals(this.tail.substring(0, 1))) {
-                this.captainLocation = this.head.substring(0, 1) + (Integer.parseInt(this.head.substring(1)) + 2);
-            } else{
-                this.captainLocation = (this.head.charAt(0) + 2) + this.head.substring(1);
-            }
-        }
-    }
+//    public Ship(String name, String head, String tail, String captainLocation) {
+//        casualtyReported = false;
+//        this.name = name;
+//        this.head = head;
+//        this.tail = tail;
+//        if(this.name.equals("Minesweeper")){
+//            this.captainLocation = head;
+//        } else if(this.name.equals("Destroyer")){
+//            if(this.head.substring(0, 1).equals(this.tail.substring(0, 1))) {
+//                this.captainLocation = this.head.substring(0, 1) + (Integer.parseInt(this.head.substring(1)) + 1);
+//            } else{
+//                this.captainLocation = (this.head.charAt(0) + 1) + this.head.substring(1);
+//            }
+//        } else {
+//            if(this.head.substring(0, 1).equals(this.tail.substring(0, 1))) {
+//                this.captainLocation = this.head.substring(0, 1) + (Integer.parseInt(this.head.substring(1)) + 2);
+//            } else{
+//                this.captainLocation = (this.head.charAt(0) + 2) + this.head.substring(1);
+//            }
+//        }
+//    }
 
     public String getName() {
         return name;

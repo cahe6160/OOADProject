@@ -33,60 +33,47 @@ public class TestHitOrMiss {
 
     @Test
     public void testHit() {
-        //System.out.println("Test Hit");
-        boolean hitMiss = gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
-        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
 
-        assertEquals(true, hitMiss);
+        assertEquals(1, hitMiss[0]);
 
     }
 
     @Test
     public void testMiss() {
-        //System.out.println("Test Miss");
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
 
-        boolean hitMiss = gameTest.getP1Grid().updateBoards("A3", p2ShipBoard);
-        gameTest.getP2Grid().updateBoards("A3", p2ShipBoard);
-
-        assertEquals(false, hitMiss);
+        assertEquals(0, hitMiss[0]);
     }
 
     @Test
     public void shipHitBoardUpdateTest() {
-        //System.out.println("Test Ship Board Update");
-
-        gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
-        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A1", hitMiss);
 
         assertEquals("Critical", gameTest.getP2Grid().getMyShips()[0][0]);
     }
 
     @Test
     public void shotHitBoardUpdateTest() {
-        //System.out.println("Test Shots Board Update");
-
-        gameTest.getP1Grid().updateBoards("A1", p2ShipBoard);
-        gameTest.getP2Grid().updateBoards("A1", p2ShipBoard);
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A1", hitMiss);
 
         assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][0]);
     }
 
     @Test
     public void shipMissBoardUpdateTest() {
-        //System.out.println("Test Ship Board Update");
-
-        gameTest.getP1Grid().updateBoards("A3", p2ShipBoard);
-        gameTest.getP2Grid().updateBoards("A3", p2ShipBoard);
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A3", hitMiss);
 
         assertEquals("Sea", gameTest.getP2Grid().getMyShips()[2][0]);
     }
 
     @Test
     public void shotMissBoardUpdateTest() {
-        //System.out.println("Test Shots Board Update");
-
-        gameTest.getP1Grid().updateBoards("A3", p2ShipBoard);
-        gameTest.getP2Grid().updateBoards("A3", p2ShipBoard);
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A3", hitMiss);
 
         assertEquals("MISS", gameTest.getP1Grid().getMyShots()[2][0]);
     }
