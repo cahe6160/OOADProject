@@ -51,16 +51,16 @@ public class Grid {
         int[] tailPosition = convertPosition(shipToAdd.getTail());
         int[] captainPosition = convertPosition(shipToAdd.getCaptainLocation());
 
-        if(headPosition[0] == tailPosition[0]) {
-            for(int i = headPosition[1]; i <= tailPosition[1]; i++) {
+        if (headPosition[0] == tailPosition[0]) {
+            for (int i = headPosition[1]; i <= tailPosition[1]; i++) {
                 myShips[i][headPosition[0]] = "Ship";
             }
         } else {
-            for(int i = headPosition[0]; i <= tailPosition[0]; i++) {
+            for (int i = headPosition[0]; i <= tailPosition[0]; i++) {
                 myShips[headPosition[1]][i] = "Ship";
             }
         }
-        if(shipToAdd.getName().equals("Minesweeper")) {
+        if (shipToAdd.getName().equals("Minesweeper")) {
             myShips[captainPosition[1]][captainPosition[0]] = "Captain";
         } else {
             myShips[captainPosition[1]][captainPosition[0]] = "Armor";

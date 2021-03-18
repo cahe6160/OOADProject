@@ -6,13 +6,15 @@ public class Submarine extends Ship {
     private String head;
     private String tail;
     private String captainLocation;
-    private Boolean casualtyReported;
+    private boolean casualtyReported;
 
     public Submarine(String head, String tail) {
+
         casualtyReported = false;
         this.name = name;
         this.head = head;
         this.tail = tail;
+
         if(this.name.equals("Minesweeper")){
             this.captainLocation = head;
         } else if(this.name.equals("Destroyer")){

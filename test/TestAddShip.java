@@ -1,4 +1,5 @@
 import edu.colorado.mtoftheholycross.Game;
+import edu.colorado.mtoftheholycross.Minesweeper;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
 
@@ -35,5 +36,34 @@ public class TestAddShip {
 
         assertEquals("Captain", gameTest.getP2Grid().getMyShips()[0][0]);
         assertEquals( "Ship", gameTest.getP2Grid().getMyShips()[1][0]);
+    }
+
+    @Test
+    public void surfacedSub() {
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+
+        assertEquals("Captain", gameTest.getP2Grid().getMyShips()[3][3]);
+        assertEquals( "Ship", gameTest.getP2Grid().getMyShips()[3][2]);
+        assertEquals("Ship", gameTest.getP2Grid().getMyShips()[4][2]);
+    }
+
+    @Test
+    public void subUnderneathShip() {
+        gameTest.getP2Fleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2Grid().addShip(new Minesweeper("D1", "D2"));
+
+        assertEquals("Ship/Sub", gameTest.getP2Grid().getMyShips()[3][0]);
+        assertEquals( "Captain/Sub", gameTest.getP2Grid().getMyShips()[3][1]);
+    }
+
+    @Test
+    public void subUnderNoShip() {
+        gameTest.getP2Fleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+
+        assertEquals("Captain", gameTest.getP2Grid().getMyShips()[3][3]);
+        assertEquals( "Ship", gameTest.getP2Grid().getMyShips()[3][2]);
+        assertEquals("Ship", gameTest.getP2Grid().getMyShips()[4][2]);
     }
 }

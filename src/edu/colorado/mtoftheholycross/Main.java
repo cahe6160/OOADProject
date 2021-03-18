@@ -59,7 +59,7 @@ public class Main {
 
 
         //Sonar test
-
+/*
         Game gameTest;
         String[][] p2ShipBoard;
         String [][] p1ShipBoard;
@@ -84,6 +84,17 @@ public class Main {
         }
 
         gameTest.getP1().getSonar().activateSonar("D5", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
+*/
 
+        //Unicode test
+        MapSymbols test = new MapSymbols();
+        System.out.println(test.sub);
+        System.out.println(test.damage);
+        System.out.println(test.armor);
+        System.out.println(test.captain);
+        System.out.println(test.sea);
+        System.out.println(test.fog);
+        System.out.println(test.hit);
+        System.out.println(test.miss);
     }
 }

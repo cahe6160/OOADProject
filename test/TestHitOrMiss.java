@@ -1,4 +1,5 @@
 import edu.colorado.mtoftheholycross.Game;
+import edu.colorado.mtoftheholycross.Minesweeper;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
 
@@ -76,5 +77,28 @@ public class TestHitOrMiss {
         gameTest.getP1Grid().updateBoards("A3", hitMiss);
 
         assertEquals("MISS", gameTest.getP1Grid().getMyShots()[2][0]);
+    }
+
+    @Test
+    public void subUnderShipHit() {
+        gameTest.getP2Fleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2Grid().addShip(new Minesweeper("D1", "D2"));
+
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("D1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("D1", hitMiss);
+
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[3][0]);
+    }
+
+    @Test
+    public void subSubmergedHit() {
+        gameTest.getP2Fleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("D1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("D1", hitMiss);
+
+        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[3][0]);
     }
 }

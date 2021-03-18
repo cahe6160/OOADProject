@@ -3,25 +3,27 @@ package edu.colorado.mtoftheholycross;
 import javax.security.auth.Destroyable;
 
 public class Game {
-    private
-        Ship[] p1Fleet;
-        Ship[] p2Fleet;
-        Grid p1Grid;
-        Grid p2Grid;
-        Player P1;
-        Player P2;
+
+    private Ship[] p1Fleet;
+    private Ship[] p2Fleet;
+    private Grid p1Grid;
+    private Grid p2Grid;
+    private Player P1;
+    private Player P2;
 
     public Game() {
-        p2Fleet = new Ship[3];
+        p2Fleet = new Ship[4];
         p2Fleet[0] = new Minesweeper("A1", "A2");
         p2Fleet[1] = new Destroyer("B1", "B3");
         p2Fleet[2] = new Battleship("C1", "C4");
+        p2Fleet[3] = new Submarine("D1", "D4");
 
 
-        p1Fleet = new Ship[3];
+        p1Fleet = new Ship[4];
         p1Fleet[0] = new Minesweeper("A7", "A8");
         p1Fleet[1] = new Destroyer("B7", "B9");
         p1Fleet[2] = new Battleship("C7", "C10");
+        p1Fleet[3] = new Submarine("D7", "D10");
 
         p1Grid = new Grid(false);
         p2Grid = new Grid(true);
