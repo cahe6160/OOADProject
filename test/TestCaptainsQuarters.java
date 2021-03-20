@@ -2,6 +2,7 @@ import apple.laf.JRSUIConstants;
 import edu.colorado.mtoftheholycross.Game;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.*;
 import org.junit.Test;
@@ -17,8 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class TestCaptainsQuarters {
 
     Game gameTest;
-    String[][] p2ShipBoard;
-    String [][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
 
     @Before
     public void init() {

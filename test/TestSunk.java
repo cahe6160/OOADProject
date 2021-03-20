@@ -1,6 +1,7 @@
 import edu.colorado.mtoftheholycross.Game;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.*;
 import org.junit.Test;
@@ -16,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 public class TestSunk {
 
     Game gameTest;
-    String[][] p2ShipBoard;
-    String [][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
 
     @Before
     public void init() {
@@ -67,9 +68,9 @@ public class TestSunk {
     @Test
     public void testNotSunk() {
         //Shot 1
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A2", hitMiss);
+        gameTest.getP2Grid().updateBoards("A2", hitMiss);
         assertEquals(false, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
     }
 }

@@ -3,7 +3,7 @@ package edu.colorado.mtoftheholycross;
 public class Battleship extends Ship {
 
     public Battleship(String head, String tail) {
-        casualtyReported = false;
+
         name = "Battleship";
         this.head = head;
         this.tail = tail;

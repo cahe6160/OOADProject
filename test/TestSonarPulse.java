@@ -2,6 +2,7 @@ import apple.laf.JRSUIConstants;
 import edu.colorado.mtoftheholycross.Game;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.*;
 import org.junit.Test;
@@ -25,8 +26,8 @@ public class TestSonarPulse {
     }
 
     Game gameTest;
-    String[][] p2ShipBoard;
-    String [][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
 
     @Before
     public void init() {
@@ -70,7 +71,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        String[][] referenceMap = {{"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Fog/Fog"}, {"Sea/Sea", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Sea/Sea"}, {"Fog/Fog", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}};
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
                 System.out.print(referenceMap[i][j] + " ");
@@ -98,7 +99,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        String[][] referenceMap = {{"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Fog/Fog"}, {"Sea/Sea", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Sea/Sea"}, {"Fog/Fog", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}};
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
                 System.out.print(referenceMap[i][j] + " ");
@@ -126,7 +127,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        String[][] referenceMap = {{"Fog", "Fog", "Sea", "Fog", "Fog"}, {"Fog", "Ship", "Sea", "Sea", "Fog"}, {"Sea", "Sea", "Sea", "Sea", "Sea"}, {"Fog", "Sea", "Sea", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        String[][] referenceMap = {{"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Ship/Sea", "Sea/Sea", "Sea/Sea", "Fog/Fog"}, {"Sea/Sea", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Sea/Sea"}, {"Fog/Fog", "Sea/Sea", "Sea/Sea", "Sea/Sea", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}};
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
                 System.out.print(referenceMap[i][j] + " ");
@@ -154,7 +155,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        String[][] referenceMap = {{"Fog", "Fog", "Ship", "Fog", "Fog"}, {"Fog", "Sea", "Ship", "Sea", "Fog"}, {"Sea", "Sea", "Ship", "Sea", "Sea"}, {"Fog", "Sea", "Ship", "Sea", "Fog"}, {"Fog", "Fog", "Sea", "Fog", "Fog"}};
+        String[][] referenceMap = {{"Fog/Fog", "Fog/Fog", "Ship/Sea", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Sea/Sea", "Ship/Sea", "Sea/Sea", "Fog/Fog"}, {"Sea/Sea", "Sea/Sea", "Ship/Sea", "Sea/Sea", "Sea/Sea"}, {"Fog/Fog", "Sea/Sea", "Ship/Sea", "Sea/Sea", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Sea/Sea", "Fog/Fog", "Fog/Fog"}};
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
                 System.out.print(referenceMap[i][j] + " ");

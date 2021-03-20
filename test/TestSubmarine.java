@@ -4,6 +4,7 @@ import edu.colorado.mtoftheholycross.Minesweeper;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
 import edu.colorado.mtoftheholycross.Submarine;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.*;
 import org.junit.Test;
@@ -19,8 +20,8 @@ import static org.junit.Assert.assertTrue;
 public class TestSubmarine {
 
     Game gameTest;
-    String[][] p2ShipBoard;
-    String [][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
 
     @Before
     public void init() {

@@ -1,6 +1,7 @@
 import edu.colorado.mtoftheholycross.Game;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,8 +29,8 @@ public class TestSurrender {
 
     Game gameTest;
 
-    String [][] p1ShipBoard;
-    String [][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
 
     @Before
     public void init() {
@@ -103,7 +104,7 @@ public class TestSurrender {
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-        assertEquals("You sunk my Minesweeper\nYou sunk my Destroyer\nYou sunk my Battleship\nPlayer 2 surrendered!", standardOutput);
+        assertEquals("You sunk my Minesweeper\nYou sunk my Destroyer\nYou sunk my Battleship\nYou sunk my Submarine\nPlayer 2 surrendered!", standardOutput);
 
     }
 }

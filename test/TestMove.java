@@ -2,6 +2,7 @@
 //import edu.colorado.mtoftheholycross.Minesweeper;
 //import edu.colorado.mtoftheholycross.Ship;
 //import edu.colorado.mtoftheholycross.Grid;
+//import edu.colorado.mtoftheholycross.Cell;
 //
 //import org.junit.Assert;
 //import org.junit.Before;
@@ -21,8 +22,8 @@
 //public class TestMove {
 //
 //    Game gameTest;
-//    String[][] p2ShipBoard;
-//    String [][] p1ShipBoard;
+//    Cell[][] p2ShipBoard;
+//    Cell[][] p1ShipBoard;
 //
 //    @Before
 //    public void init() {
@@ -32,11 +33,12 @@
 //        p2ShipBoard = gameTest.getP2Grid().getMyShips();
 //        p1ShipBoard = gameTest.getP1Grid().getMyShips();
 //
-//        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
 //    }
 //
 //    @Test
 //    public void northNoBlockage() {
+//        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+//
 //
 //    }
 //

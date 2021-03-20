@@ -2,6 +2,7 @@ import edu.colorado.mtoftheholycross.Game;
 import edu.colorado.mtoftheholycross.Minesweeper;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,8 +30,8 @@ public class TestSpaceLaser {
     }
 
     Game gameTest;
-    String[][] p2ShipBoard;
-    String [][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
 
     @Before
     public void init() {
@@ -39,21 +40,31 @@ public class TestSpaceLaser {
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
-
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        int[] hitMiss = gameTest.getP2().getCannon().makeHit("A1", gameTest.getP1Grid());
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
     }
+/*
+    @Test
+    public void noShipSunk() {
 
+        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(myOut));
+
+        gameTest.getP1().getLaser().makeHit("A1", gameTest.getP2Grid());
+
+        final String standardOutput = myOut.toString().trim();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+        assertEquals("Error, at least one ship must be sunk in order to activate laser.", standardOutput);
+    }
+*/
     @Test
     public void hitSurface() {
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
 
-        int[] hitMiss = gameTest.getP1().getLaser().makeHit("D1", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("D1", hitMiss);
+        int[] hitMiss = gameTest.getP1().getLaser().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A1", hitMiss);
 
-        assertEquals("HIT/Sea", gameTest.getP1Grid().getMyShots()[3][0]);
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][0].getSurface());
+        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[0][0].getUnderwater());
     }
 
     @Test
@@ -64,7 +75,8 @@ public class TestSpaceLaser {
         int[] hitMiss = gameTest.getP1().getLaser().makeHit("D1", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("D1", hitMiss);
 
-        assertEquals("Sea/HIT", gameTest.getP1Grid().getMyShots()[3][0]);
+        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[0][3].getSurface());
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][3].getUnderwater());
     }
 
     @Test
@@ -73,9 +85,10 @@ public class TestSpaceLaser {
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
         gameTest.getP2Grid().addShip(new Minesweeper("D1", "D2"));
 
-        int[] hitMiss = gameTest.getP1().getLaser().makeHit("D1", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("D1", hitMiss);
+        int[] hitMiss = gameTest.getP1().getLaser().makeHit("D2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("D2", hitMiss);
 
-        assertEquals("HIT/HIT", gameTest.getP1Grid().getMyShots()[3][0]);
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[1][3].getSurface());
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[1][3].getUnderwater());
     }
 }

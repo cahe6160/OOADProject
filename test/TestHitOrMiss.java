@@ -2,6 +2,7 @@ import edu.colorado.mtoftheholycross.Game;
 import edu.colorado.mtoftheholycross.Minesweeper;
 import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
+import edu.colorado.mtoftheholycross.Cell;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,8 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class TestHitOrMiss {
 
     Game gameTest;
-    String[][] p2ShipBoard;
-    String [][] p1ShipBoard;
+    Cell[][] p2ShipBoard;
+    Cell[][] p1ShipBoard;
 
     @Before
     public void init() {
@@ -52,7 +53,7 @@ public class TestHitOrMiss {
         int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
         gameTest.getP2Grid().updateBoards("A1", hitMiss);
 
-        assertEquals("Critical", gameTest.getP2Grid().getMyShips()[0][0]);
+        assertEquals("Critical", gameTest.getP2Grid().getMyShips()[0][0].getSurface());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class TestHitOrMiss {
         int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A1", hitMiss);
 
-        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][0]);
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][0].getSurface());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class TestHitOrMiss {
         int[] hitMiss = gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A3", hitMiss);
 
-        assertEquals("Sea", gameTest.getP2Grid().getMyShips()[2][0]);
+        assertEquals("Sea", gameTest.getP2Grid().getMyShips()[2][0].getSurface());
     }
 
     @Test
@@ -76,7 +77,7 @@ public class TestHitOrMiss {
         int[] hitMiss = gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A3", hitMiss);
 
-        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[2][0]);
+        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[2][0].getSurface());
     }
 
     @Test
@@ -88,17 +89,18 @@ public class TestHitOrMiss {
         int[] hitMiss = gameTest.getP1().getCannon().makeHit("D1", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("D1", hitMiss);
 
-        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[3][0]);
+        assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][3].getSurface());
     }
 
     @Test
-    public void subSubmergedHit() {
+    public void subSubmergedCannon() {
         gameTest.getP2Fleet()[3].setSubmerged(true);
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
 
         int[] hitMiss = gameTest.getP1().getCannon().makeHit("D1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("D1", hitMiss);
         gameTest.getP1Grid().updateBoards("D1", hitMiss);
 
-        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[3][0]);
+        assertEquals("MISS", gameTest.getP1Grid().getMyShots()[0][3].getSurface());
     }
 }
