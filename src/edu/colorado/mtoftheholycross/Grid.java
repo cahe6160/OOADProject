@@ -1,11 +1,9 @@
 package edu.colorado.mtoftheholycross;
 
 public class Grid {
-    private
-    Cell[][] myShips;
-    Cell[][] myShots;
-    Boolean isWaiting;
-
+    private Cell[][] myShips;
+    private Cell[][] myShots;
+    private boolean isWaiting;
 
     public Grid() {
         myShips = new Cell[10][10];
@@ -50,6 +48,13 @@ public class Grid {
 
     public Cell[][] getMyShots() {
         return myShots;
+    }
+    public boolean getIsWaiting() {
+        return isWaiting;
+    }
+
+    public void setIsWaiting(boolean waiting) {
+        this.isWaiting = waiting;
     }
 
     public void addShip(Ship shipToAdd) {
@@ -342,6 +347,18 @@ public class Grid {
         shipToCheck.setCasualtyReported(true);
 
         return true;
+    }
+
+    public void move(int moveDirection) {
+        if(moveDirection == 1) {
+            System.out.println("Moved north");
+        } else if(moveDirection == -1) {
+            System.out.println("Moved south");
+        } else if(moveDirection == 2) {
+            System.out.println("Moved East");
+        } else if(moveDirection == -2) {
+            System.out.println("Moved West");
+        }
     }
 }
 

@@ -31,7 +31,6 @@ public class Game {
         P1 = new Player();
         P2 = new Player();
     }
-
     public Grid getP1Grid() {
         return p1Grid;
     }
@@ -65,27 +64,27 @@ public class Game {
     }
 
     public int switchTurn(){
-        if(p2Grid.isWaiting && playerSurrender()) {
+        if(p2Grid.getIsWaiting() && playerSurrender()) {
             System.out.println("Player 2 surrendered!");
             return 0;
-        }else if(p1Grid.isWaiting && playerSurrender()) {
+        }else if(p1Grid.getIsWaiting() && playerSurrender()) {
             System.out.println("Player 1 surrendered!");
             return 0;
         }
-        p1Grid.isWaiting = !p1Grid.isWaiting;
-        p2Grid.isWaiting = !p2Grid.isWaiting;
+        p1Grid.setIsWaiting(!p1Grid.getIsWaiting());
+        p2Grid.setIsWaiting(!p2Grid.getIsWaiting());
         return -1;
     }
 
     public boolean playerSurrender() {
-        if(p1Grid.isWaiting) {
+        if(p1Grid.getIsWaiting()) {
             for (int i = 0; i < p1Fleet.length; i++) {
                 if (!p1Grid.isSunk(p1Fleet[i])) {
                     return false;
                 }
             }
         }
-        if(p2Grid.isWaiting) {
+        if(p2Grid.getIsWaiting()) {
             for (int i = 0; i < p2Fleet.length; i++) {
                 if (!p2Grid.isSunk(p2Fleet[i])) {
                     return false;
@@ -101,5 +100,14 @@ public class Game {
 
     public Ship[] getP2Fleet() {
         return p2Fleet;
+    }
+
+    public void testCMove() {
+        Invoker invoker = new Invoker();
+        Command moveShips = new MoveCommand(p1Grid, 1);
+        invoker.setCommand(moveShips);
+        invoker.makeMove();
+        invoker.undoMove();
+        invoker.redoMove();
     }
 }

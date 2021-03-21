@@ -28,16 +28,16 @@ public class Sonar extends Weapon {
 
         int[] sonarCenter = p1Grid.convertPosition(location);
 
-        if(!p1Grid.isWaiting && P1.getSonarCount() == 0){
+        if(!p1Grid.getIsWaiting() && P1.getSonarCount() == 0){
             System.out.println("Error, no sonar charges remain.");
             return false;
-        } else if(!p1Grid.isWaiting && P2.getShipCount() == 3) {
+        } else if(!p1Grid.getIsWaiting() && P2.getShipCount() == 3) {
             System.out.println("Error, at least one ship must be sunk in order to activate sonar.");
             return false;
-        } else if(p1Grid.isWaiting && P2.getSonarCount() == 0) {
+        } else if(p1Grid.getIsWaiting() && P2.getSonarCount() == 0) {
             System.out.println("Error, no sonar charges remain.");
             return false;
-        } else if(p1Grid.isWaiting && P1.getShipCount() == 3) {
+        } else if(p1Grid.getIsWaiting() && P1.getShipCount() == 3) {
             System.out.println("Error, at least one ship must be sunk in order to activate sonar.");
             return false;
         }
@@ -52,7 +52,7 @@ public class Sonar extends Weapon {
             }
         }
 
-        if(p1Grid.isWaiting){
+        if(p1Grid.getIsWaiting()){
             Cell[][] p1Board = p1Grid.getMyShips();
             String[][] sonarArray = {{"Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog"}, {"Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog", "Fog/Fog"}};
             int counter = 0;

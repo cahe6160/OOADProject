@@ -108,19 +108,7 @@ public class Main {
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
 
-        gameTest.getP2Fleet()[3].setSubmerged(true);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
-        gameTest.getP2Grid().addShip(new Minesweeper("D1", "D2"));
-
-        int[] hitMiss = gameTest.getP1().getLaser().makeHit("D2", gameTest.getP2Grid());
-
-        System.out.println(gameTest.getP1Grid().isWaiting);
-
-        for(int i = 0; i < hitMiss.length; i++) {
-            System.out.println(hitMiss[i] + " ");
-        }
-
-        gameTest.getP1Grid().updateBoards("D2", hitMiss);
+        gameTest.testCMove();
 
     }
 }
