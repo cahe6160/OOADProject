@@ -6,6 +6,7 @@ import java.util.Vector;
 
 public class MoveCommand implements Command{
     private Grid grid;
+    private Ship[] fleet;
     List<Integer> previousDirections = new ArrayList<Integer>();
     private int direction;
     private int index;
@@ -15,17 +16,19 @@ public class MoveCommand implements Command{
     //2 is East
     //-2 is West
 
-    MoveCommand(Grid grid, int direction) {
+    MoveCommand(Grid grid, int direction, Ship[] fleet) {
         this.grid = grid;
         this.direction = direction;
+        this.fleet = fleet;
         index = -1;
 
         this.previousDirections.add(direction * -1);
     }
 
-    MoveCommand(Grid grid, int direction, int index, List<Integer> previousDirections) {
+    MoveCommand(Grid grid, int direction, int index, List<Integer> previousDirections, Ship[] fleet) {
         this.grid = grid;
         this.direction = direction;
+        this.fleet = fleet;
 
         this.previousDirections = previousDirections.subList(0, index);
         this.index = index;
@@ -33,14 +36,14 @@ public class MoveCommand implements Command{
 
     @Override
     public void execute() {
-        grid.move(direction);
+        grid.move(direction, fleet);
         index++;
     }
 
     @Override
     public void undo() {
         if(index > -1) {
-            grid.move(previousDirections.get(index));
+            grid.move(previousDirections.get(index), fleet);
             index--;
         }
     }
@@ -49,7 +52,7 @@ public class MoveCommand implements Command{
     public void redo() {
         if(index < previousDirections.size()) {
             index++;
-            grid.move(-1 * previousDirections.get(index));
+            grid.move(-1 * previousDirections.get(index), fleet);
         }
     }
 

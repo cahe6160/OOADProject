@@ -339,6 +339,82 @@ public class Grid {
         if((myShips[captainRow][captainCol].getSurface().equals("Critical") || myShips[captainRow][captainCol].getUnderwater().equals("Critical")) && !shipToCheck.getCasualtyReported()) {
             System.out.println("You sunk my " + shipToCheck.getName());
             shipToCheck.setCasualtyReported(true);
+
+            if(!shipToCheck.getName().equals("Submarine")) {
+                if (headRow == tailRow) {
+                    if (headCol < tailCol) {
+                        for (int i = headCol; i < tailCol + 1; i++) {
+                            myShips[headRow][i].setSurface("Sea");
+                        }
+                    } else {
+                        for (int i = tailCol; i < headCol + 1; i++) {
+                            myShips[headRow][i].setSurface("Sea");
+                        }
+                    }
+                } else {
+                    if (headRow < tailRow) {
+                        for (int i = headRow; i < tailRow + 1; i++) {
+                            myShips[i][headCol].setSurface("Sea");
+                        }
+                    } else {
+                        for (int i = tailRow; i < headRow + 1; i++) {
+                            myShips[i][headCol].setSurface("Sea");
+                        }
+                    }
+                }
+            } else if(!shipToCheck.getSubmerged()) {
+                if (headRow == tailRow) {
+                    if (headCol < tailCol) {
+                        for (int i = headCol; i < tailCol + 1; i++) {
+                            myShips[headRow][i].setSurface("Sea");
+                        }
+                        myShips[tailRow - 1][tailCol - 1].setSurface("Sea");
+                    } else {
+                        for (int i = tailCol; i < headCol + 1; i++) {
+                            myShips[headRow][i].setSurface("Sea");
+                        }
+                        myShips[tailRow + 1][tailCol + 1].setSurface("Sea");
+                    }
+                } else {
+                    if (headRow < tailRow) {
+                        for (int i = headRow; i < tailRow + 1; i++) {
+                            myShips[i][headCol].setSurface("Sea");
+                        }
+                        myShips[tailRow - 1][tailCol + 1].setSurface("Sea");
+                    } else {
+                        for (int i = tailRow; i < headRow + 1; i++) {
+                            myShips[i][headCol].setSurface("Sea");
+                        }
+                        myShips[tailRow + 1][tailCol - 1].setSurface("Sea");
+                    }
+                }
+            } else {
+                if (headRow == tailRow) {
+                    if (headCol < tailCol) {
+                        for (int i = headCol; i < tailCol + 1; i++) {
+                            myShips[headRow][i].setUnderwater("Sea");
+                        }
+                        myShips[tailRow - 1][tailCol - 1].setUnderwater("Sea");
+                    } else {
+                        for (int i = tailCol; i < headCol + 1; i++) {
+                            myShips[headRow][i].setUnderwater("Sea");
+                        }
+                        myShips[tailRow + 1][tailCol + 1].setUnderwater("Sea");
+                    }
+                } else {
+                    if (headRow < tailRow) {
+                        for (int i = headRow; i < tailRow + 1; i++) {
+                            myShips[i][headCol].setUnderwater("Sea");
+                        }
+                        myShips[tailRow - 1][tailCol + 1].setUnderwater("Sea");
+                    } else {
+                        for (int i = tailRow; i < headRow + 1; i++) {
+                            myShips[i][headCol].setUnderwater("Sea");
+                        }
+                        myShips[tailRow + 1][tailCol - 1].setUnderwater("Sea");
+                    }
+                }
+            }
         }
 
         if(!shipToCheck.getCasualtyReported()) {
@@ -349,15 +425,106 @@ public class Grid {
         return true;
     }
 
-    public void move(int moveDirection) {
-        if(moveDirection == 1) {
-            System.out.println("Moved north");
-        } else if(moveDirection == -1) {
-            System.out.println("Moved south");
-        } else if(moveDirection == 2) {
-            System.out.println("Moved East");
-        } else if(moveDirection == -2) {
-            System.out.println("Moved West");
+    public void move(int moveDirection, Ship[] fleet) {
+        if(!isWaiting) {
+            if (moveDirection == 1) {
+                for (int i = 0; i < 10; i++) {
+                    if (!myShips[0][i].getSurface().equals("Sea") || !myShips[0][i].getUnderwater().equals("Sea")) {
+                        System.out.println("Error, at least one ship is too far north, unable to move fleet.");
+                        return;
+                    }
+                }
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 10; j++) {
+                        myShips[i][j] = myShips[i + 1][j];
+                    }
+                }
+                for (int i = 0; i < 10; i++) {
+                    myShips[9][i] = new Cell("Sea", "Sea");
+                }
+
+                for (int i = 0; i < fleet.length; i++) {
+                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 66)) + fleet[i].getHead().substring(1);
+                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 66)) + fleet[i].getTail().substring(1);
+                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 66)) + fleet[i].getCaptainLocation().substring(1);
+                    fleet[i].setHead(newHead);
+                    fleet[i].setTail(newTail);
+                    fleet[i].setCaptainLocation(newCapt);
+                }
+
+            } else if (moveDirection == -1) {
+                for (int i = 0; i < 10; i++) {
+                    if (!myShips[9][i].getSurface().equals("Sea") || !myShips[9][i].getUnderwater().equals("Sea")) {
+                        System.out.println("Error, at least one ship is too far south, unable to move fleet.");
+                        return;
+                    }
+                }
+                for (int i = 8; i > 0; i--) {
+                    for (int j = 0; j < 10; j++) {
+                        myShips[i][j] = myShips[i - 1][j];
+                    }
+                }
+                for (int i = 0; i < 10; i++) {
+                    myShips[0][i] = new Cell("Sea", "Sea");
+                }
+
+                for (int i = 0; i < fleet.length; i++) {
+                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 64)) + fleet[i].getHead().substring(1);
+                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 64)) + fleet[i].getTail().substring(1);
+                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 64)) + fleet[i].getCaptainLocation().substring(1);
+                    fleet[i].setHead(newHead);
+                    fleet[i].setTail(newTail);
+                    fleet[i].setCaptainLocation(newCapt);
+                }
+            } else if (moveDirection == 2) {
+                for (int i = 0; i < 10; i++) {
+                    if (!myShips[i][9].getSurface().equals("Sea") || !myShips[i][9].getUnderwater().equals("Sea")) {
+                        System.out.println("Error, at least one ship is too far east, unable to move fleet.");
+                        return;
+                    }
+                }
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 8; j > 0; j--) {
+                        myShips[i][j] = myShips[i][j - 1];
+                    }
+                }
+                for (int i = 0; i < 10; i++) {
+                    myShips[i][0] = new Cell("Sea", "Sea");
+                }
+
+                for (int i = 0; i < fleet.length; i++) {
+                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getHead().substring(1)) + 1);
+                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getTail().substring(1)) + 1);
+                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getCaptainLocation().substring(1)) + 1);
+                    fleet[i].setHead(newHead);
+                    fleet[i].setTail(newTail);
+                    fleet[i].setCaptainLocation(newCapt);
+                }
+            } else if (moveDirection == -2) {
+                for (int i = 0; i < 10; i++) {
+                    if (!myShips[i][0].getSurface().equals("Sea") || !myShips[i][0].getUnderwater().equals("Sea")) {
+                        System.out.println("Error, at least one ship is too far west, unable to move fleet.");
+                        return;
+                    }
+                }
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 1; j < 10; j++) {
+                        myShips[i][j] = myShips[i][j + 1];
+                    }
+                }
+                for (int i = 0; i < 10; i++) {
+                    myShips[i][9] = new Cell("Sea", "Sea");
+                }
+
+                for (int i = 0; i < fleet.length; i++) {
+                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getHead().substring(1)) - 1);
+                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getTail().substring(1)) - 1);
+                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getCaptainLocation().substring(1)) - 1);
+                    fleet[i].setHead(newHead);
+                    fleet[i].setTail(newTail);
+                    fleet[i].setCaptainLocation(newCapt);
+                }
+            }
         }
     }
 }
