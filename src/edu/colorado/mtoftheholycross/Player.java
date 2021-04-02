@@ -7,6 +7,9 @@ public class Player {
     private Sonar sonar;
     private Cannon cannon;
     private Laser laser;
+    private boolean[] lastShot = {true, true, true, true, true};
+    private int index;
+
 
     Player(){
         this.shipCount = 3;
@@ -36,11 +39,18 @@ public class Player {
         return sonarCount;
     }
 
+    public boolean[] getLastShot() { return lastShot;}
+
     public void setShipCount(int shipCount) {
         this.shipCount = shipCount;
     }
 
     public void setSonarCount(int sonarCount) {
         this.sonarCount = sonarCount;
+    }
+
+    public void setLastShot(boolean hitMiss) {
+        lastShot[index % 5] = hitMiss;
+        index++;
     }
 }

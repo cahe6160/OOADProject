@@ -105,7 +105,7 @@ public class Game {
         return p2Fleet;
     }
 
-    public void makeMove(int direction, Ship[] fleet, Grid grid) {
+    public void makeMove(String direction, Ship[] fleet, Grid grid) {
         Command moveShips = new MoveCommand(grid, direction, fleet);
         invoker.setCommand(moveShips);
         invoker.makeMove();

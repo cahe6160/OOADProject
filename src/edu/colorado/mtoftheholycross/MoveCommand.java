@@ -1,31 +1,31 @@
 package edu.colorado.mtoftheholycross;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+
 
 public class MoveCommand implements Command{
     private Grid grid;
     private Ship[] fleet;
     List<Integer> previousDirections = new ArrayList<Integer>();
-    private int direction;
+    Map<String, Integer> directionMap = new HashMap<String, Integer>();
+    private String direction;
     private int index;
 
-    //1 is North
-    //-1 is South
-    //2 is East
-    //-2 is West
+    MoveCommand(Grid grid, String direction, Ship[] fleet) {
+        directionMap.put("NORTH", 1);
+        directionMap.put("SOUTH", -1);
+        directionMap.put("EAST", 2);
+        directionMap.put("WEST", -2);
 
-    MoveCommand(Grid grid, int direction, Ship[] fleet) {
         this.grid = grid;
         this.direction = direction;
         this.fleet = fleet;
         index = -1;
 
-        this.previousDirections.add(direction * -1);
+        this.previousDirections.add(directionMap.get(direction) * -1);
     }
 
-    MoveCommand(Grid grid, int direction, int index, List<Integer> previousDirections, Ship[] fleet) {
+    MoveCommand(Grid grid, String direction, int index, List<Integer> previousDirections, Ship[] fleet) {
         this.grid = grid;
         this.direction = direction;
         this.fleet = fleet;
@@ -36,7 +36,7 @@ public class MoveCommand implements Command{
 
     @Override
     public void execute() {
-        grid.move(direction, fleet);
+        grid.move(directionMap.get(direction), fleet);
         index++;
     }
 

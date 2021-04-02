@@ -47,41 +47,41 @@ public class TestSurrender {
     @Test
     public void surrender() {
         //Shot 1
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
         //Shot 2
-        hitMiss = gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
         //Shot 3
-        hitMiss = gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("B1", hitMiss);
-        gameTest.getP1Grid().updateBoards("B1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("B1", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("B1", gameTest.getP1().getCannon());
         //Shot 4
-        hitMiss = gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("B2", hitMiss);
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
         //Shot 5
-        hitMiss = gameTest.getP1().getCannon().makeHit("B3", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("B3", hitMiss);
-        gameTest.getP1Grid().updateBoards("B3", hitMiss);
+        gameTest.getP1().getCannon().makeHit("B3", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("B3", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("B3", gameTest.getP1().getCannon());
         //Shot 6
-        hitMiss = gameTest.getP1().getCannon().makeHit("C1", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("C1", hitMiss);
-        gameTest.getP1Grid().updateBoards("C1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("C1", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("C1", gameTest.getP1().getCannon());
         //Shot 7
-        hitMiss = gameTest.getP1().getCannon().makeHit("C2", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("C2", hitMiss);
-        gameTest.getP1Grid().updateBoards("C2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C2", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("C2", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("C2", gameTest.getP1().getCannon());
         //Shot 8
-        hitMiss = gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("C3", hitMiss);
-        gameTest.getP1Grid().updateBoards("C3", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("C3", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("C3", gameTest.getP1().getCannon());
         //Shot 9
-        hitMiss = gameTest.getP1().getCannon().makeHit("C4", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("C4", hitMiss);
-        gameTest.getP1Grid().updateBoards("C4", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C4", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("C4", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("C4", gameTest.getP1().getCannon());
 
 
         assertEquals(true, gameTest.playerSurrender());
@@ -92,13 +92,13 @@ public class TestSurrender {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
         //Shot 1
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
         //Shot 2
-        hitMiss = gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
 
         gameTest.switchTurn();
 

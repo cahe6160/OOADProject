@@ -14,13 +14,9 @@ public class Ship {
         return name;
     }
 
-    public String getHead() {
-        return head;
-    }
+    public String getHead() { return head; }
 
-    public String getTail() {
-        return tail;
-    }
+    public String getTail() { return tail; }
 
     public String getCaptainLocation() {
         return captainLocation;

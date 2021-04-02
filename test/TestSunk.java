@@ -34,13 +34,13 @@ public class TestSunk {
     @Test
     public void testSunk() {
         //Shot 1
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
         //Shot 2
-        hitMiss = gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
 
         assertEquals(true, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
     }
@@ -50,13 +50,13 @@ public class TestSunk {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
         //Shot 1
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
         //Shot 2
-        hitMiss = gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
 
         gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]);
 
@@ -68,9 +68,9 @@ public class TestSunk {
     @Test
     public void testNotSunk() {
         //Shot 1
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A2", hitMiss);
-        gameTest.getP2Grid().updateBoards("A2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
         assertEquals(false, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
     }
 }

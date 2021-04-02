@@ -110,13 +110,13 @@ public class Main {
 
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[5]);
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
         gameTest.switchTurn();
 
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[4]);
-        gameTest.makeMove(1, gameTest.getP2Fleet(), gameTest.getP2Grid());
+        gameTest.makeMove("NORTH", gameTest.getP2Fleet(), gameTest.getP2Grid());
 
         gameTest.getP2Grid().printMyShips();
 

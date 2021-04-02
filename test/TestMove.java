@@ -41,7 +41,7 @@ public class TestMove {
     @Test
     public void northNoBlockage() {
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
 
         assertEquals("Captain", gameTest.getP1Grid().getMyShips()[5][0].getSurface());
     }
@@ -49,7 +49,7 @@ public class TestMove {
     @Test
     public void eastNoBlockage() {
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.makeMove(2, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("EAST", gameTest.getP1Fleet(), gameTest.getP1Grid());
 
         assertEquals("Captain", gameTest.getP1Grid().getMyShips()[6][1].getSurface());
     }
@@ -60,7 +60,7 @@ public class TestMove {
         System.setOut(new PrintStream(myOut));
 
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[2]);
-        gameTest.makeMove(2, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("EAST", gameTest.getP1Fleet(), gameTest.getP1Grid());
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
@@ -74,7 +74,7 @@ public class TestMove {
         System.setOut(new PrintStream(myOut));
 
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[2]);
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
@@ -86,13 +86,13 @@ public class TestMove {
     public void northBlockage() {
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[5]);
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
         gameTest.switchTurn();
 
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[4]);
-        gameTest.makeMove(1, gameTest.getP2Fleet(), gameTest.getP2Grid());
+        gameTest.makeMove("NORTH", gameTest.getP2Fleet(), gameTest.getP2Grid());
 
         assertEquals("Captain", gameTest.getP2Grid().getMyShips()[1][0].getSurface());
     }
@@ -100,7 +100,7 @@ public class TestMove {
     @Test
     public void northUndo() {
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
         gameTest.undoMove();
 
         assertEquals("Captain", gameTest.getP1Grid().getMyShips()[6][0].getSurface());
@@ -109,8 +109,8 @@ public class TestMove {
     @Test
     public void multiUndo() {
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
         gameTest.undoMove();
         gameTest.undoMove();
 
@@ -120,7 +120,7 @@ public class TestMove {
     @Test
     public void undoRedo() {
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
         gameTest.undoMove();
         gameTest.redoMove();
 
@@ -130,8 +130,8 @@ public class TestMove {
     @Test
     public void multiUndoRedo() {
         gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
-        gameTest.makeMove(1, gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
+        gameTest.makeMove("NORTH", gameTest.getP1Fleet(), gameTest.getP1Grid());
         gameTest.undoMove();
         gameTest.undoMove();
         gameTest.redoMove();

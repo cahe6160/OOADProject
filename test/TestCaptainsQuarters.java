@@ -38,9 +38,9 @@ public class TestCaptainsQuarters {
     @Test
     public void hitCaptainMinesweeper(){
 
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("A1", hitMiss);
-        gameTest.getP2Grid().updateBoards("A1", hitMiss);
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
 
         assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[0]));
 
@@ -49,31 +49,31 @@ public class TestCaptainsQuarters {
     @Test
     public void hitCaptainDestroyerOnce(){
 
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
-        gameTest.getP2Grid().updateBoards("B2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
         assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
     }
 
     @Test
     public void hitCaptainBattleshipOnce(){
 
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("C3", hitMiss);
-        gameTest.getP2Grid().updateBoards("C3", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("C3", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("C3", gameTest.getP1().getCannon());
         assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
     }
 
     @Test
     public void hitCaptainDestroyerTwice(){
 
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
-        gameTest.getP2Grid().updateBoards("B2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
 
-        hitMiss = gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("B2", hitMiss);
-        gameTest.getP2Grid().updateBoards("B2", hitMiss);
+        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
 
         assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[1]));
     }
@@ -81,13 +81,13 @@ public class TestCaptainsQuarters {
     @Test
     public void hitCaptainBattleshipTwice(){
 
-        int[] hitMiss = gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("C3", hitMiss);
-        gameTest.getP2Grid().updateBoards("C3", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("C3", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("C3", gameTest.getP1().getCannon());
 
-        hitMiss = gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
-        gameTest.getP1Grid().updateBoards("C3", hitMiss);
-        gameTest.getP2Grid().updateBoards("C3", hitMiss);
+        gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("C3", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("C3", gameTest.getP1().getCannon());
 
         assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[1]));
     }

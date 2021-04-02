@@ -1,9 +1,14 @@
 package edu.colorado.mtoftheholycross;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grid {
     private Cell[][] myShips;
     private Cell[][] myShots;
     private boolean isWaiting;
+    //private List<Ship> shipList = new ArrayList<Ship>();
+
 
     public Grid() {
         myShips = new Cell[10][10];
@@ -49,13 +54,18 @@ public class Grid {
     public Cell[][] getMyShots() {
         return myShots;
     }
+
     public boolean getIsWaiting() {
         return isWaiting;
     }
 
+    //public List<Ship> getShipList() { return shipList; }
+
     public void setIsWaiting(boolean waiting) {
         this.isWaiting = waiting;
     }
+
+    //public void setShipList(List<Ship> ships) { this.shipList = ships; }
 
     public void addShip(Ship shipToAdd) {
 
@@ -190,6 +200,7 @@ public class Grid {
                 }
             }
         }
+        //shipList.add(shipToAdd);
     }
 
     public void printMyShips() {
@@ -210,41 +221,39 @@ public class Grid {
         }
     }
 
-    public void updateBoards(String location, int[] hitResults) {
+    public void updateBoards(String location, Weapon hitResults) {
 
         int[] position = convertPosition(location);
         int row = position[0];
         int col = position[1];
 
 
-        if(hitResults[0] == 1 && isWaiting && hitResults[1] == 0) {
+        if(hitResults.getShipHit() == true && isWaiting && hitResults.getCaptainHit() == false) {
             myShips[row][col].setSurface("Damage");
-        } else if(hitResults[0] == 1 && isWaiting && hitResults[1] == 1) {
+        } else if(hitResults.getShipHit() == true && isWaiting && hitResults.getCaptainHit() == true) {
             myShips[row][col].setSurface("Critical");
-        } else if(hitResults[0] == 1 && isWaiting) {
+        } else if(hitResults.getShipHit() == true && isWaiting) {
             myShips[row][col].setSurface("Captain");
-        } else if(hitResults[0] == 1 && hitResults[1] != 2) {
+        } else if(hitResults.getShipHit() == true && hitResults.getArmorHit() == false) {
             myShots[row][col].setSurface("HIT");
-        } else if(hitResults[0] == 1) {
+        } else if(hitResults.getShipHit() == true) {
             myShots[row][col].setSurface("MISS"); //This is miss b/c writeup says first hit to armor counts as miss.
         } else if(!isWaiting){
             myShots[row][col].setSurface("MISS");
         }
 
-        if(hitResults.length == 4) {
-            if(hitResults[2] == 1 && isWaiting && hitResults[3] == 0) {
-                myShips[row][col].setUnderwater("Damage");
-            } else if(hitResults[2] == 1 && isWaiting && hitResults[3] == 1) {
-                myShips[row][col].setUnderwater("Critical");
-            } else if(hitResults[2] == 1 && isWaiting) {
-                myShips[row][col].setUnderwater("Captain");
-            } else if(hitResults[2] == 1 && hitResults[3] != 2) {
-                myShots[row][col].setUnderwater("HIT");
-            } else if(hitResults[2] == 1) {
-                myShots[row][col].setUnderwater("MISS");
-            } else if(!isWaiting){
-                myShots[row][col].setUnderwater("MISS");
-            }
+        if(hitResults.getUnderShipHit() == true && isWaiting && hitResults.getUnderCaptainHit() == false) {
+            myShips[row][col].setUnderwater("Damage");
+        } else if(hitResults.getUnderShipHit() == true && isWaiting && hitResults.getUnderCaptainHit() == true) {
+            myShips[row][col].setUnderwater("Critical");
+        } else if(hitResults.getUnderShipHit() == true && isWaiting) {
+            myShips[row][col].setUnderwater("Captain");
+        } else if(hitResults.getUnderShipHit() == true && hitResults.getUnderArmorHit() == false) {
+            myShots[row][col].setUnderwater("HIT");
+        } else if(hitResults.getUnderShipHit() == true) {
+            myShots[row][col].setUnderwater("MISS");
+        } else if(!isWaiting){
+            myShots[row][col].setUnderwater("MISS");
         }
 
     }
@@ -528,4 +537,3 @@ public class Grid {
         }
     }
 }
-
