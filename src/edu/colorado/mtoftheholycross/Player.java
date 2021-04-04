@@ -53,4 +53,10 @@ public class Player {
         lastShot[index % 5] = hitMiss;
         index++;
     }
+    public void resetLastShot() {
+        for(int i=0;i<5;i++) {
+            this.lastShot[i] = true;
+        }
+    }
+
 }

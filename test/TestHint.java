@@ -16,8 +16,8 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 public class TestHint {
 
@@ -41,44 +41,53 @@ public class TestHint {
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
 
-        gameTest.getP1Grid().addShip(gameTest.getP2Fleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
 
     }
 
     @Test
     public void testAtLeastOneHit() {
-        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B1", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B1", gameTest.getP1().getCannon());
 
         boolean[] referenceGrid = {false, true, true, true, true};
-        assertEquals(referenceGrid, gameTest.getP1().getLastShot());
+        assertArrayEquals(referenceGrid, gameTest.getP1().getLastShot());
     }
 
     @Test
     public void testAllMisses() {
-        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B1", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B1", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B3", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B3", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B3", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B3", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B4", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B4", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B4", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B4", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B5", gameTest.getP1Grid());
+        boolean[] referenceGrid = {false, false, false, false, true};
+        assertArrayEquals(referenceGrid, gameTest.getP1().getLastShot());
+
+        gameTest.getP1().getCannon().makeHit("B5", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
 
-        boolean[] referenceGrid = {false, false, false, false, false};
-        assertEquals(referenceGrid, gameTest.getP1().getLastShot());
+        boolean[] secondReferenceGrid = {true, true, true, true, true};
+        assertArrayEquals(secondReferenceGrid, gameTest.getP1().getLastShot());
     }
 
     @Test
@@ -86,23 +95,28 @@ public class TestHint {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B1", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B1", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B3", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B3", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B3", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B3", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B4", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B4", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B4", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B4", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getCannon().makeHit("B5", gameTest.getP1Grid());
+        gameTest.getP1().getCannon().makeHit("B5", gameTest.getP2Grid());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
 

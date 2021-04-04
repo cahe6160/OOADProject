@@ -99,6 +99,8 @@ public class Main {
         System.out.println(test.miss);
         */
 
+        //Move test
+        /*
         Game gameTest;
         Cell[][] p2ShipBoard;
         Cell[][] p1ShipBoard;
@@ -113,12 +115,56 @@ public class Main {
         gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
         gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.switchTurn();
 
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[4]);
         gameTest.makeMove("NORTH", gameTest.getP2Fleet(), gameTest.getP2Grid());
 
         gameTest.getP2Grid().printMyShips();
+        */
+//        int test = 0;
+//        System.out.println("test12" + (char)(test + 65));
 
+        //Hint Test
+//        Game gameTest;
+//        Cell[][] p2ShipBoard;
+//        Cell[][] p1ShipBoard;
+//
+//        gameTest = new Game();
+//
+//        p2ShipBoard = gameTest.getP2Grid().getMyShips();
+//        p1ShipBoard = gameTest.getP1Grid().getMyShips();
+//
+//        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+//
+//        gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
+//        gameTest.checkHint(gameTest.getP1().getCannon());
+//        gameTest.getP1Grid().updateBoards("B1", gameTest.getP1().getCannon());
+//        gameTest.getP2Grid().updateBoards("B1", gameTest.getP1().getCannon());
+//
+//        gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
+//        gameTest.checkHint(gameTest.getP1().getCannon());
+//        gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
+//        gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
+//
+//        gameTest.getP1().getCannon().makeHit("B3", gameTest.getP2Grid());
+//        gameTest.checkHint(gameTest.getP1().getCannon());
+//        gameTest.getP1Grid().updateBoards("B3", gameTest.getP1().getCannon());
+//        gameTest.getP2Grid().updateBoards("B3", gameTest.getP1().getCannon());
+//
+//        gameTest.getP1().getCannon().makeHit("B4", gameTest.getP2Grid());
+//        gameTest.checkHint(gameTest.getP1().getCannon());
+//        gameTest.getP1Grid().updateBoards("B4", gameTest.getP1().getCannon());
+//        gameTest.getP2Grid().updateBoards("B4", gameTest.getP1().getCannon());
+//
+//        gameTest.getP1().getCannon().makeHit("B5", gameTest.getP2Grid());
+//        gameTest.checkHint(gameTest.getP1().getCannon());
+//        gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
+//        gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
+//
+//        for(int i =0; i<5;i++) {
+//            System.out.println(gameTest.getP1().getLastShot()[i]);
+//       }
     }
 }
