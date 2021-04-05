@@ -200,7 +200,10 @@ public class Grid {
                 }
             }
         }
-        //shipList.add(shipToAdd);
+        if(shipToAdd.getName().equals("Tower Ship")) {
+            myShips[headRow][headCol].setSurface("Ship");
+            myShips[headRow][headCol].setUnderwater("Captain");
+        }
     }
 
     public void printMyShips() {
@@ -342,6 +345,12 @@ public class Grid {
                         return false;
                     }
                 }
+            }
+        }
+
+        if(shipToCheck.getName().equals("Tower Ship")) {
+            if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol].getSurface().equals("Captain")) {
+                return false;
             }
         }
 

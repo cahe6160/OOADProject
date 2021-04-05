@@ -13,13 +13,14 @@ public class Game {
     private Invoker invoker = new Invoker();
 
     public Game() {
-        p2Fleet = new Ship[6];
+        p2Fleet = new Ship[7];
         p2Fleet[0] = new Minesweeper("A1", "A2");
         p2Fleet[1] = new Destroyer("B1", "B3");
         p2Fleet[2] = new Battleship("C1", "C4");
         p2Fleet[3] = new Submarine("D1", "D4", false);
         p2Fleet[4] = new Minesweeper("A3", "A4");
         p2Fleet[5] = new Minesweeper("B4", "B5");
+        p2Fleet[6] = new TowerShip("J10", "J10", true);
 
 
         p1Fleet = new Ship[4];

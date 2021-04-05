@@ -166,5 +166,25 @@ public class Main {
 //        for(int i =0; i<5;i++) {
 //            System.out.println(gameTest.getP1().getLastShot()[i]);
 //       }
+
+        // Testing Towership
+//        Game gameTest;
+//        Cell[][] p2ShipBoard;
+//        Cell[][] p1ShipBoard;
+//
+//        gameTest = new Game();
+//
+//        gameTest.getP1Grid().addShip(gameTest.getP2Fleet()[6]);
+//
+//        p2ShipBoard = gameTest.getP2Grid().getMyShips();
+//        p1ShipBoard = gameTest.getP1Grid().getMyShips();
+//
+//
+//        gameTest.getP1().getCannon().makeHit("J10", gameTest.getP1Grid());
+//        gameTest.getP1Grid().updateBoards("J10", gameTest.getP1().getCannon());
+//        gameTest.getP2Grid().updateBoards("J10", gameTest.getP1().getCannon());
+//        gameTest.getP1Grid().printMyShots();
+
+
     }
 }
