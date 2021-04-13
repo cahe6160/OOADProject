@@ -53,7 +53,7 @@ public class TestHint {
         gameTest.getP2Grid().updateBoards("B1", gameTest.getP1().getCannon());
 
         boolean[] referenceGrid = {false, true, true, true, true};
-        assertArrayEquals(referenceGrid, gameTest.getP1().getLastShot());
+        assertArrayEquals(referenceGrid, gameTest.getP1().getHint().getLastShot());
     }
 
     @Test
@@ -79,15 +79,15 @@ public class TestHint {
         gameTest.getP2Grid().updateBoards("B4", gameTest.getP1().getCannon());
 
         boolean[] referenceGrid = {false, false, false, false, true};
-        assertArrayEquals(referenceGrid, gameTest.getP1().getLastShot());
+        assertArrayEquals(referenceGrid, gameTest.getP1().getHint().getLastShot());
 
         gameTest.getP1().getCannon().makeHit("B5", gameTest.getP2Grid());
         gameTest.checkHint(gameTest.getP1().getCannon());
         gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
 
-        boolean[] secondReferenceGrid = {true, true, true, true, true};
-        assertArrayEquals(secondReferenceGrid, gameTest.getP1().getLastShot());
+        boolean[] secondReferenceGrid = {false, false, false, false, false};
+        assertArrayEquals(secondReferenceGrid, gameTest.getP1().getHint().getLastShot());
     }
 
     @Test
@@ -120,8 +120,10 @@ public class TestHint {
         gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
 
+        gameTest.getP1().getHint().activateHint(gameTest.getP2Grid(), gameTest.getP2Fleet());
+
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-        assertEquals("Here's a hint, there's a ship at A1", standardOutput);
+        assertEquals("Hint: There is a ship located in the upper left quadrant.", standardOutput);
     }
 }

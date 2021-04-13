@@ -123,45 +123,29 @@ public class Game {
     public void checkHint(Weapon hitResult) {
         if(p1Grid.getIsWaiting()) {
             if(hitResult.getShipHit() == true || hitResult.getUnderShipHit() == true) {
-                P2.setLastShot(true);
+                P2.getHint().setLastShot(true);
             } else {
-                P2.setLastShot(false);
+                P2.getHint().setLastShot(false);
             }
             for(int i = 0; i < 5; i++) {
-                if(P2.getLastShot()[i] == true) {
+                if(P2.getHint().getLastShot()[i] == true) {
                     return;
                 }
             }
-            for(int i = 0; i < 10; i++) {
-                for(int j = 0; j < 10; j++) {
-                    if(p1Grid.getMyShips()[i][j].getSurface() == "Ship" || p1Grid.getMyShips()[i][j].getSurface() == "Captain" || p1Grid.getMyShips()[i][j].getSurface() == "Armor") {
-                        System.out.println("Here's a hint, there's a ship at " + (char)(j + 65) + (i+1));
-                        P2.resetLastShot();
-                        return;
-                    }
-                }
-            }
+            P2.getHint().addHint();
         } else {
             if(hitResult.getShipHit() == true || hitResult.getUnderShipHit() == true) {
-                P1.setLastShot(true);
+                P1.getHint().setLastShot(true);
             } else {
-                P1.setLastShot(false);
+                P1.getHint().setLastShot(false);
             }
 
             for(int i = 0; i < 5; i++) {
-                if(P1.getLastShot()[i] == true) {
+                if(P1.getHint().getLastShot()[i] == true) {
                     return;
                 }
             }
-            for(int i = 0; i < 10; i++) {
-                for(int j = 0; j < 10; j++) {
-                    if(p2Grid.getMyShips()[i][j].getSurface() == "Ship" || p2Grid.getMyShips()[i][j].getSurface() == "Captain" || p2Grid.getMyShips()[i][j].getSurface() == "Armor") {
-                        System.out.println("Here's a hint, there's a ship at " + (char)(j + 65) + (i+1));
-                        P1.resetLastShot();
-                        return;
-                    }
-                }
-            }
+            P1.getHint().addHint();
         }
     }
 }

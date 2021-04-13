@@ -230,35 +230,33 @@ public class Grid {
         int row = position[0];
         int col = position[1];
 
-
-        if(hitResults.getShipHit() == true && isWaiting && hitResults.getCaptainHit() == false) {
+        if(hitResults.getShipHit() && isWaiting && !hitResults.getCaptainHit()) {
             myShips[row][col].setSurface("Damage");
-        } else if(hitResults.getShipHit() == true && isWaiting && hitResults.getCaptainHit() == true) {
+        } else if(hitResults.getShipHit() && isWaiting && hitResults.getCaptainHit()) {
             myShips[row][col].setSurface("Critical");
-        } else if(hitResults.getShipHit() == true && isWaiting) {
+        } else if(hitResults.getShipHit() && isWaiting) {
             myShips[row][col].setSurface("Captain");
-        } else if(hitResults.getShipHit() == true && hitResults.getArmorHit() == false) {
+        } else if(hitResults.getShipHit() && !hitResults.getArmorHit()) {
             myShots[row][col].setSurface("HIT");
-        } else if(hitResults.getShipHit() == true) {
+        } else if(hitResults.getShipHit()) {
             myShots[row][col].setSurface("MISS"); //This is miss b/c writeup says first hit to armor counts as miss.
         } else if(!isWaiting){
             myShots[row][col].setSurface("MISS");
         }
 
-        if(hitResults.getUnderShipHit() == true && isWaiting && hitResults.getUnderCaptainHit() == false) {
+        if(hitResults.getUnderShipHit() && isWaiting && !hitResults.getUnderCaptainHit()) {
             myShips[row][col].setUnderwater("Damage");
-        } else if(hitResults.getUnderShipHit() == true && isWaiting && hitResults.getUnderCaptainHit() == true) {
+        } else if(hitResults.getUnderShipHit() && isWaiting && hitResults.getUnderCaptainHit()) {
             myShips[row][col].setUnderwater("Critical");
-        } else if(hitResults.getUnderShipHit() == true && isWaiting) {
+        } else if(hitResults.getUnderShipHit() && isWaiting) {
             myShips[row][col].setUnderwater("Captain");
-        } else if(hitResults.getUnderShipHit() == true && hitResults.getUnderArmorHit() == false) {
+        } else if(hitResults.getUnderShipHit() && !hitResults.getUnderArmorHit()) {
             myShots[row][col].setUnderwater("HIT");
-        } else if(hitResults.getUnderShipHit() == true) {
+        } else if(hitResults.getUnderShipHit()) {
             myShots[row][col].setUnderwater("MISS");
         } else if(!isWaiting){
             myShots[row][col].setUnderwater("MISS");
         }
-
     }
 
     //Helper Functions
