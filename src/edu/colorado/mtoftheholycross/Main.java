@@ -1,5 +1,10 @@
 package edu.colorado.mtoftheholycross;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -186,6 +191,17 @@ public class Main {
 //        gameTest.getP2Grid().updateBoards("J10", gameTest.getP1().getCannon());
 //        gameTest.getP1Grid().printMyShots();
 
+
+//        String IMAGE_PATH = "/src/edu/colorado/mtoftheholycross/test/HighScores.txt";
+//        //private final String IMAGE_PATH = "../battleship/resources/images/";
+//
+//        try {
+//            byte[] oldFile = Files.readAllBytes(Paths.get(IMAGE_PATH));
+//            byte[] newFile = Files.readAllBytes(Paths.get("/testFile.txt"));
+//            System.out.println(Arrays.equals(oldFile, newFile));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }
