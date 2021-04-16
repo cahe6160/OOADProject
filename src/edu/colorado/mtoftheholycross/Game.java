@@ -1,6 +1,12 @@
 package edu.colorado.mtoftheholycross;
 
 import javax.security.auth.Destroyable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+import java.io.*;
+import java.util.stream.Stream;
 
 public class Game {
 
@@ -67,13 +73,67 @@ public class Game {
         P2 = p2;
     }
 
+    public void updateScores(Player player) {
+        File inputFile = new File("src/resources/HighScores.txt");
+        Scanner scan = null;
+
+        try {
+            scan = new Scanner(inputFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        List<String> nameArray = new ArrayList<String>();
+        List<Integer> scoreArray = new ArrayList<Integer>();
+
+        while(scan.hasNextLine()) {
+            String[] delimitedScore = scan.nextLine().split(",");
+            nameArray.add(delimitedScore[0]);
+            scoreArray.add(Integer.parseInt(delimitedScore[1]));
+        }
+
+        for(int i = 0; i < scoreArray.size(); i++) {
+            if(scoreArray.get(i) > player.getTurnCount()) {
+                scoreArray.add(i, player.getTurnCount());
+                nameArray.add(i, player.getPlayerName());
+                scoreArray.remove(5);
+                nameArray.remove(5);
+                break;
+            }
+        }
+
+        scan.close();
+        try {
+            FileWriter writer = new FileWriter("src/resources/HighScores.txt");
+            FileWriter writer2 = new FileWriter("src/resources/testFile.txt");
+            for(int i =0; i<5; i++) {
+                writer.write(nameArray.get(i) + "," + scoreArray.get(i) + "\n");
+                writer2.write(nameArray.get(i) + "," + scoreArray.get(i) + "\n");
+            }
+            writer.close();
+            writer2.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int switchTurn(){
         if(p2Grid.getIsWaiting() && playerSurrender()) {
             System.out.println("Player 2 surrendered!");
+            P1.incrementTurnCount();
+            System.out.println("Your score this game was " + P1.getTurnCount() + " turns!");
+            updateScores(P1);
             return 0;
         }else if(p1Grid.getIsWaiting() && playerSurrender()) {
             System.out.println("Player 1 surrendered!");
+            P2.incrementTurnCount();
+            System.out.println("Your score this game was " + P2.getTurnCount() + " turns!");
+            updateScores(P2);
             return 0;
+        }
+        if(p1Grid.getIsWaiting()) {
+            P2.incrementTurnCount();
+        } else {
+            P1.incrementTurnCount();
         }
         p1Grid.setIsWaiting(!p1Grid.getIsWaiting());
         p2Grid.setIsWaiting(!p2Grid.getIsWaiting());

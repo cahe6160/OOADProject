@@ -104,7 +104,7 @@ public class TestSurrender {
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-        assertEquals("You sunk my Minesweeper\nYou sunk my Destroyer\nYou sunk my Battleship\nYou sunk my Submarine\nYou sunk my Minesweeper\nYou sunk my Minesweeper\nYou sunk my Tower Ship\nPlayer 2 surrendered!", standardOutput);
+        assertEquals("You sunk my Minesweeper\nYou sunk my Destroyer\nYou sunk my Battleship\nYou sunk my Submarine\nYou sunk my Minesweeper\nYou sunk my Minesweeper\nYou sunk my Tower Ship\nPlayer 2 surrendered!\nYour score this game was 1 turns!", standardOutput);
 
     }
 }

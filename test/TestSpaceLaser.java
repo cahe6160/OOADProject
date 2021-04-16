@@ -41,21 +41,7 @@ public class TestSpaceLaser {
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
-/*
-    @Test
-    public void noShipSunk() {
 
-        final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(myOut));
-
-        gameTest.getP1().getLaser().makeHit("A1", gameTest.getP2Grid());
-
-        final String standardOutput = myOut.toString().trim();
-        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-
-        assertEquals("Error, at least one ship must be sunk in order to activate laser.", standardOutput);
-    }
-*/
     @Test
     public void hitSurface() {
         gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
