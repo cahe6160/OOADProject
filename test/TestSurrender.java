@@ -36,9 +36,9 @@ public class TestSurrender {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP2Grid().addShip(gameTest.getP1Fleet()[0]);//A1, A2
-        gameTest.getP2Grid().addShip(gameTest.getP1Fleet()[1]);//B1, B2, B3
-        gameTest.getP2Grid().addShip(gameTest.getP1Fleet()[2]);//C1, C2, C3, C4
+        gameTest.getP2Grid().addShip(gameTest.getP1TestFleet()[0]);//A1, A2
+        gameTest.getP2Grid().addShip(gameTest.getP1TestFleet()[1]);//B1, B2, B3
+        gameTest.getP2Grid().addShip(gameTest.getP1TestFleet()[2]);//C1, C2, C3, C4
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();

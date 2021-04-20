@@ -24,12 +24,12 @@ public class TestCaptainsQuarters {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[1]);
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[2]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[1]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[2]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[1]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[2]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[1]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[2]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
@@ -42,7 +42,7 @@ public class TestCaptainsQuarters {
         gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
 
-        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[0]));
+        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2TestFleet()[0]));
 
     }
 
@@ -52,7 +52,7 @@ public class TestCaptainsQuarters {
         gameTest.getP1().getCannon().makeHit("B2", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
-        assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
+        assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1TestFleet()[1]));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TestCaptainsQuarters {
         gameTest.getP1().getCannon().makeHit("C3", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("C3", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("C3", gameTest.getP1().getCannon());
-        assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1Fleet()[1]));
+        assertEquals(false, gameTest.getP1Grid().isSunk(gameTest.getP1TestFleet()[1]));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class TestCaptainsQuarters {
         gameTest.getP1Grid().updateBoards("B2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B2", gameTest.getP1().getCannon());
 
-        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[1]));
+        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2TestFleet()[1]));
     }
 
     @Test
@@ -89,6 +89,6 @@ public class TestCaptainsQuarters {
         gameTest.getP1Grid().updateBoards("C3", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("C3", gameTest.getP1().getCannon());
 
-        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2Fleet()[1]));
+        assertEquals(true, gameTest.getP1Grid().isSunk(gameTest.getP2TestFleet()[1]));
     }
 }

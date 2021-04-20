@@ -4,6 +4,7 @@ import edu.colorado.mtoftheholycross.Ship;
 import edu.colorado.mtoftheholycross.Grid;
 import edu.colorado.mtoftheholycross.Submarine;
 import edu.colorado.mtoftheholycross.Cell;
+import edu.colorado.mtoftheholycross.GUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,19 +28,21 @@ public class TestGUI {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private GUI graphics;
 
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
     }
-    
+
     @Test
     public void testCellClick() {
-        GUI graphics = new GUI();
+
+        graphics = new GUI();
         Robot testBot = null;
         try {
             testBot = new Robot();
-        } catch (AWTException e){
+        } catch (AWTException e) {
             e.printStackTrace();
         }
         testBot.mouseMove(50, 50);
@@ -51,36 +54,36 @@ public class TestGUI {
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
         assertEquals("SHOT AT A1", standardOutput);
     }
-    
+
     @Test
     public void testHit() {
-        GUI graphics = new GUI();
+
         Robot testBot = null;
         try {
             testBot = new Robot();
-        } catch (AWTException e){
+        } catch (AWTException e) {
             e.printStackTrace();
         }
         testBot.mouseMove(50, 50);
         testBot.mousePress(InputEvent.BUTTON1_MASK);
         testBot.mouseRelease(InputEvent.BUTTON1_MASK);
 
-        assertEquals(Color.GREEN, testBot.getPixelColor(50,50));
+        assertEquals(Color.GREEN, testBot.getPixelColor(50, 50));
     }
 
     @Test
     public void testMiss() {
-        GUI graphics = new GUI();
+
         Robot testBot = null;
         try {
             testBot = new Robot();
-        } catch (AWTException e){
+        } catch (AWTException e) {
             e.printStackTrace();
         }
         testBot.mouseMove(50, 50);
         testBot.mousePress(InputEvent.BUTTON1_MASK);
         testBot.mouseRelease(InputEvent.BUTTON1_MASK);
 
-        assertEquals(Color.RED, testBot.getPixelColor(50,50));
+        assertEquals(Color.RED, testBot.getPixelColor(50, 50));
     }
 }

@@ -44,7 +44,7 @@ public class TestSpaceLaser {
 
     @Test
     public void hitSurface() {
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
 
         gameTest.getP1().getLaser().makeHit("A1", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getLaser());
@@ -55,8 +55,8 @@ public class TestSpaceLaser {
 
     @Test
     public void hitSubmerged() {
-        gameTest.getP2Fleet()[3].setSubmerged(true);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2TestFleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[3]);
 
         gameTest.getP1().getLaser().makeHit("D1", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("D1", gameTest.getP1().getLaser());
@@ -67,8 +67,8 @@ public class TestSpaceLaser {
 
     @Test
     public void hitBoth() {
-        gameTest.getP2Fleet()[3].setSubmerged(true);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2TestFleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[3]);
         gameTest.getP2Grid().addShip(new Minesweeper("D1", "D2"));
 
         gameTest.getP1().getLaser().makeHit("D2", gameTest.getP2Grid());

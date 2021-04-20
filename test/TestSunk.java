@@ -24,8 +24,8 @@ public class TestSunk {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
@@ -42,7 +42,7 @@ public class TestSunk {
         gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
 
-        assertEquals(true, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
+        assertEquals(true, gameTest.getP2Grid().isSunk(gameTest.getP2TestFleet()[0]));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class TestSunk {
         gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
 
-        gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]);
+        gameTest.getP2Grid().isSunk(gameTest.getP2TestFleet()[0]);
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
@@ -71,6 +71,6 @@ public class TestSunk {
         gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("A2", gameTest.getP1().getCannon());
-        assertEquals(false, gameTest.getP2Grid().isSunk(gameTest.getP2Fleet()[0]));
+        assertEquals(false, gameTest.getP2Grid().isSunk(gameTest.getP2TestFleet()[0]));
     }
 }

@@ -41,7 +41,7 @@ public class TestHint {
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
 
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
 
     }
 
@@ -120,7 +120,7 @@ public class TestHint {
         gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getHint().activateHint(gameTest.getP2Grid(), gameTest.getP2Fleet());
+        gameTest.getP1().getHint().activateHint(gameTest.getP2Grid(), gameTest.getP2TestFleet());
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));

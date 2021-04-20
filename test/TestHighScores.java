@@ -34,8 +34,8 @@ public class TestHighScores {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
         //P1 Shoots at P2
         gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
@@ -61,8 +61,8 @@ public class TestHighScores {
     @Test
     public void correctTest() {
 
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
         gameTest.getP1().setPlayerName("Will");
         //P1 Shoots at P2
         gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());

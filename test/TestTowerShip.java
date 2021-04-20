@@ -25,7 +25,7 @@ public class TestTowerShip {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[6]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[6]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();

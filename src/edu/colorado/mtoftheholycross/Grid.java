@@ -7,7 +7,7 @@ public class Grid {
     private Cell[][] myShips;
     private Cell[][] myShots;
     private boolean isWaiting;
-    //private List<Ship> shipList = new ArrayList<Ship>();
+    private int shipCount;
 
 
     public Grid() {
@@ -22,6 +22,7 @@ public class Grid {
             }
         }
         isWaiting = true;
+        this.shipCount = 5;
     }
 
     public Grid(Boolean isWaiting) {
@@ -39,12 +40,14 @@ public class Grid {
             }
         }
         this.isWaiting = isWaiting;
+        this.shipCount = 5;
     }
 
     public Grid(Cell[][] myShips, Cell[][] myShots, Boolean isWaiting) {
         this.myShips = myShips;
         this.myShots = myShots;
         this.isWaiting = isWaiting;
+        this.shipCount = 5;
     }
 
     public Cell[][] getMyShips() {
@@ -59,6 +62,14 @@ public class Grid {
         return isWaiting;
     }
 
+    public int getShipCount() {
+        return shipCount;
+    }
+
+    public void setShipCount(int count) {
+        this.shipCount = count;
+    }
+
     //public List<Ship> getShipList() { return shipList; }
 
     public void setIsWaiting(boolean waiting) {
@@ -66,6 +77,10 @@ public class Grid {
     }
 
     //public void setShipList(List<Ship> ships) { this.shipList = ships; }
+
+    public void decrementShipCount() {
+        this.shipCount--;
+    }
 
     public void addShip(Ship shipToAdd) {
 
@@ -263,6 +278,9 @@ public class Grid {
 
     //Converts string coordinate to indices
     public int[] convertPosition(String Location) {
+        if(Location == null) {
+            return new int[]{-1, -1};
+        }
         return new int[]{Integer.parseInt(Location.substring(1)) -1, Location.charAt(0) -65};
     }
 
@@ -355,6 +373,8 @@ public class Grid {
         if((myShips[captainRow][captainCol].getSurface().equals("Critical") || myShips[captainRow][captainCol].getUnderwater().equals("Critical")) && !shipToCheck.getCasualtyReported()) {
             System.out.println("You sunk my " + shipToCheck.getName());
             shipToCheck.setCasualtyReported(true);
+            shipCount--;
+
 
             if(!shipToCheck.getName().equals("Submarine")) {
                 if (headRow == tailRow) {
@@ -435,6 +455,7 @@ public class Grid {
 
         if(!shipToCheck.getCasualtyReported()) {
             System.out.println("You sunk my " + shipToCheck.getName());
+            shipCount--;
         }
         shipToCheck.setCasualtyReported(true);
 
@@ -485,9 +506,9 @@ public class Grid {
                 }
 
                 for (int i = 0; i < fleet.length; i++) {
-                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 64)) + fleet[i].getHead().substring(1);
-                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 64)) + fleet[i].getTail().substring(1);
-                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 64)) + fleet[i].getCaptainLocation().substring(1);
+                    String newHead = fleet[i].getHead().substring(0, 1) + (Integer.parseInt((fleet[i].getHead().substring(1))) + 1);
+                    String newTail = fleet[i].getTail().substring(0, 1) + (Integer.parseInt((fleet[i].getTail().substring(1))) + 1);
+                    String newCapt = fleet[i].getCaptainLocation().substring(0, 1) + (Integer.parseInt((fleet[i].getCaptainLocation().substring(1))) + 1);
                     fleet[i].setHead(newHead);
                     fleet[i].setTail(newTail);
                     fleet[i].setCaptainLocation(newCapt);

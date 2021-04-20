@@ -32,8 +32,8 @@ public class TestSonarPulse {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[2]);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[2]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[2]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[2]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
@@ -84,7 +84,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myTestOut));
 
-        gameTest.getP2().setShipCount(2);
+        gameTest.getP2Grid().setShipCount(2);
         gameTest.getP1().getSonar().activateSonar("E6", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
 
         final String testStandardOutput = myTestOut.toString().trim();
@@ -112,7 +112,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myTestOut));
 
-        gameTest.getP2().setShipCount(2);
+        gameTest.getP2Grid().setShipCount(2);
         gameTest.getP1().getSonar().activateSonar("E6", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
 
         final String testStandardOutput = myTestOut.toString().trim();
@@ -140,7 +140,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myTestOut));
 
-        gameTest.getP2().setShipCount(2);
+        gameTest.getP2Grid().setShipCount(2);
         gameTest.getP1().getSonar().activateSonar("D5", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
 
         final String testStandardOutput = myTestOut.toString().trim();
@@ -168,7 +168,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myTestOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myTestOut));
 
-        gameTest.getP2().setShipCount(2);
+        gameTest.getP2Grid().setShipCount(2);
         gameTest.getP1().getSonar().activateSonar("C3", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
 
         final String testStandardOutput = myTestOut.toString().trim();
@@ -182,7 +182,7 @@ public class TestSonarPulse {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        gameTest.getP2().setShipCount(2);
+        gameTest.getP2Grid().setShipCount(2);
         gameTest.getP1().getSonar().activateSonar("J10", gameTest.getP1Grid(), gameTest.getP2Grid(), gameTest.getP1(), gameTest.getP2());
 
         final String standardOutput = myOut.toString().trim();

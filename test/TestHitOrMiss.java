@@ -25,9 +25,9 @@ public class TestHitOrMiss {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP1Grid().addShip(gameTest.getP1Fleet()[0]);
+        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
 
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[0]);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
@@ -82,8 +82,8 @@ public class TestHitOrMiss {
 
     @Test
     public void subUnderShipHit() {
-        gameTest.getP2Fleet()[3].setSubmerged(true);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2TestFleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[3]);
         gameTest.getP2Grid().addShip(new Minesweeper("D1", "D2"));
 
         gameTest.getP1().getCannon().makeHit("D1", gameTest.getP2Grid());
@@ -94,8 +94,8 @@ public class TestHitOrMiss {
 
     @Test
     public void subSubmergedCannon() {
-        gameTest.getP2Fleet()[3].setSubmerged(true);
-        gameTest.getP2Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP2TestFleet()[3].setSubmerged(true);
+        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[3]);
 
         gameTest.getP1().getCannon().makeHit("D1", gameTest.getP2Grid());
         gameTest.getP2Grid().updateBoards("D1", gameTest.getP1().getCannon());

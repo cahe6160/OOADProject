@@ -27,7 +27,7 @@ public class TestSubmarine {
     public void init() {
         gameTest = new Game();
 
-        gameTest.getP1Grid().addShip(gameTest.getP2Fleet()[3]);
+        gameTest.getP1Grid().addShip(gameTest.getP2TestFleet()[3]);
 
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
@@ -35,12 +35,12 @@ public class TestSubmarine {
 
     @Test
     public void surfaced() {
-        assertEquals(false, gameTest.getP1Fleet()[3].getSubmerged());
+        assertEquals(false, gameTest.getP1TestFleet()[3].getSubmerged());
     }
 
     @Test
     public void submerged() {
-        gameTest.getP1Fleet()[3].setSubmerged(true);
-        assertEquals(true, gameTest.getP1Fleet()[3].getSubmerged());
+        gameTest.getP1TestFleet()[3].setSubmerged(true);
+        assertEquals(true, gameTest.getP1TestFleet()[3].getSubmerged());
     }
 }

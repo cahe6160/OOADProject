@@ -3,17 +3,18 @@ package edu.colorado.mtoftheholycross;
 public class Player {
 
     private String playerName;
-    private int shipCount;
+    //private int shipCount;
     private int sonarCount;
     private Sonar sonar;
     private Cannon cannon;
     private Laser laser;
     private Hint hint;
     private int turnCount;
+    private boolean isWinner;
 
 
     Player(){
-        this.shipCount = 3;
+        //this.shipCount = 5;
         this.sonarCount = 2;
         sonar = new Sonar();
         cannon = new Cannon();
@@ -36,9 +37,9 @@ public class Player {
 
     public Hint getHint() { return hint; }
 
-    public int getShipCount() {
-        return shipCount;
-    }
+//    public int getShipCount() {
+//        return shipCount;
+//    }
 
     public int getSonarCount() {
         return sonarCount;
@@ -52,9 +53,13 @@ public class Player {
         return playerName;
     }
 
-    public void setShipCount(int shipCount) {
-        this.shipCount = shipCount;
+    public boolean getIsWinner() {
+        return isWinner;
     }
+
+    //public void setShipCount(int shipCount) {
+    //    this.shipCount = shipCount;
+    //}
 
     public void setSonarCount(int sonarCount) {
         this.sonarCount = sonarCount;
@@ -66,5 +71,9 @@ public class Player {
 
     public void incrementTurnCount() {
         turnCount++;
+    }
+
+    public void setIsWinner(boolean winner) {
+        isWinner = winner;
     }
 }
