@@ -1,7 +1,9 @@
 package edu.colorado.mtoftheholycross;
 
 public class Laser extends Cannon {
-    public void makeHit(String location, Grid opponentBoard){
+
+    @Override
+    public boolean makeHit(String location, Grid opponentBoard){
 
         super.makeHit(location, opponentBoard);
 
@@ -18,5 +20,6 @@ public class Laser extends Cannon {
             this.setUnderShipHit(true);
             this.setUnderArmorHit(true);
         }
+        return true;
     }
 }

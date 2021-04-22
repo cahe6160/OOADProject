@@ -10,29 +10,29 @@ public class Hint extends Weapon {
         return lastShot;
     }
 
-    public void activateHint(Grid opponentGrid, Ship[] opponentFleet) {
+    public boolean makeHit(String location, Grid opponentGrid) {
         if(hintCount == 0) {
             System.out.println("Error, not enough hints available.");
-            return;
+            return false;
         }
         hintCount--;
         while(true) {
-            int ranShip = (int) ((Math.random() * (opponentFleet.length - 1)));
-            if (opponentFleet[ranShip].getCasualtyReported() == false) {
-                if (opponentFleet[ranShip].getCaptainLocation().charAt(0) <= 'E') {
-                    if (opponentFleet[ranShip].getCaptainLocation().charAt(1) <= '5') {
+            int ranShip = (int) ((Math.random() * (opponentGrid.getPlayerFleet().size() - 1)));
+            if (opponentGrid.getPlayerFleet().get(ranShip).getCasualtyReported() == false) {
+                if (opponentGrid.getPlayerFleet().get(ranShip).getCaptainLocation().charAt(0) <= 'E') {
+                    if (opponentGrid.getPlayerFleet().get(ranShip).getCaptainLocation().charAt(1) <= '5') {
                         System.out.println("Hint: There is a ship located in the upper left quadrant.");
                     } else {
                         System.out.println("Hint: There is a ship located in the lower left quadrant.");
                     }
-                } else if (opponentFleet[ranShip].getCaptainLocation().charAt(0) > 'E') {
-                    if (opponentFleet[ranShip].getCaptainLocation().charAt(1) > '5') {
+                } else if (opponentGrid.getPlayerFleet().get(ranShip).getCaptainLocation().charAt(0) > 'E') {
+                    if (opponentGrid.getPlayerFleet().get(ranShip).getCaptainLocation().charAt(1) > '5') {
                         System.out.println("Hint: There is a ship located in the lower right quadrant.");
                     } else {
                         System.out.println("Hint: There is a ship located in the upper right quadrant.");
                     }
                 }
-                return;
+                return true;
             }
         }
     }

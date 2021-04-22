@@ -4,7 +4,7 @@ public class Player {
 
     private String playerName;
     //private int shipCount;
-    private int sonarCount;
+    //private int sonarCount;
     private Sonar sonar;
     private Cannon cannon;
     private Laser laser;
@@ -15,7 +15,7 @@ public class Player {
 
     Player(){
         //this.shipCount = 5;
-        this.sonarCount = 2;
+        //this.sonarCount = 2;
         sonar = new Sonar();
         cannon = new Cannon();
         laser = new Laser();
@@ -41,9 +41,9 @@ public class Player {
 //        return shipCount;
 //    }
 
-    public int getSonarCount() {
-        return sonarCount;
-    }
+//    public int getSonarCount() {
+//        return sonarCount;
+//    }
 
     public int getTurnCount() {
         return turnCount;
@@ -61,9 +61,9 @@ public class Player {
     //    this.shipCount = shipCount;
     //}
 
-    public void setSonarCount(int sonarCount) {
-        this.sonarCount = sonarCount;
-    }
+//    public void setSonarCount(int sonarCount) {
+//        this.sonarCount = sonarCount;
+//    }
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;

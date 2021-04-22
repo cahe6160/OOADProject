@@ -1,6 +1,6 @@
 package edu.colorado.mtoftheholycross;
 
-public class Weapon {
+abstract class Weapon {
 
     private boolean shipHit = false;
     private boolean captainHit = false;
@@ -20,6 +20,7 @@ public class Weapon {
         underArmorHit = false;
     }
 
+    public abstract boolean makeHit(String location, Grid opponentBoard);
 
     public void setShipHit(boolean isHit) {
         this.shipHit = isHit;

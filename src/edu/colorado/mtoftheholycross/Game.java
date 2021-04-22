@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.util.*;
 import java.io.*;
 
-/* ------------------------
+/* ------------------------------------------
 
 
 
------------------------- */
+------------------------------------------- */
 public class Game {
+
+    private static Game single_instance = null;
 
     private Grid p1Grid;
     private Grid p2Grid;
@@ -18,7 +20,7 @@ public class Game {
     private Player P2;
     private Invoker invoker = new Invoker();
 
-    public Game() {
+    private Game() {
 
         p1Grid = new Grid(false);
         p2Grid = new Grid(true);
@@ -26,6 +28,14 @@ public class Game {
         P1 = new Player();
         P2 = new Player();
     }
+
+    public static Game getInstance() {
+        if(single_instance == null) {
+            single_instance = new Game();
+        }
+        return single_instance;
+    }
+
     public Grid getP1Grid() {
         return p1Grid;
     }
@@ -58,6 +68,11 @@ public class Game {
         P2 = p2;
     }
 
+    /* ------------------------------------------
+
+
+
+    ------------------------------------------- */
     public void updateScores(Player player) {
         File inputFile = new File("src/resources/HighScores.txt");
         Scanner scan = null;
@@ -101,6 +116,11 @@ public class Game {
         }
     }
 
+    /* ------------------------------------------
+
+
+
+    ------------------------------------------- */
     public int switchTurn(){
         if(p2Grid.getIsWaiting() && playerSurrender()) {
             System.out.println("Player 2 surrendered!");
@@ -127,6 +147,11 @@ public class Game {
         return -1;
     }
 
+    /* ------------------------------------------
+
+
+
+    ------------------------------------------- */
     public boolean playerSurrender() {
         if(p1Grid.getIsWaiting()) {
             for (int i = 0; i < p1Grid.getPlayerFleet().size(); i++) {
@@ -146,6 +171,11 @@ public class Game {
     }
 
 
+    /* ------------------------------------------
+
+
+
+    ------------------------------------------- */
     public void makeMove(String direction, Ship[] fleet, Grid grid) {
         Command moveShips = new MoveCommand(grid, direction, fleet);
         invoker.setCommand(moveShips);
@@ -160,6 +190,11 @@ public class Game {
         invoker.redoMove();
     }
 
+    /* ------------------------------------------
+
+
+
+   ------------------------------------------- */
     public void checkHint(Weapon hitResult) {
         if(p1Grid.getIsWaiting()) {
             if(hitResult.getShipHit() == true || hitResult.getUnderShipHit() == true) {
@@ -189,6 +224,11 @@ public class Game {
         }
     }
 
+    /* ------------------------------------------
+
+
+
+    ------------------------------------------- */
     public void play() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Player one, what is your name?");
@@ -335,7 +375,6 @@ public class Game {
         headCoord = null;
         tailCoord = null;
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         System.out.println(P2.getPlayerName() + ", it is your turn to place your fleet.");
         do {
             System.out.println("Enter a location for the front of your minesweeper. Formatted as Letter+Number. (E.g 'A5')");
@@ -470,7 +509,6 @@ public class Game {
         headCoord = null;
         tailCoord = null;
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         while(!P1.getIsWinner() && !P2.getIsWinner()) {
             while(!getP1Grid().getIsWaiting()) {
@@ -516,7 +554,7 @@ public class Game {
                         sonarLocation = scan.nextLine();
                     }
 
-                    if(P1.getSonar().activateSonar(sonarLocation, p1Grid, p2Grid, P1, P2)) {
+                    if(P1.getSonar().makeHit(sonarLocation, p2Grid)) { //activateSonar --------------------------------
                         switchTurn();
                     }
                 }else if(choice.equals("3")){
@@ -586,7 +624,7 @@ public class Game {
                     while(sonarLocation.equals("") || p2Grid.convertPosition(sonarLocation)[0] < 0 || p2Grid.convertPosition(sonarLocation)[0] > 9 || p2Grid.convertPosition(sonarLocation)[1] < 0 || p2Grid.convertPosition(sonarLocation)[1] > 9) {
                         sonarLocation = scan.nextLine();
                     }
-                    if(P1.getSonar().activateSonar(sonarLocation, p1Grid, p2Grid, P1, P2)) {
+                    if(P2.getSonar().makeHit(sonarLocation, p1Grid)) { //activateSonar --------------------------------
                         switchTurn();
                     }
                 }else if(choice.equals("3")) {

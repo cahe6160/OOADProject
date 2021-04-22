@@ -1,13 +1,19 @@
 package edu.colorado.mtoftheholycross;
 
 public class Cannon extends Weapon {
-    public void makeHit(String location, Grid opponentBoard){
+    @Override
+    public boolean makeHit(String location, Grid opponentBoard){
 
         int[] position = opponentBoard.convertPosition(location);
         int hitRow = position[0];
         int hitCol = position[1];
 
         this.emptyHit();
+        if(hitRow < 0 || hitRow > 9 || hitCol < 0 || hitCol > 9) {
+            System.out.print("Error, hit location out of bounds.");
+            return false;
+        }
+
 
         if(opponentBoard.getMyShips()[hitRow][hitCol].getSurface().equals("Ship")) {
             this.setShipHit(true);
@@ -18,5 +24,6 @@ public class Cannon extends Weapon {
             this.setShipHit(true);
             this.setArmorHit(true);
         }
+        return true;
     }
 }
