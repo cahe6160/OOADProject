@@ -1,13 +1,13 @@
 package edu.colorado.mtoftheholycross;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Grid {
     private Cell[][] myShips;
     private Cell[][] myShots;
     private boolean isWaiting;
     private int shipCount;
+    ArrayList<Ship> playerFleet = new ArrayList<Ship>();
 
 
     public Grid() {
@@ -22,7 +22,7 @@ public class Grid {
             }
         }
         isWaiting = true;
-        this.shipCount = 5;
+        this.shipCount = 0;
     }
 
     public Grid(Boolean isWaiting) {
@@ -40,14 +40,14 @@ public class Grid {
             }
         }
         this.isWaiting = isWaiting;
-        this.shipCount = 5;
+        this.shipCount = 0;
     }
 
     public Grid(Cell[][] myShips, Cell[][] myShots, Boolean isWaiting) {
         this.myShips = myShips;
         this.myShots = myShots;
         this.isWaiting = isWaiting;
-        this.shipCount = 5;
+        this.shipCount = 0;
     }
 
     public Cell[][] getMyShips() {
@@ -66,23 +66,29 @@ public class Grid {
         return shipCount;
     }
 
+    public ArrayList<Ship> getPlayerFleet() { return playerFleet;}
+
+    public void setPlayerFleet(ArrayList<Ship> fleet) {
+        this.playerFleet = fleet;
+    }
+
     public void setShipCount(int count) {
         this.shipCount = count;
     }
-
-    //public List<Ship> getShipList() { return shipList; }
 
     public void setIsWaiting(boolean waiting) {
         this.isWaiting = waiting;
     }
 
-    //public void setShipList(List<Ship> ships) { this.shipList = ships; }
-
     public void decrementShipCount() {
         this.shipCount--;
     }
 
+
     public void addShip(Ship shipToAdd) {
+
+        playerFleet.add(shipToAdd);
+        shipCount++;
 
         int[] headPosition = convertPosition(shipToAdd.getHead());
         int[] tailPosition = convertPosition(shipToAdd.getTail());
@@ -166,7 +172,7 @@ public class Grid {
                         myShips[headRow][tailCol + 1].setSurface("Ship");
                         myShips[headRow][tailCol + 2].setSurface("Ship");
                         myShips[tailRow][tailCol].setSurface("Armor");
-                        myShips[tailRow - 1][tailCol + 1].setSurface("Ship");
+                        myShips[tailRow + 1][tailCol + 1].setSurface("Ship");
                     }
                 } else {
                     if (headRow < tailRow) {
@@ -259,6 +265,10 @@ public class Grid {
             myShots[row][col].setSurface("MISS");
         }
 
+        if(hitResults.getArmorHit() && isWaiting) {
+            myShips[row][col].setSurface("Captain");
+        }
+
         if(hitResults.getUnderShipHit() && isWaiting && !hitResults.getUnderCaptainHit()) {
             myShips[row][col].setUnderwater("Damage");
         } else if(hitResults.getUnderShipHit() && isWaiting && hitResults.getUnderCaptainHit()) {
@@ -272,6 +282,10 @@ public class Grid {
         } else if(!isWaiting){
             myShots[row][col].setUnderwater("MISS");
         }
+
+        if(hitResults.getUnderArmorHit() && isWaiting) {
+            myShips[row][col].setUnderwater("Captain");
+        }
     }
 
     //Helper Functions
@@ -284,10 +298,10 @@ public class Grid {
         return new int[]{Integer.parseInt(Location.substring(1)) -1, Location.charAt(0) -65};
     }
 
-    public Boolean isSunk(Ship shipToCheck){
-        int[] headPosition = convertPosition(shipToCheck.getHead());
-        int[] tailPosition = convertPosition(shipToCheck.getTail());
-        int[] captainPosition = convertPosition(shipToCheck.getCaptainLocation());
+    public Boolean isSunk(int shipIndex){
+        int[] headPosition = convertPosition(playerFleet.get(shipIndex).getHead());
+        int[] tailPosition = convertPosition(playerFleet.get(shipIndex).getTail());
+        int[] captainPosition = convertPosition(playerFleet.get(shipIndex).getCaptainLocation());
 
         int headRow = headPosition[0];
         int headCol = headPosition[1];
@@ -296,87 +310,13 @@ public class Grid {
         int captainRow = captainPosition[0];
         int captainCol = captainPosition[1];
 
-        if(shipToCheck.getName().equals("Minesweeper") && myShips[headRow][headCol].getSurface().equals("Captain")) {
-            return false;
-        }
-
-        if(shipToCheck.getName().equals("Destroyer")) {
-            if(headRow == tailRow){
-                if(headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Captain")){
-                    return false;
-                }
-            } else {
-                if(headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Captain")){
-                    return false;
-                }
-            }
-        }
-
-        if(shipToCheck.getName().equals("Battleship")) {
-            if(headRow == tailRow){
-                if(headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Captain")){
-                    return false;
-                }
-            } else {
-                if(headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Captain")){
-                    return false;
-                }
-            }
-        }
-
-        if(shipToCheck.getName().equals("Submarine")) {
-            if(!shipToCheck.getSubmerged()) {
-                if (headRow == tailRow) {
-                    if (headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol - 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain")){
-                        return false;
-                    }
-                } else {
-                    if (headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow + 1][tailCol - 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain")){
-                        return false;
-                    }
-                }
-            } else {
-                if (headRow == tailRow) {
-                    if (headCol < tailCol && (myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow][headCol + 1].getUnderwater().equals("Ship") || myShips[headRow][headCol + 2].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol - 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow][tailCol + 1].getUnderwater().equals("Ship") || myShips[headRow][tailCol + 2].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain")){
-                        return false;
-                    }
-                } else {
-                    if (headRow < tailRow && (myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow + 1][headCol].getUnderwater().equals("Ship") || myShips[headRow + 2][headCol].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[tailRow + 1][tailCol].getUnderwater().equals("Ship") || myShips[tailRow + 2][tailCol].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow + 1][tailCol - 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain")){
-                        return false;
-                    }
-                }
-            }
-        }
-
-        if(shipToCheck.getName().equals("Tower Ship")) {
-            if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol].getSurface().equals("Captain")) {
-                return false;
-            }
-        }
-
-        if((myShips[captainRow][captainCol].getSurface().equals("Critical") || myShips[captainRow][captainCol].getUnderwater().equals("Critical")) && !shipToCheck.getCasualtyReported()) {
-            System.out.println("You sunk my " + shipToCheck.getName());
-            shipToCheck.setCasualtyReported(true);
+        if((myShips[captainRow][captainCol].getSurface().equals("Critical") || myShips[captainRow][captainCol].getUnderwater().equals("Critical")) && !playerFleet.get(shipIndex).getCasualtyReported()) {
+            System.out.println("You sunk my " + playerFleet.get(shipIndex).getName());
+            playerFleet.get(shipIndex).setCasualtyReported(true);
             shipCount--;
 
 
-            if(!shipToCheck.getName().equals("Submarine")) {
+            if(!playerFleet.get(shipIndex).getName().equals("Submarine")) {
                 if (headRow == tailRow) {
                     if (headCol < tailCol) {
                         for (int i = headCol; i < tailCol + 1; i++) {
@@ -398,7 +338,7 @@ public class Grid {
                         }
                     }
                 }
-            } else if(!shipToCheck.getSubmerged()) {
+            } else if(!playerFleet.get(shipIndex).getSubmerged()) {
                 if (headRow == tailRow) {
                     if (headCol < tailCol) {
                         for (int i = headCol; i < tailCol + 1; i++) {
@@ -451,13 +391,88 @@ public class Grid {
                     }
                 }
             }
+            return true;
         }
 
-        if(!shipToCheck.getCasualtyReported()) {
-            System.out.println("You sunk my " + shipToCheck.getName());
+        if(playerFleet.get(shipIndex).getName().equals("Minesweeper") && myShips[headRow][headCol].getSurface().equals("Captain")) {
+            return false;
+        }
+
+        if(playerFleet.get(shipIndex).getName().equals("Destroyer")) {
+            if(headRow == tailRow){
+                if(headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Captain"))) {
+                    return false;
+                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Captain")){
+                    return false;
+                }
+            } else {
+                if(headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Captain"))) {
+                    return false;
+                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Captain")){
+                    return false;
+                }
+            }
+        }
+
+        if(playerFleet.get(shipIndex).getName().equals("Battleship")) {
+            if(headRow == tailRow){
+                if(headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Captain"))) {
+                    return false;
+                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Captain")){
+                    return false;
+                }
+            } else {
+                if(headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Captain"))) {
+                    return false;
+                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Captain")){
+                    return false;
+                }
+            }
+        }
+
+        if(playerFleet.get(shipIndex).getName().equals("Submarine")) {
+            if(!playerFleet.get(shipIndex).getSubmerged()) {
+                if (headRow == tailRow) {
+                    if (headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol - 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain"))) {
+                        return false;
+                    } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain")){
+                        return false;
+                    }
+                } else {
+                    if (headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain"))) {
+                        return false;
+                    } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow + 1][tailCol - 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain")){
+                        return false;
+                    }
+                }
+            } else {
+                if (headRow == tailRow) {
+                    if (headCol < tailCol && (myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow][headCol + 1].getUnderwater().equals("Ship") || myShips[headRow][headCol + 2].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol - 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain"))) {
+                        return false;
+                    } else if(myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow][tailCol + 1].getUnderwater().equals("Ship") || myShips[headRow][tailCol + 2].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain")){
+                        return false;
+                    }
+                } else {
+                    if (headRow < tailRow && (myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow + 1][headCol].getUnderwater().equals("Ship") || myShips[headRow + 2][headCol].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain"))) {
+                        return false;
+                    } else if(myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[tailRow + 1][tailCol].getUnderwater().equals("Ship") || myShips[tailRow + 2][tailCol].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow + 1][tailCol - 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain")){
+                        return false;
+                    }
+                }
+            }
+        }
+
+        if(playerFleet.get(shipIndex).getName().equals("Tower Ship")) {
+            if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol].getSurface().equals("Captain")) {
+                return false;
+            }
+        }
+
+        if(!playerFleet.get(shipIndex).getCasualtyReported()) {
+            System.out.println("You sunk my " + playerFleet.get(shipIndex).getName());
             shipCount--;
         }
-        shipToCheck.setCasualtyReported(true);
+        playerFleet.get(shipIndex).setCasualtyReported(true);
 
         return true;
     }
@@ -481,9 +496,9 @@ public class Grid {
                 }
 
                 for (int i = 0; i < fleet.length; i++) {
-                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 66)) + fleet[i].getHead().substring(1);
-                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 66)) + fleet[i].getTail().substring(1);
-                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 66)) + fleet[i].getCaptainLocation().substring(1);
+                    String newHead = fleet[i].getHead().substring(0, 1) + (Integer.parseInt(fleet[i].getHead().substring(1)) +1);
+                    String newTail = fleet[i].getTail().substring(0, 1) + (Integer.parseInt(fleet[i].getHead().substring(1)) +1);
+                    String newCapt = fleet[i].getCaptainLocation().substring(0, 1) + (Integer.parseInt(fleet[i].getCaptainLocation().substring(1)) +1);
                     fleet[i].setHead(newHead);
                     fleet[i].setTail(newTail);
                     fleet[i].setCaptainLocation(newCapt);
@@ -496,7 +511,7 @@ public class Grid {
                         return;
                     }
                 }
-                for (int i = 8; i > 0; i--) {
+                for (int i = 9; i > 0; i--) {
                     for (int j = 0; j < 10; j++) {
                         myShips[i][j] = myShips[i - 1][j];
                     }
@@ -521,7 +536,7 @@ public class Grid {
                     }
                 }
                 for (int i = 0; i < 10; i++) {
-                    for (int j = 8; j > 0; j--) {
+                    for (int j = 9; j > 0; j--) {
                         myShips[i][j] = myShips[i][j - 1];
                     }
                 }
@@ -530,9 +545,9 @@ public class Grid {
                 }
 
                 for (int i = 0; i < fleet.length; i++) {
-                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getHead().substring(1)) + 1);
-                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getTail().substring(1)) + 1);
-                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getCaptainLocation().substring(1)) + 1);
+                    String newHead = (char)(fleet[i].getHead().charAt(0) + 1) + fleet[i].getHead().substring(1);
+                    String newTail = (char)(fleet[i].getTail().charAt(0) + 1) + fleet[i].getTail().substring(1);
+                    String newCapt = (char)(fleet[i].getCaptainLocation().charAt(0) + 1) + fleet[i].getCaptainLocation().substring(1);
                     fleet[i].setHead(newHead);
                     fleet[i].setTail(newTail);
                     fleet[i].setCaptainLocation(newCapt);
@@ -545,7 +560,7 @@ public class Grid {
                     }
                 }
                 for (int i = 0; i < 10; i++) {
-                    for (int j = 1; j < 10; j++) {
+                    for (int j = 0; j < 9; j++) {
                         myShips[i][j] = myShips[i][j + 1];
                     }
                 }
@@ -554,9 +569,9 @@ public class Grid {
                 }
 
                 for (int i = 0; i < fleet.length; i++) {
-                    String newHead = Integer.toString((fleet[i].getHead().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getHead().substring(1)) - 1);
-                    String newTail = Integer.toString((fleet[i].getTail().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getTail().substring(1)) - 1);
-                    String newCapt = Integer.toString((fleet[i].getCaptainLocation().charAt(0) - 65)) + Integer.toString(Integer.parseInt(fleet[i].getCaptainLocation().substring(1)) - 1);
+                    String newHead = (char)(fleet[i].getHead().charAt(0) - 1) + fleet[i].getHead().substring(1);
+                    String newTail = (char)(fleet[i].getTail().charAt(0) - 1) + fleet[i].getTail().substring(1);
+                    String newCapt = (char)(fleet[i].getCaptainLocation().charAt(0) - 1) + fleet[i].getCaptainLocation().substring(1);
                     fleet[i].setHead(newHead);
                     fleet[i].setTail(newTail);
                     fleet[i].setCaptainLocation(newCapt);

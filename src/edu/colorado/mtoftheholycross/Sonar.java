@@ -31,13 +31,13 @@ public class Sonar extends Weapon {
         if(!p1Grid.getIsWaiting() && P1.getSonarCount() == 0){
             System.out.println("Error, no sonar charges remain.");
             return false;
-        } else if(!p1Grid.getIsWaiting() && p2Grid.getShipCount() == 5) {
+        } else if(!p1Grid.getIsWaiting() && p2Grid.getShipCount() == p2Grid.getPlayerFleet().size()) {
             System.out.println("Error, at least one ship must be sunk in order to activate sonar.");
             return false;
         } else if(p1Grid.getIsWaiting() && P2.getSonarCount() == 0) {
             System.out.println("Error, no sonar charges remain.");
             return false;
-        } else if(p1Grid.getIsWaiting() && p2Grid.getShipCount() == 5) {
+        } else if(p1Grid.getIsWaiting() && p1Grid.getShipCount() == p1Grid.getPlayerFleet().size()) {
             System.out.println("Error, at least one ship must be sunk in order to activate sonar.");
             return false;
         }

@@ -1,23 +1,12 @@
-import edu.colorado.mtoftheholycross.Game;
-import edu.colorado.mtoftheholycross.Minesweeper;
-import edu.colorado.mtoftheholycross.Ship;
-import edu.colorado.mtoftheholycross.Grid;
-import edu.colorado.mtoftheholycross.Cell;
-
-import org.junit.Assert;
+import edu.colorado.mtoftheholycross.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.lang.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class TestHint {
 
@@ -32,16 +21,20 @@ public class TestHint {
     Game gameTest;
     Cell[][] p2ShipBoard;
     Cell[][] p1ShipBoard;
+    Ship[] p1Input;
+    Ship[] p2Input;
 
     @Before
     public void init() {
 
         gameTest = new Game();
 
+        p1Input = new Ship[]{new Minesweeper("A7", "A8"), new Destroyer("B7", "B9"), new Battleship("J1", "J4"), new Submarine("D7", "D10", false)};
+        p2Input = new Ship[]{new Minesweeper("A1", "A2"), new Destroyer("B1", "B3"), new Battleship("C1", "C4"), new Submarine("D1", "D4", false), new Minesweeper("A3", "A4"), new Minesweeper("B4", "B5"), new TowerShip("J10", true)};
         p2ShipBoard = gameTest.getP2Grid().getMyShips();
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
 
-        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
+        gameTest.getP2Grid().addShip(p2Input[0]);
 
     }
 
@@ -120,7 +113,7 @@ public class TestHint {
         gameTest.getP1Grid().updateBoards("B5", gameTest.getP1().getCannon());
         gameTest.getP2Grid().updateBoards("B5", gameTest.getP1().getCannon());
 
-        gameTest.getP1().getHint().activateHint(gameTest.getP2Grid(), gameTest.getP2TestFleet());
+        gameTest.getP1().getHint().activateHint(gameTest.getP2Grid(), gameTest.getP2Grid().getPlayerFleet().toArray(new Ship[gameTest.getP2Grid().getPlayerFleet().size()]));
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));

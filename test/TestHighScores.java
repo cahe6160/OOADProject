@@ -1,15 +1,11 @@
-import edu.colorado.mtoftheholycross.Game;
-import org.junit.*;
+import edu.colorado.mtoftheholycross.*;
+import org.junit.Before;
 import org.junit.Test;
 import java.io.*;
-import java.lang.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestHighScores {
 
@@ -22,11 +18,15 @@ public class TestHighScores {
     }
 
     Game gameTest;
+    Ship[] p1Input;
+    Ship[] p2Input;
 
     @Before
     public void init() {
 
         gameTest = new Game();
+        p1Input = new Ship[]{new Minesweeper("A7", "A8"), new Destroyer("B7", "B9"), new Battleship("J1", "J4"), new Submarine("D7", "D10", false)};
+        p2Input = new Ship[]{new Minesweeper("A1", "A2"), new Destroyer("B1", "B3"), new Battleship("C1", "C4"), new Submarine("D1", "D4", false), new Minesweeper("A3", "A4"), new Minesweeper("B4", "B5"), new TowerShip("J10", true)};
     }
 
     @Test
@@ -34,8 +34,8 @@ public class TestHighScores {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(myOut));
 
-        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
-        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
+        gameTest.getP2Grid().addShip(p2Input[0]);
+        gameTest.getP1Grid().addShip(p1Input[0]);
         //P1 Shoots at P2
         gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());
         gameTest.getP1Grid().updateBoards("A2", gameTest.getP1().getCannon());
@@ -54,15 +54,15 @@ public class TestHighScores {
 
         final String standardOutput = myOut.toString().trim();
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-        assertEquals("You sunk my Minesweeper\nYou sunk my Destroyer\nYou sunk my Battleship\nYou sunk my Submarine\nYou sunk my Minesweeper\nYou sunk my Minesweeper\nYou sunk my Tower Ship\nPlayer 2 surrendered!\nYour score this game was 2 turns!", standardOutput);
+        assertEquals("You sunk my Minesweeper\nPlayer 2 surrendered!\nYour score this game was 2 turns!", standardOutput);
 
     }
 
     @Test
     public void correctTest() {
 
-        gameTest.getP2Grid().addShip(gameTest.getP2TestFleet()[0]);
-        gameTest.getP1Grid().addShip(gameTest.getP1TestFleet()[0]);
+        gameTest.getP2Grid().addShip(p2Input[0]);
+        gameTest.getP1Grid().addShip(p1Input[0]);
         gameTest.getP1().setPlayerName("Will");
         //P1 Shoots at P2
         gameTest.getP1().getCannon().makeHit("A2", gameTest.getP2Grid());

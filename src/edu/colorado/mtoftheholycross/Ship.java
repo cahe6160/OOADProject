@@ -1,6 +1,5 @@
 package edu.colorado.mtoftheholycross;
-// This is the  baseclass for your ship.  Modify accordingly
-// TODO: practice good OO design
+
 public class Ship {
 
     protected String name;
