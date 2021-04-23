@@ -2,7 +2,7 @@ package edu.colorado.mtoftheholycross;
 
 public class Sonar extends Weapon {
 
-    private int sonarCount = 2;
+    private int sonarCount = 3;
 
     private int[][] getBounds(int[] centerLocation){
         int[][] bounds = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};

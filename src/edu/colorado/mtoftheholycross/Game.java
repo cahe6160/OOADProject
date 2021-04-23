@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.io.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /* ------------------------------------------
 
@@ -141,6 +142,21 @@ public class Game {
             P2.incrementTurnCount();
         } else {
             P1.incrementTurnCount();
+        }
+        int event = ThreadLocalRandom.current().nextInt(0, 20 + 1);
+        if(event == 1) {
+            int eventType = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+            if(eventType == 3) {
+                new RandEvent(p1Grid, P1, eventType);
+                p1Grid.setIsWaiting(!p1Grid.getIsWaiting());
+                p2Grid.setIsWaiting(!p2Grid.getIsWaiting());
+            } else {
+                if(p1Grid.getIsWaiting()) {
+                    new RandEvent(p2Grid, P2, eventType);
+                } else {
+                    new RandEvent(p1Grid, P1, eventType);
+                }
+            }
         }
         p1Grid.setIsWaiting(!p1Grid.getIsWaiting());
         p2Grid.setIsWaiting(!p2Grid.getIsWaiting());

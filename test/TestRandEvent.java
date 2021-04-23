@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class TestRandEvent {
     Game gameTest;
@@ -41,25 +40,32 @@ public class TestRandEvent {
         gameTest.getP2Grid().updateBoards("A3", gameTest.getP1().getCannon());
 
         new RandEvent(gameTest.getP1Grid(), gameTest.getP1(), 0);
-        assertEquals(gameTest.getP1().getSonar().getSonarCount(), 1);
+        assertEquals(2, gameTest.getP1().getSonar().getSonarCount());
     }
 
     @Test
     public void testMine() {
         gameTest.getP1Grid().addShip(p2Input[0]);
         gameTest.getP1Grid().addShip(p2Input[1]);
-        gameTest.getP2().getCannon().makeHit("A1", gameTest.getP1Grid());
-        gameTest.getP1Grid().updateBoards("A1", gameTest.getP2().getCannon());
-        gameTest.getP2Grid().updateBoards("A1", gameTest.getP2().getCannon());
+        gameTest.getP2Grid().addShip(p2Input[0]);
+        gameTest.getP2Grid().addShip(p2Input[1]);
+
+        gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
+        gameTest.getP1Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().updateBoards("A1", gameTest.getP1().getCannon());
+        gameTest.getP2Grid().getPlayerFleet().get(0).setCasualtyReported(true);
+        gameTest.getP2Grid().setIsWaiting(false);
+        gameTest.getP1Grid().setIsWaiting(true);
+
         new RandEvent(gameTest.getP2Grid(), gameTest.getP2(), 1);
-        assert(gameTest.getP1Grid().getMyShips()[0][1].getSurface().equals("Damage") || gameTest.getP1Grid().getMyShips()[2][1].getSurface().equals("Damage"));
+        assertEquals("Damage", gameTest.getP2Grid().getMyShips()[0][1].getSurface());
     }
 
     @Test
     public void testWave() {
         gameTest.getP1Grid().addShip(p2Input[0]);
         new RandEvent(gameTest.getP2Grid(), gameTest.getP2(), 2);
-        assert(gameTest.getP1Grid().getMyShips()[0][1].getSurface().equals("Ship") || gameTest.getP1Grid().getMyShips()[2][0].getSurface().equals("Ship"));
+        assertTrue(gameTest.getP1Grid().getMyShips()[1][0].getSurface().equals("Ship") || gameTest.getP1Grid().getMyShips()[0][2].getSurface().equals("Ship"));
     }
 
     @Test
