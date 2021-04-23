@@ -544,7 +544,6 @@ public class Game {
                         p1Grid.updateBoards(hitLocation, P1.getLaser());
                         p2Grid.updateBoards(hitLocation, P1.getLaser());
                     }
-
                     switchTurn();
 
                 }else if (choice.equals("2")) {
