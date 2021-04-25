@@ -2,7 +2,7 @@
 
 <p>This is a battleship game project created by Gabriel Madera, Drew McFaul, Alex Kim, and Caroline Hernandez.
 This project allows you to play a full game of battleship, where each player has a fleet of 5 ships and exciting abilities at their disposal.
- There is a high score system based on the number of turns taken to win. This project uses test driven development and incorporates various object orient practices and software design patterns.</p>
+ There is a high score system based on the number of turns taken to win. This project uses test driven development and incorporates various object oriented practices and software design patterns.</p>
 
 <p> Requirements to run this game and its tests include:</p>
 <ul>
