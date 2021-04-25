@@ -1,6 +1,17 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Cannon class, which is an extension from Weapon
+ * Cannon fires, but only hits Ships on the waters surface.
+ */
 public class Cannon extends Weapon {
+    /**
+     * Determines the results of a cannon strike,
+     * and updates attributes of the weapon accordingly.
+     * @param location location of strike attack
+     * @param opponentBoard this is the oppnents board/grid
+     * @return whether or not the hit location was valid.
+     */
     @Override
     public boolean makeHit(String location, Grid opponentBoard){
 

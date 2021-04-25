@@ -1,10 +1,13 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Player class, represents one of the two players of the game.
+ * Holds all necessary attributes for each player.
+ * Includes name, weapons, turns, and if they are determined to be the winner
+ */
 public class Player {
 
     private String playerName;
-    //private int shipCount;
-    //private int sonarCount;
     private Sonar sonar;
     private Cannon cannon;
     private Laser laser;
@@ -12,10 +15,7 @@ public class Player {
     private int turnCount;
     private boolean isWinner;
 
-
     Player(){
-        //this.shipCount = 5;
-        //this.sonarCount = 2;
         sonar = new Sonar();
         cannon = new Cannon();
         laser = new Laser();
@@ -37,14 +37,6 @@ public class Player {
 
     public Hint getHint() { return hint; }
 
-//    public int getShipCount() {
-//        return shipCount;
-//    }
-
-//    public int getSonarCount() {
-//        return sonarCount;
-//    }
-
     public int getTurnCount() {
         return turnCount;
     }
@@ -56,14 +48,6 @@ public class Player {
     public boolean getIsWinner() {
         return isWinner;
     }
-
-    //public void setShipCount(int shipCount) {
-    //    this.shipCount = shipCount;
-    //}
-
-//    public void setSonarCount(int sonarCount) {
-//        this.sonarCount = sonarCount;
-//    }
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;

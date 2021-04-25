@@ -10,11 +10,19 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class is used to implement methods that test the Hint feature.
+ * Specifically, performs output checks and Hint availability.
+ */
 public class TestHint {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+    /**
+     * The set up method is used to set up outputStreamCaptor.
+     * Specifically, this will help us read console output later on in the class.
+     */
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
@@ -26,6 +34,13 @@ public class TestHint {
     Ship[] p1Input;
     Ship[] p2Input;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -33,6 +48,10 @@ public class TestHint {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
 
@@ -47,6 +66,10 @@ public class TestHint {
 
     }
 
+    /**
+     * This test is made to check that a hit updates the recent shots array correctly.
+     * This array determines if a player gets a hint.
+     */
     @Test
     public void testAtLeastOneHit() {
         gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
@@ -58,6 +81,10 @@ public class TestHint {
         assertArrayEquals(referenceGrid, gameTest.getP1().getHint().getLastShot());
     }
 
+    /**
+     * This test is made to check that a 5 consecutive misses are recorded correctly.
+     * This array determines if a player gets a hint.
+     */
     @Test
     public void testAllMisses() {
         gameTest.getP1().getCannon().makeHit("B1", gameTest.getP2Grid());
@@ -92,6 +119,10 @@ public class TestHint {
         assertArrayEquals(secondReferenceGrid, gameTest.getP1().getHint().getLastShot());
     }
 
+    /**
+     * This test was made to test the command line output of calling Hint.
+     * Should output a quadrant where a ship is located.
+     */
     @Test
     public void testHintOutput() {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();

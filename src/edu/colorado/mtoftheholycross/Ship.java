@@ -1,5 +1,10 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Ship class, represents the ship objects
+ * This holds the ship type, head, tail, captain location,
+ * whether it is underwater, and if it has been sunk.
+ */
 public class Ship {
 
     protected String name;

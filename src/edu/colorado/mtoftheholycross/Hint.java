@@ -1,5 +1,9 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Hint class, extends from Weapon.
+ * If available this one fires, and gives a hint of where their ships might be
+ */
 public class Hint extends Weapon {
 
     private boolean[] lastShot = {true, true, true, true, true};
@@ -10,6 +14,13 @@ public class Hint extends Weapon {
         return lastShot;
     }
 
+    /**
+     * If there are hints available, earned after 5 straight misses,
+     * reports a quadrant where an opponents ship is located.
+     * @param location location of strike attack
+     * @param opponentGrid this is the opponents board/grid
+     * @return whether or not the Hint was valid
+     */
     public boolean makeHit(String location, Grid opponentGrid) {
         if(hintCount == 0) {
             System.out.println("Error, not enough hints available.");
@@ -45,6 +56,10 @@ public class Hint extends Weapon {
         hintCount++;
     }
 
+    /**
+     * Adds the shot results into the corresponding spot, and increments the index.
+     * @param hitMiss Either true or false, represents recent shot results.
+     */
     public void setLastShot(boolean hitMiss) {
         lastShot[index % 5] = hitMiss;
         index++;

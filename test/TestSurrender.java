@@ -7,16 +7,21 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.*;
 import java.lang.reflect.Field;
-
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class tests that playerSurrender methods are working.
+ * This will test command line output and that variables are updated.
+ */
 public class TestSurrender {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
-
-
+    /**
+     * The set up method is used to set up outputStreamCaptor.
+     * Specifically, this will help us read console output later on in the class.
+     */
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
@@ -29,6 +34,13 @@ public class TestSurrender {
     Cell[][] p1ShipBoard;
     Cell[][] p2ShipBoard;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -36,6 +48,10 @@ public class TestSurrender {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
         gameTest = Game.getInstance();;
@@ -50,6 +66,9 @@ public class TestSurrender {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * This tests that after all ships and their respective location have taken damage, playerSurrender returns that a player has no ships left.
+     */
     @Test
     public void surrender() {
         //Shot 1
@@ -101,6 +120,10 @@ public class TestSurrender {
         assertEquals(true, gameTest.playerSurrender());
     }
 
+    /**
+     * This tests that after all ships and their respective location have taken damage, playerSurrender returns that a player has no ships left.
+     * Specifically, this test command line output after a player has surrendered.
+     */
     @Test
     public void testPlayerSurrender() {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();

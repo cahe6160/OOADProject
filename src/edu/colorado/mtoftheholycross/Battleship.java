@@ -1,5 +1,9 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Battleship class, which extends Ship
+ * Battleship differs in size, and has a different captains location
+ */
 public class Battleship extends Ship {
 
     public Battleship(String head, String tail) {

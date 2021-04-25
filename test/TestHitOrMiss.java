@@ -6,6 +6,10 @@ import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class was made to implement methods that test hits and misses.
+ * This will test both cannon and laser.
+ */
 public class TestHitOrMiss {
 
     Game gameTest;
@@ -14,6 +18,13 @@ public class TestHitOrMiss {
     Ship[] p1Input;
     Ship[] p2Input;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -21,6 +32,10 @@ public class TestHitOrMiss {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
         gameTest = Game.getInstance();
@@ -35,6 +50,9 @@ public class TestHitOrMiss {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * This tests whether a hit is made appropriately.
+     */
     @Test
     public void testHit() {
         gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
@@ -43,6 +61,9 @@ public class TestHitOrMiss {
 
     }
 
+    /**
+     * This test whether a miss is made appropriately.
+     */
     @Test
     public void testMiss() {
         gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
@@ -50,6 +71,9 @@ public class TestHitOrMiss {
         assertEquals(false, gameTest.getP1().getCannon().getShipHit());
     }
 
+    /**
+     * This tests whether a cannon hit updates on the opposing players ship grid.
+     */
     @Test
     public void shipHitBoardUpdateTest() {
         gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
@@ -58,6 +82,9 @@ public class TestHitOrMiss {
         assertEquals("Critical", gameTest.getP2Grid().getMyShips()[0][0].getSurface());
     }
 
+    /**
+     * This tests whether a cannon hit updates on the shooting players shot grid.
+     */
     @Test
     public void shotHitBoardUpdateTest() {
         gameTest.getP1().getCannon().makeHit("A1", gameTest.getP2Grid());
@@ -66,6 +93,9 @@ public class TestHitOrMiss {
         assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][0].getSurface());
     }
 
+    /**
+     *
+     */
     @Test
     public void shipMissBoardUpdateTest() {
         gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
@@ -74,6 +104,9 @@ public class TestHitOrMiss {
         assertEquals("Sea", gameTest.getP2Grid().getMyShips()[2][0].getSurface());
     }
 
+    /**
+     * This tests whether a cannon miss updates on the shooting players shot grid.
+     */
     @Test
     public void shotMissBoardUpdateTest() {
         gameTest.getP1().getCannon().makeHit("A3", gameTest.getP2Grid());
@@ -82,6 +115,9 @@ public class TestHitOrMiss {
         assertEquals("MISS", gameTest.getP1Grid().getMyShots()[2][0].getSurface());
     }
 
+    /**
+     * This tests whether a cannon hits a surfaced ship only.
+     */
     @Test
     public void subUnderShipHit() {
         p2Input[3].setSubmerged(true);
@@ -94,6 +130,9 @@ public class TestHitOrMiss {
         assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][3].getSurface());
     }
 
+    /**
+     * This tests whether a cannon misses, when there is a underwater sub at the location.
+     */
     @Test
     public void subSubmergedCannon() {
         p2Input[3].setSubmerged(true);

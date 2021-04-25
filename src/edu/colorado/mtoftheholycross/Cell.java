@@ -1,5 +1,9 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * The cell class allows us to make every grid position contina two values:
+ * The surface status, and the underwater status.
+ */
 public class Cell {
     private String surface;
     private String underwater;

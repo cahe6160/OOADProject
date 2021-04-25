@@ -6,14 +6,21 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
-
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class' methods are used to test the new weapon, the Sonar Pulse.
+ * Again, this checks command line output and other variables.
+ */
 public class TestSonarPulse {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+    /**
+     * The set up method is used to set up outputStreamCaptor.
+     * Specifically, this will help us read console output later on in the class.
+     */
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
@@ -25,6 +32,13 @@ public class TestSonarPulse {
     Ship[] p1Input;
     Ship[] p2Input;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -32,6 +46,10 @@ public class TestSonarPulse {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
         gameTest = Game.getInstance();;
@@ -45,6 +63,10 @@ public class TestSonarPulse {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * This tests the output of the command line, when a user
+     * tries to use the Sonar when they have none remaining.
+     */
     @Test
     public void noCharges(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -59,6 +81,10 @@ public class TestSonarPulse {
         assertEquals("Error, no sonar charges remain.", standardOutput);
     }
 
+    /**
+     * This tests the output of the command line, when a user
+     * tries to use the Sonar without sinking an opposing ship first.
+     */
     @Test
     public void noShipSunk(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -71,6 +97,9 @@ public class TestSonarPulse {
         assertEquals("Error, at least one ship must be sunk in order to activate sonar.", standardOutput);
     }
 
+    /**
+     * This tests the output of a Sonar Pulse, when the pulse does not detect a ship in the vicinity.
+     */
     @Test
     public void noShipDetected(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -99,6 +128,9 @@ public class TestSonarPulse {
         assertEquals(standardOutput, testStandardOutput);
     }
 
+    /**
+     * This tests the output of a Sonar Pulse, when the pulse partially detects a ship, but is still in the fog.
+     */
     @Test
     public void shipInFog(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -127,6 +159,9 @@ public class TestSonarPulse {
         assertEquals(standardOutput, testStandardOutput);
     }
 
+    /**
+     * This tests the output of a Sonar Pulse, when the pulse partially detects a ship in the vicinity.
+     */
     @Test
     public void shipPartiallyInFog(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -155,6 +190,9 @@ public class TestSonarPulse {
         assertEquals(standardOutput, testStandardOutput);
     }
 
+    /**
+     * This tests the output of a Sonar Pulse, when the pulse fully detects a ship in the vicinity.
+     */
     @Test
     public void fullyDetected(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -183,6 +221,9 @@ public class TestSonarPulse {
         assertEquals(standardOutput, testStandardOutput);
     }
 
+    /**
+     * This tests the command line output when a sonar location is too close ot the edge of the grid.
+     */
     @Test
     public void outOfBounds(){
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();

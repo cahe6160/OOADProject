@@ -1,5 +1,9 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Destroyer class, which extends Ships
+ * Destroyer differs in size, and captain location
+ */
 public class Destroyer extends Ship {
 
     public Destroyer(String head, String tail) {

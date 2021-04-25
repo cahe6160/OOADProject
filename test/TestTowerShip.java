@@ -1,12 +1,13 @@
 import edu.colorado.mtoftheholycross.*;
 import org.junit.*;
 import org.junit.Test;
-
 import java.lang.reflect.Field;
-
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * This tests that the TowerShip Ship is implemented correctly.
+ * This will not test command line output.
+ */
 public class TestTowerShip {
     Game gameTest;
     Ship[] p1Input;
@@ -14,6 +15,13 @@ public class TestTowerShip {
     Cell[][] p2ShipBoard;
     Cell[][] p1ShipBoard;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -21,6 +29,10 @@ public class TestTowerShip {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
         gameTest = Game.getInstance();;
@@ -33,6 +45,10 @@ public class TestTowerShip {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * This tests that a cannon hit is updated on the ship grid correctly.
+     * Should not affect the underwater portion.
+     */
     @Test
     public void surfaceHit() {
         gameTest.getP1().getCannon().makeHit("J10", gameTest.getP2Grid());
@@ -44,6 +60,10 @@ public class TestTowerShip {
 
     }
 
+    /**
+     * This tests that a laser hit is updated on the ship grid correctly.
+     * Should change both the surface and the underwater portion.
+     */
     @Test
     public void laserHit() {
         gameTest.getP1().getLaser().makeHit("J10", gameTest.getP2Grid());

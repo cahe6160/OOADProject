@@ -5,9 +5,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * GUI class represents the Interface that is in development for Battleship game.
+ * Will not be run in command line.
+ */
 public class GUI extends javax.swing.JFrame {
 
-    //Composite Pattern?
     private final JButton shotGridGUI[][] = new JButton[10][10];
     private final JButton shipGridGUI[][] = new JButton[10][10];
     private final JPanel shipPanel = new JPanel();
@@ -46,6 +49,9 @@ public class GUI extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Builds a 10x10 grid of clickable buttons, specific for a players ship board.
+     */
     private void buildShipBoard() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -70,6 +76,9 @@ public class GUI extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Builds a 10x10 grid of clickable buttons, specific for a players shot board.
+     */
     private void buildShotBoard() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;

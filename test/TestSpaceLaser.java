@@ -4,14 +4,21 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
-
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class' methods are used to test the capabilities of the space laser.
+ * Tests command line outputs, and that some variables are updated accordingly.
+ */
 public class TestSpaceLaser {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+    /**
+     * The set up method is used to set up outputStreamCaptor.
+     * Specifically, this will help us read console output later on in the class.
+     */
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
@@ -23,6 +30,13 @@ public class TestSpaceLaser {
     Ship[] p1Input;
     Ship[] p2Input;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -30,6 +44,10 @@ public class TestSpaceLaser {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
 
@@ -41,6 +59,10 @@ public class TestSpaceLaser {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * This tests that a laser weapon is capable of hitting ships on the surface.
+     * Makes sure the values in the my shots grid at that position are updated accordingly.
+     */
     @Test
     public void hitSurface() {
         gameTest.getP2Grid().addShip(p2Input[0]);
@@ -52,6 +74,10 @@ public class TestSpaceLaser {
         assertEquals("MISS", gameTest.getP1Grid().getMyShots()[0][0].getUnderwater());
     }
 
+    /**
+     * This tests that a laser weapon is capable of hitting ships underwater.
+     * Makes sure the values in the my shots grid at that position are updated accordingly.
+     */
     @Test
     public void hitSubmerged() {
         p2Input[3].setSubmerged(true);
@@ -64,6 +90,10 @@ public class TestSpaceLaser {
         assertEquals("HIT", gameTest.getP1Grid().getMyShots()[0][3].getUnderwater());
     }
 
+    /**
+     * This tests that a laser weapon is capable of hitting ships both on the surface and underwater.
+     * Makes sure the values in the my shots grid, at that position, are updated accordingly.
+     */
     @Test
     public void hitBoth() {
         p2Input[3].setSubmerged(true);

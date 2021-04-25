@@ -1,5 +1,11 @@
 package edu.colorado.mtoftheholycross;
 
+/**
+ * Template Method:
+ * Abstract class for weapon
+ * This provides a template for all weapons to be made.
+ * Cannon, Laser, Sonar, and Hint all use this class.
+ */
 abstract class Weapon {
 
     private boolean shipHit = false;
@@ -20,6 +26,12 @@ abstract class Weapon {
         underArmorHit = false;
     }
 
+    /**
+     * Initializes a makeHit function that will be overriden based on the type of Weapon used.
+     * @param location location of the players attack
+     * @param opponentBoard the opponents board/grid
+     * @return returns whether or not the hit was valid
+     */
     public abstract boolean makeHit(String location, Grid opponentBoard);
 
     public void setShipHit(boolean isHit) {

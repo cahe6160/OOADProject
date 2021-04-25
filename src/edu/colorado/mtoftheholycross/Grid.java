@@ -1,7 +1,10 @@
 package edu.colorado.mtoftheholycross;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/**
+ * Grid class holds value information stored for each player
+ * Holds 2D arrays for ships and shots, holds value to determine whose turn it is, and the player's ships
+ */
 public class Grid {
     private Cell[][] myShips;
     private Cell[][] myShots;
@@ -84,7 +87,11 @@ public class Grid {
         this.shipCount--;
     }
 
-
+    /**
+     * addShip method is given a ship object, and based on the user's input,
+     * it places the ships and the correct coordinates and stores the ship object.
+     * @param shipToAdd ship object to be added to players fleet and the grid.
+     */
     public void addShip(Ship shipToAdd) {
 
         playerFleet.add(shipToAdd);
@@ -227,6 +234,9 @@ public class Grid {
         }
     }
 
+    /**
+     * prints the current players ship board
+     */
     public void printMyShips() {
         for (int i = 0; i < 10; i++) {
             for(int j=0; j < 10 ; j++) {
@@ -236,6 +246,9 @@ public class Grid {
         }
     }
 
+    /**
+     * prints the current players shot board
+     */
     public void printMyShots() {
         for (int i = 0; i < 10; i++) {
             for(int j=0; j < 10 ; j++) {
@@ -245,6 +258,12 @@ public class Grid {
         }
     }
 
+    /**
+     * updateBoards method is responsible for using the previous attack's information,
+     * and update both my players boards accordingly.
+     * @param location this is the location of the recent attack
+     * @param hitResults this is the actual weapon that was just used
+     */
     public void updateBoards(String location, Weapon hitResults) {
 
         int[] position = convertPosition(location);
@@ -288,9 +307,11 @@ public class Grid {
         }
     }
 
-    //Helper Functions
-
-    //Converts string coordinate to indices
+    /**
+     * Converts a given string location to the array value equivalent
+     * @param Location the string location value
+     * @return an array of size two, holding the location in it's array equivalent
+     */
     public int[] convertPosition(String Location) {
         if(Location == null) {
             return new int[]{-1, -1};
@@ -298,6 +319,12 @@ public class Grid {
         return new int[]{Integer.parseInt(Location.substring(1)) -1, Location.charAt(0) -65};
     }
 
+    /**
+     * isSunk method is given the ships index, from the player fleet,
+     * and determines if the ship there is sunk or not
+     * @param shipIndex the ships index, in the player fleet List
+     * @return whether or not that ship is sunk or not
+     */
     public Boolean isSunk(int shipIndex){
         int[] headPosition = convertPosition(playerFleet.get(shipIndex).getHead());
         int[] tailPosition = convertPosition(playerFleet.get(shipIndex).getTail());
@@ -477,6 +504,11 @@ public class Grid {
         return true;
     }
 
+    /**
+     * Command calls this method to move all the ships in the players fleet one space in the given direction
+     * @param moveDirection integer equivalent for direction they wanted the ship to move
+     * @param fleet an array containing the current players fleet
+     */
     public void move(int moveDirection, Ship[] fleet) {
         if(!isWaiting) {
             if (moveDirection == 1) {

@@ -6,6 +6,11 @@ import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class was made to test the Captains Quarters feature.
+ * This checks that Captains quarters are placed appropriately,
+ * and the fact that they are more vulnerable.
+ */
 public class TestCaptainsQuarters {
 
     Game gameTest;
@@ -14,6 +19,13 @@ public class TestCaptainsQuarters {
     Ship[] p1Input;
     Ship[] p2Input;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -21,6 +33,10 @@ public class TestCaptainsQuarters {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be used later on.
+     */
     @Before
     public void init() {
         gameTest = Game.getInstance();
@@ -40,6 +56,9 @@ public class TestCaptainsQuarters {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * Tests that hitting a Minesweeper's captain sinks the ship entirely
+     */
     @Test
     public void hitCaptainMinesweeper(){
 
@@ -51,6 +70,9 @@ public class TestCaptainsQuarters {
 
     }
 
+    /**
+     * Tests that hitting a Destroyer's captain once does not sink the ship entirely
+     */
     @Test
     public void hitCaptainDestroyerOnce(){
 
@@ -60,6 +82,9 @@ public class TestCaptainsQuarters {
         assertEquals(false, gameTest.getP1Grid().isSunk(1));
     }
 
+    /**
+     * Tests that hitting a Battleship's captain once does not sink the ship entirely
+     */
     @Test
     public void hitCaptainBattleshipOnce(){
 
@@ -69,6 +94,9 @@ public class TestCaptainsQuarters {
         assertEquals(false, gameTest.getP1Grid().isSunk(1));
     }
 
+    /**
+     * Tests that hitting a Destroyer's captain twice sinks the ship entirely
+     */
     @Test
     public void hitCaptainDestroyerTwice(){
 
@@ -83,6 +111,9 @@ public class TestCaptainsQuarters {
         assertEquals(true, gameTest.getP2Grid().isSunk(1));
     }
 
+    /**
+     * Tests that hitting a Battleship's captain twice sinks the ship entirely
+     */
     @Test
     public void hitCaptainBattleshipTwice(){
 

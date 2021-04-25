@@ -6,9 +6,12 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
-
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class and its methods check that the isSunk method works as expected.
+ * This will check command line output and other variables.
+ */
 public class TestSunk {
 
     Game gameTest;
@@ -17,6 +20,13 @@ public class TestSunk {
     Cell[][] p2ShipBoard;
     Cell[][] p1ShipBoard;
 
+    /**
+     * Resets the single instance of Game
+     * @throws SecurityException Security Exception
+     * @throws NoSuchFieldException If the single_instance does not exist
+     * @throws IllegalArgumentException Invalid argument
+     * @throws IllegalAccessException Illegal Access
+     */
     @Before
     public void resetSingleton() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field instance = Game.class.getDeclaredField("single_instance");
@@ -24,6 +34,10 @@ public class TestSunk {
         instance.set(null, null);
     }
 
+    /**
+     * Initializes some variable that will be manipulated in the coming tests.
+     * Also, has some premade ship objects that will be added/used later on.
+     */
     @Before
     public void init() {
         gameTest = Game.getInstance();
@@ -37,6 +51,9 @@ public class TestSunk {
         p1ShipBoard = gameTest.getP1Grid().getMyShips();
     }
 
+    /**
+     * This checks that after a minesweeper is sunk, it reports that correctly.
+     */
     @Test
     public void testSunk() {
         //Shot 1
@@ -51,6 +68,9 @@ public class TestSunk {
         assertEquals(true, gameTest.getP2Grid().isSunk(0));
     }
 
+    /**
+     * This tests after a ship is sunk, the command line reports that to the player.
+     */
     @Test
     public void testSunkMessage() {
         final ByteArrayOutputStream myOut = new ByteArrayOutputStream();
@@ -71,6 +91,9 @@ public class TestSunk {
         assertEquals("You sunk my Minesweeper", standardOutput);
     }
 
+    /**
+     * This tests that if a ship is hit but not sunk, it reports that correctly.
+     */
     @Test
     public void testNotSunk() {
         //Shot 1
