@@ -1,5 +1,5 @@
-g,3
-g,3
-gabriel,16
-George,20
-Jim,25
+null,1
+null,1
+null,1
+null,2
+Will,2

@@ -209,7 +209,7 @@ public class Grid {
                         myShips[headRow][tailCol + 1].setUnderwater("Ship");
                         myShips[headRow][tailCol + 2].setUnderwater("Ship");
                         myShips[tailRow][tailCol].setUnderwater("Armor");
-                        myShips[tailRow - 1][tailCol + 1].setUnderwater("Ship");
+                        myShips[tailRow + 1][tailCol + 1].setUnderwater("Ship");
                     }
                 } else {
                     if (headRow < tailRow) {
@@ -343,7 +343,7 @@ public class Grid {
             shipCount--;
 
 
-            if(!playerFleet.get(shipIndex).getName().equals("Submarine")) {
+            if(!playerFleet.get(shipIndex).getName().equals("Submarine") && !playerFleet.get(shipIndex).getName().equals("Tower Ship")) {
                 if (headRow == tailRow) {
                     if (headCol < tailCol) {
                         for (int i = headCol; i < tailCol + 1; i++) {
@@ -365,6 +365,9 @@ public class Grid {
                         }
                     }
                 }
+            } else if(playerFleet.get(shipIndex).getName().equals("Tower Ship")){
+                myShips[headRow][headCol].setSurface("Sea");
+                myShips[headRow][headCol].setUnderwater("Sea");
             } else if(!playerFleet.get(shipIndex).getSubmerged()) {
                 if (headRow == tailRow) {
                     if (headCol < tailCol) {
@@ -421,76 +424,12 @@ public class Grid {
             return true;
         }
 
-        if(playerFleet.get(shipIndex).getName().equals("Minesweeper") && myShips[headRow][headCol].getSurface().equals("Captain")) {
-            return false;
-        }
-
-        if(playerFleet.get(shipIndex).getName().equals("Destroyer")) {
-            if(headRow == tailRow){
-                if(headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Captain")){
-                    return false;
-                }
-            } else {
-                if(headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Captain")){
-                    return false;
-                }
+        if(playerFleet.get(shipIndex).getSubmerged()) {
+            if(!myShips[captainRow][captainCol].getUnderwater().equals("Critical")) {
+                return false;
             }
-        }
-
-        if(playerFleet.get(shipIndex).getName().equals("Battleship")) {
-            if(headRow == tailRow){
-                if(headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Captain")){
-                    return false;
-                }
-            } else {
-                if(headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Captain"))) {
-                    return false;
-                } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Armor") || myShips[tailRow][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Captain")){
-                    return false;
-                }
-            }
-        }
-
-        if(playerFleet.get(shipIndex).getName().equals("Submarine")) {
-            if(!playerFleet.get(shipIndex).getSubmerged()) {
-                if (headRow == tailRow) {
-                    if (headCol < tailCol && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol + 1].getSurface().equals("Ship") || myShips[headRow][headCol + 2].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol - 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][tailCol + 1].getSurface().equals("Ship") || myShips[headRow][tailCol + 2].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain")){
-                        return false;
-                    }
-                } else {
-                    if (headRow < tailRow && (myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow + 1][headCol].getSurface().equals("Ship") || myShips[headRow + 2][headCol].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[tailRow + 1][tailCol].getSurface().equals("Ship") || myShips[tailRow + 2][tailCol].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Armor") || myShips[tailRow + 1][tailCol - 1].getSurface().equals("Ship") || myShips[tailRow][tailCol].getSurface().equals("Captain")){
-                        return false;
-                    }
-                }
-            } else {
-                if (headRow == tailRow) {
-                    if (headCol < tailCol && (myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow][headCol + 1].getUnderwater().equals("Ship") || myShips[headRow][headCol + 2].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol - 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow][tailCol + 1].getUnderwater().equals("Ship") || myShips[headRow][tailCol + 2].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain")){
-                        return false;
-                    }
-                } else {
-                    if (headRow < tailRow && (myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[headRow + 1][headCol].getUnderwater().equals("Ship") || myShips[headRow + 2][headCol].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow - 1][tailCol + 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain"))) {
-                        return false;
-                    } else if(myShips[headRow][headCol].getUnderwater().equals("Ship") || myShips[tailRow + 1][tailCol].getUnderwater().equals("Ship") || myShips[tailRow + 2][tailCol].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Armor") || myShips[tailRow + 1][tailCol - 1].getUnderwater().equals("Ship") || myShips[tailRow][tailCol].getUnderwater().equals("Captain")){
-                        return false;
-                    }
-                }
-            }
-        }
-
-        if(playerFleet.get(shipIndex).getName().equals("Tower Ship")) {
-            if(myShips[headRow][headCol].getSurface().equals("Ship") || myShips[headRow][headCol].getSurface().equals("Captain")) {
+        } else {
+            if(!myShips[captainRow][captainCol].getSurface().equals("Critical")) {
                 return false;
             }
         }

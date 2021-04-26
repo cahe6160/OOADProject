@@ -170,22 +170,24 @@ public class Game {
      * @return whether or not the current player has surrendered.
      */
     public boolean playerSurrender() {
-        boolean surrendered = true;
+
         if(p1Grid.getIsWaiting()) {
             for (int i = 0; i < p1Grid.getPlayerFleet().size(); i++) {
-                if (!p1Grid.isSunk(i)) {
-                    surrendered = false;
-                }
+                p1Grid.isSunk(i);
+            }
+            if(p1Grid.getShipCount() == 0) {
+                return true;
             }
         }
         if(p2Grid.getIsWaiting()) {
             for (int i = 0; i < p2Grid.getPlayerFleet().size(); i++) {
-                if (!p2Grid.isSunk(i)) {
-                    surrendered = false;
-                }
+                p2Grid.isSunk(i);
+            }
+            if(p2Grid.getShipCount() == 0) {
+                return true;
             }
         }
-        return surrendered;
+        return false;
     }
 
 
@@ -288,21 +290,32 @@ public class Game {
             int tailRow = p1Grid.convertPosition(tailCoord)[0];
             int tailCol = p1Grid.convertPosition(tailCoord)[1];
 
-            if(headRow == tailRow){
-                if(headCol < tailCol && (!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][tailCol + 1].getSurface().equals("Sea") || p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || p1Grid.getMyShips()[headRow][tailCol + 1].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+            if(headRow < 0 || headRow > 9 || tailRow < 0 || tailRow > 9 || headCol < 0 || headCol > 9 || tailCol < 0 || tailCol > 9) {
+                System.out.println("Error, invalid ship placement. Coordinate out of bounds");
+                headCoord = "K11";
+            } else if(headRow == tailRow) {
+                if(headCol < tailCol) {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol - 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol - 2].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             } else {
-                if(headRow < tailRow && (!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow + 1][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow + 1][tailCol].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+                if(headRow < tailRow) {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow - 1][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow - 2][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             }
         } while(p1Grid.convertPosition(headCoord)[0] < 0 || p1Grid.convertPosition(headCoord)[0] > 9 || p1Grid.convertPosition(headCoord)[1] < 0 || p1Grid.convertPosition(headCoord)[1] > 9 || p1Grid.convertPosition(tailCoord)[0] < 0 || p1Grid.convertPosition(tailCoord)[0] > 9 || p1Grid.convertPosition(tailCoord)[1] < 0 || p1Grid.convertPosition(tailCoord)[1] > 9 || (Math.abs(p1Grid.convertPosition(headCoord)[0] - p1Grid.convertPosition(tailCoord)[0]) != 2 && Math.abs(p1Grid.convertPosition(headCoord)[1] - p1Grid.convertPosition(tailCoord)[1]) != 2) || !p1Grid.getMyShips()[p1Grid.convertPosition(headCoord)[0]][p1Grid.convertPosition(headCoord)[1]].getSurface().equals("Sea") || !p1Grid.getMyShips()[p1Grid.convertPosition(tailCoord)[0]][p1Grid.convertPosition(tailCoord)[1]].getSurface().equals("Sea"));
@@ -320,21 +333,32 @@ public class Game {
             int tailRow = p1Grid.convertPosition(tailCoord)[0];
             int tailCol = p1Grid.convertPosition(tailCoord)[1];
 
-            if(headRow == tailRow){
-                if(headCol < tailCol && (!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][tailCol + 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][tailCol + 2].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][tailCol + 2].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+            if(headRow < 0 || headRow > 9 || tailRow < 0 || tailRow > 9 || headCol < 0 || headCol > 9 || tailCol < 0 || tailCol > 9) {
+                System.out.println("Error, invalid ship placement. Coordinate out of bounds");
+                headCoord = "K11";
+            } else if(headRow == tailRow) {
+                if(headCol < tailCol) {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol + 3].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol - 1].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol - 2].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow][headCol - 3].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             } else {
-                if(headRow < tailRow && (!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow + 1][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow + 2][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[tailRow + 2][tailCol].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+                if(headRow < tailRow) {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow + 3][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p1Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow - 1][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow - 2][headCol].getSurface().equals("Sea") || !p1Grid.getMyShips()[headRow - 3][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             }
 
@@ -344,6 +368,7 @@ public class Game {
         tailCoord = null;
         boolean isSubmerged = false;
         int[] hangPiece;
+
         do {
             System.out.println("Enter a location for the front of your submarine. Formatted as Letter+Number. (E.g 'A5')");
             headCoord = scan.nextLine();
@@ -472,21 +497,32 @@ public class Game {
             int tailRow = p1Grid.convertPosition(tailCoord)[0];
             int tailCol = p1Grid.convertPosition(tailCoord)[1];
 
-            if(headRow == tailRow){
-                if(headCol < tailCol && (!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][tailCol + 1].getSurface().equals("Sea") || p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || p2Grid.getMyShips()[headRow][tailCol + 1].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+            if(headRow < 0 || headRow > 9 || tailRow < 0 || tailRow > 9 || headCol < 0 || headCol > 9 || tailCol < 0 || tailCol > 9) {
+                System.out.println("Error, invalid ship placement. Coordinate out of bounds");
+                headCoord = "K11";
+            } else if(headRow == tailRow) {
+                if(headCol < tailCol) {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol - 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol - 2].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             } else {
-                if(headRow < tailRow && (!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow + 1][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow + 1][tailCol].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+                if(headRow < tailRow) {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow - 1][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow - 2][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             }
         } while(p1Grid.convertPosition(headCoord)[0] < 0 || p1Grid.convertPosition(headCoord)[0] > 9 || p1Grid.convertPosition(headCoord)[1] < 0 || p1Grid.convertPosition(headCoord)[1] > 9 || p1Grid.convertPosition(tailCoord)[0] < 0 || p1Grid.convertPosition(tailCoord)[0] > 9 || p1Grid.convertPosition(tailCoord)[1] < 0 || p1Grid.convertPosition(tailCoord)[1] > 9 || (Math.abs(p1Grid.convertPosition(headCoord)[0] - p1Grid.convertPosition(tailCoord)[0]) != 2 && Math.abs(p1Grid.convertPosition(headCoord)[1] - p1Grid.convertPosition(tailCoord)[1]) != 2) || !p2Grid.getMyShips()[p1Grid.convertPosition(headCoord)[0]][p1Grid.convertPosition(headCoord)[1]].getSurface().equals("Sea") || !p2Grid.getMyShips()[p1Grid.convertPosition(tailCoord)[0]][p1Grid.convertPosition(tailCoord)[1]].getSurface().equals("Sea"));
@@ -504,21 +540,32 @@ public class Game {
             int tailRow = p1Grid.convertPosition(tailCoord)[0];
             int tailCol = p1Grid.convertPosition(tailCoord)[1];
 
-            if(headRow == tailRow){
-                if(headCol < tailCol && (!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][tailCol + 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][tailCol + 2].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][tailCol + 2].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+            if(headRow < 0 || headRow > 9 || tailRow < 0 || tailRow > 9 || headCol < 0 || headCol > 9 || tailCol < 0 || tailCol > 9) {
+                System.out.println("Error, invalid ship placement. Coordinate out of bounds");
+                headCoord = "K11";
+            } else if(headRow == tailRow) {
+                if(headCol < tailCol) {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 2].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol + 3].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol - 1].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol - 2].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow][headCol - 3].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             } else {
-                if(headRow < tailRow && (!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea"))) {
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
-                } else if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow + 1][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow + 2][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow][tailCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[tailRow + 2][tailCol].getSurface().equals("Sea")){
-                    System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
-                    headCoord = "K11";
+                if(headRow < tailRow) {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 1][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 2][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow + 3][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
+                } else {
+                    if(!p2Grid.getMyShips()[headRow][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow - 1][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow - 2][headCol].getSurface().equals("Sea") || !p2Grid.getMyShips()[headRow - 3][headCol].getSurface().equals("Sea")) {
+                        System.out.println("Error, invalid ship placement. A ship already occupies part of this space.");
+                        headCoord = "K11";
+                    }
                 }
             }
 

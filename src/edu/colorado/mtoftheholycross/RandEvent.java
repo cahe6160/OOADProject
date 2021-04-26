@@ -36,7 +36,7 @@ public class RandEvent {
      * @param currentPlayer the current player object
      */
     public void tsunami(Grid playerGrid, Player currentPlayer) {
-        System.out.println("Tsunami! Your fleet was caught in a bad storm!'");
+        System.out.println("Tsunami! Your fleet was caught in a bad storm!");
         int direction = ThreadLocalRandom.current().nextInt(1, 4 + 1);
             if(direction == 1) {
                 for(int i=0; i<10; i++) {
